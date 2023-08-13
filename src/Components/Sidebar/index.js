@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import styles from './styles.module.css'
+import Link from "next/link";
+import styles from "./styles.module.css";
 
 const Sidebar = () => {
   const barOnClick = (e) => {
@@ -7,16 +7,15 @@ const Sidebar = () => {
     e.stopPropagation();
     console.log(e.currentTarget.classList);
     if (e.currentTarget.classList.contains("pc-trigger")) {
-      console.log("remove")
-      e.currentTarget.classList.remove("pc-trigger")
-      return
+      console.log("remove");
+      e.currentTarget.classList.remove("pc-trigger");
+      return;
     } else {
       console.log("add");
       e.currentTarget.classList.add("pc-trigger");
       return;
     }
   };
-
 
   return (
     <>
@@ -30,7 +29,7 @@ const Sidebar = () => {
               </span>
             </a>
           </div>
-          <div className={`navbar-content ${styles.scrollbar}`} >
+          <div className={`navbar-content ${styles.scrollbar}`}>
             <div className="card pc-user-card">
               <div className="card-body">
                 <div className="d-flex align-items-center">
@@ -173,13 +172,53 @@ const Sidebar = () => {
                 </svg>
               </li>
               <li className="pc-item">
-                <Link href="programs" className="pc-link">
+                <Link href="/programs" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
-                      <use xlinkHref="#custom-story"></use>
+                      <path
+                        d="M16.42 7.95012C18.86 10.3901 18.86 14.3501 16.42 16.7901C13.98 19.2301 10.02 19.2301 7.58 16.7901C5.14 14.3501 5.14 10.3901 7.58 7.95012C10.02 5.51012 13.98 5.51012 16.42 7.95012Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        opacity="0.4"
+                        d="M8.24906 22.3899C8.15906 22.3899 8.05906 22.3699 7.96906 22.3399C5.71906 21.4399 3.89905 19.8499 2.67905 17.7499C1.49905 15.6999 1.02905 13.3799 1.33905 11.0199C1.38905 10.6099 1.77905 10.3199 2.17905 10.3699C2.58905 10.4199 2.87904 10.7999 2.82904 11.2099C2.56904 13.2299 2.96907 15.2299 3.97907 16.9899C5.01907 18.7899 6.58905 20.1599 8.51905 20.9299C8.89905 21.0899 9.08906 21.5198 8.93906 21.9098C8.82906 22.2098 8.53906 22.3899 8.24906 22.3899Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        opacity="0.4"
+                        d="M5.84961 5.22986C5.62961 5.22986 5.40961 5.12988 5.25961 4.93988C4.99961 4.60988 5.05962 4.13989 5.38962 3.88989C7.29962 2.39989 9.57961 1.60986 11.9996 1.60986C14.3596 1.60986 16.6096 2.36988 18.4996 3.80988C18.8296 4.05988 18.8896 4.52986 18.6396 4.85986C18.3896 5.18986 17.9196 5.24988 17.5896 4.99988C15.9696 3.75988 14.0396 3.10986 11.9996 3.10986C9.91961 3.10986 7.9496 3.78989 6.3096 5.06989C6.1696 5.17989 6.00961 5.22986 5.84961 5.22986Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        opacity="0.4"
+                        d="M15.7507 22.3901C15.4507 22.3901 15.1707 22.2101 15.0507 21.9201C14.9007 21.5401 15.0807 21.1001 15.4707 20.9401C17.4007 20.1601 18.9707 18.8001 20.0107 17.0001C21.0307 15.2401 21.4307 13.2401 21.1607 11.2201C21.1107 10.8101 21.4007 10.4301 21.8107 10.3801C22.2107 10.3301 22.6007 10.6201 22.6507 11.0301C22.9507 13.3801 22.4907 15.7101 21.3107 17.7601C20.1007 19.8601 18.2707 21.4401 16.0207 22.3501C15.9407 22.3701 15.8507 22.3901 15.7507 22.3901Z"
+                        fill="currentcolor"
+                      />
                     </svg>
                   </span>
                   <span className="pc-mtext">Programs</span>
+                </Link>
+              </li>
+              <li className="pc-item">
+                <Link href="/gurus" className="pc-link">
+                  <span className="pc-micon">
+                    <svg className="pc-icon">
+                      <path
+                        opacity="0.4"
+                        d="M22 7.81V16.19C22 19 20.71 20.93 18.44 21.66C17.78 21.89 17.02 22 16.19 22H7.81C6.98 22 6.22 21.89 5.56 21.66C3.29 20.93 2 19 2 16.19V7.81C2 4.17 4.17 2 7.81 2H16.19C19.83 2 22 4.17 22 7.81Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M18.4406 21.66C17.7806 21.89 17.0206 22 16.1906 22H7.81055C6.98055 22 6.22055 21.89 5.56055 21.66C5.91055 19.02 8.67055 16.97 12.0005 16.97C15.3305 16.97 18.0906 19.02 18.4406 21.66Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M15.5799 11.58C15.5799 13.56 13.9799 15.17 11.9999 15.17C10.0199 15.17 8.41992 13.56 8.41992 11.58C8.41992 9.60002 10.0199 8 11.9999 8C13.9799 8 15.5799 9.60002 15.5799 11.58Z"
+                        fill="currentcolor"
+                      />
+                    </svg>
+                  </span>
+                  <span className="pc-mtext">gurus</span>
                 </Link>
               </li>
               <li className="pc-item">

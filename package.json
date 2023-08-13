@@ -9,11 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^39.0.1",
+    "@ckeditor/ckeditor5-react": "^6.1.0",
     "antd": "^5.8.2",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
+    "formik": "^2.4.3",
     "next": "13.4.13",
+    "quill-blot-formatter": "^1.0.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-quill": "^2.0.0",
+    "react-quilljs": "^1.3.3"
   }
 }

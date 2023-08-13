@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiPut } from "./Api";
+import { apiDelete, apiGet, apiPost, apiPostImage, apiPut } from "./Api";
 import Localstorage from "./storage/Localstorage";
 
 const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`
@@ -16,6 +16,15 @@ export const routes = {
         },
         RESET_PASSWORD:async(data)=>{
             return await apiPost("/admin/resetPassword",routes.BASE_PATH,data)
+        },
+        GET_ALL_GURUS:async()=>{
+            return await apiGet("/gurus",routes.BASE_PATH)
+        },
+        DELETE_GURU:async(id)=>{
+            return await apiDelete(`/gurus/${id}`,routes.BASE_PATH)
+        },
+        UPLOAD_IMAGE:async(data)=>{
+            return await apiPostImage("/uploadImageToS3",routes.BASE_PATH,data)
         }
     }
 

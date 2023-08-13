@@ -152,6 +152,7 @@ export const apiPostImage = async (url, baseURL, values) => {
       fetch(`${baseURL}${url}`, {
         method: "POST",
         headers: {
+          Accept: "application/json",
           token: LocalStorageUtil.JWT_TOKEN.get(),
           userid: LocalStorageUtil.USER_ID.get(),
         },
