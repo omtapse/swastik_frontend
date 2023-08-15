@@ -1,28 +1,23 @@
 "use client";
-import Image from "next/image";
-import { Html, Head, Main, NextScript } from "next/document";
 import "@/styles/Template Styles/css/fonts/fontawesome.css";
 import { useEffect, useState } from "react";
-import Localstorage from "@/utills/storage/Localstorage";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Sidebar from "@/Components/Sidebar";
 import Header from "@/Components/Header";
-import Script from "next/script";
 import { Upload, message, notification } from "antd";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
 import { routes } from "@/utills/routes";
-import ReactQuill from "react-quill";
-import dynamic from "next/dynamic";
 import Editor from "@/Components/Editor/Editor";
 import { Formik } from "formik";
 import styles from './styles.module.css'
 
 export default function Home() {
   const router = useRouter();
+  const params = useParams();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
   const [fileList, setFileList] = useState([]);
-  const [value, setValue] = useState("");
+  const [data,setData] = useState({})
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -75,13 +70,28 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {}, []);
+  const fetchData = async () => {
+    let data = await routes.APIS.GET_GURU_BY_ID(params.id)
+    data = data.guru
+    setData(data)
+    setImageUrl(data.image)
+    setFileList(data.programImages.map((item)=>({url:item})))
+
+
+  }
+
+  useEffect(() => {
+    console.log("fileList", params.id);
+    if (params.id) {
+      fetchData()
+    }
+    }, []);
 
   return (
     <>
       <Sidebar />
       <Header />
-      <section class="pc-container" style={{ paddingTop: 0 }}>
+      {data.name && <section class="pc-container" style={{ paddingTop: 0 }}>
         <div class="pc-content">
           <div class="page-header">
             <div class="page-block">
@@ -115,12 +125,13 @@ export default function Home() {
                 <h5></h5>
               </div> */}
                 <div class="card-body">
+                  {console.log(data)}
                   <Formik
                     initialValues={{
-                      name: "",
-                      experties: "",
-                      Testimonials: "",
-                      about: "",
+                      name:data.name,
+                      experties: data.experties,
+                      Testimonials: data.testimonials,
+                      about: data.about,
                     }}
                     validate={(values) => {
                       console.log("values", values);
@@ -154,8 +165,8 @@ export default function Home() {
                         guruImage: imageUrl,
                         programImages: fileList.map((item) => item.url),
                       };
-                      const responce = await routes.APIS.ADD_GURU(data)
-                      if(responce.message === "Guru created successfully"){
+                      const responce = await routes.APIS.UPDATE_GURU(params.id,data)
+                      if(responce.message === "Guru updated successfully"){
                         notification.success({
                           message: responce.message,
                         });
@@ -209,7 +220,7 @@ export default function Home() {
                                 onChange={setFieldValue}
                                 fieldName={"about"}
                                 placeholder={"Write something..."}
-                                error={errors.about}
+                                value={values.about}                                
                               />
                               {errors.about && (
                                 <small
@@ -306,6 +317,7 @@ export default function Home() {
                                   onChange={setFieldValue}
                                   fieldName={"Testimonials"}
                                   placeholder={"Write something..."}
+                                  value={values.Testimonials}     
                                 />
                                 {errors.Testimonials && (
                                   <small
@@ -337,7 +349,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
     </>
   );
 }

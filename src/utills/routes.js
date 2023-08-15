@@ -25,7 +25,17 @@ export const routes = {
         },
         UPLOAD_IMAGE:async(data)=>{
             return await apiPostImage("/uploadImageToS3",routes.BASE_PATH,data)
+        },
+        ADD_GURU:async(data)=>{
+            return await apiPost("/gurus",routes.BASE_PATH,data)
+        },
+        GET_GURU_BY_ID:async(id)=>{
+            return await apiGet(`/gurus/${id}`,routes.BASE_PATH)
+        },
+        UPDATE_GURU:async(id,data)=>{
+            return await apiPut(`/gurus/${id}`,routes.BASE_PATH,data)
         }
+        
     }
 
 

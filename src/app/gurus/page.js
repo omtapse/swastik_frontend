@@ -14,6 +14,7 @@ import { Table, notification } from "antd";
 export default function Home() {
   const [gurus, setGurus] = useState([]);
   const [columns, setColumns] = useState([]);
+  const router = useRouter();
 
   const fetchGurus =async () => {
     const res = await routes.APIS.GET_ALL_GURUS();
@@ -54,9 +55,12 @@ export default function Home() {
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
+                        // height:"46px",
+                        overflow: "hidden"
                       }}
+                      dangerouslySetInnerHTML={{ __html: obj.about }}
                     >
-                      {obj.about}
+                      {/* {obj.about} */}
                     </p>
                   </div>
                 </div>
@@ -117,12 +121,12 @@ export default function Home() {
                     data-bs-toggle="tooltip"
                     title="Edit"
                   >
-                    <a
-                      href="ecom_product-add.html"
+                    <Link
+                      href={`/gurus/editgurus/${obj._id}`}
                       class="avtar avtar-xs btn-link-success btn-pc-default"
                     >
                       <i class="ti ti-edit-circle f-18"></i>
-                    </a>
+                    </Link>
                   </li>
                   <li
                     class="list-inline-item align-bottom"
@@ -196,103 +200,6 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="table-responsive">
-                    {/* <table class="table table-hover" id="pc-dt-simple">
-                      <thead>
-                        <tr>
-                          <th class="text-end">#</th>
-                          <th>Program Name</th>
-                          <th>Pillar</th>
-                          <th>Program Date</th>
-                          <th class="text-end">Price</th>
-                          <th>Status</th>
-                          <th class="text-center">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.map((item) => {
-                          return (
-                            <tr>
-                              <td class="text-end">{item.id}</td>
-                              <td>
-                                <div class="row">
-                                  <div class="col-auto pe-0">
-                                    <img
-                                      src={item.img}
-                                      alt="user-image"
-                                      class="wid-40 rounded"
-                                    />
-                                  </div>
-                                  <div class="col">
-                                    <h6 class="mb-1">{item.name}</h6>
-                                    <p
-                                      class="text-muted f-12 mb-0"
-                                      style={{
-                                        width: "15rem",
-                                        whiteSpace: "nowrap",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                      }}
-                                    >
-                                      {item.shortDescription}
-                                    </p>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>{item.pillar}</td>
-                              <td>{item.date}</td>
-                              <td class="text-end">{item.price}</td>
-                              <td>
-                                <span class="badge bg-light-success  f-12">
-                                  {item.status}
-                                </span>{" "}
-                              </td>
-                              <td class="text-center">
-                                <ul class="list-inline me-auto mb-0">
-                                  <li
-                                    class="list-inline-item align-bottom"
-                                    data-bs-toggle="tooltip"
-                                    title="View"
-                                  >
-                                    <a
-                                      href="#"
-                                      class="avtar avtar-xs btn-link-secondary btn-pc-default"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#cust-modal"
-                                    >
-                                      <i class="ti ti-eye f-18"></i>
-                                    </a>
-                                  </li>
-                                  <li
-                                    class="list-inline-item align-bottom"
-                                    data-bs-toggle="tooltip"
-                                    title="Edit"
-                                  >
-                                    <a
-                                      href="ecom_product-add.html"
-                                      class="avtar avtar-xs btn-link-success btn-pc-default"
-                                    >
-                                      <i class="ti ti-edit-circle f-18"></i>
-                                    </a>
-                                  </li>
-                                  <li
-                                    class="list-inline-item align-bottom"
-                                    data-bs-toggle="tooltip"
-                                    title="Delete"
-                                  >
-                                    <a
-                                      href="#"
-                                      class="avtar avtar-xs btn-link-danger btn-pc-default"
-                                    >
-                                      <i class="ti ti-trash f-18"></i>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table> */}
                     <Table columns={columns} dataSource={gurus} pagination={{pageSize:7}} />
                   </div>
                 </div>
