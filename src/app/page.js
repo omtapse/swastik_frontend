@@ -18,7 +18,7 @@ export default function Home() {
       price: "$98000",
       duration: "6 months",
       date: "12/12/2021",
-      Action:<p>View</p>
+      // Action:<p>View</p>
     },
     {
       id: 2,
