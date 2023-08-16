@@ -34,33 +34,56 @@ export default function Home() {
           dataIndex: "programName",
           key: "programName",
           render: (text, obj) => {
-            {
-              console.log(text, obj);
-            }
             return (
+              // <div class="row">
+              //   <div class="col-auto pe-0">
+              //     <img
+              //       src={obj.programImages}
+              //       alt="user-image"
+              //       class="wid-40 rounded"
+              //     />
+              //   </div>
+              //   <div class="col">
+              //     <h6 class="mb-1">{text}</h6>
+              //     <p
+              //       class="text-muted f-12 mb-0"
+              //       style={{
+              //         width: "20rem",
+              //         whiteSpace: "nowrap",
+              //         overflow: "hidden",
+              //         textOverflow: "ellipsis",
+              //       }}
+              //     >
+              //       {obj.programDetails}
+              //     </p>
+              //   </div>
+              // </div>
               <div class="row">
-                <div class="col-auto pe-0">
-                  <img
-                    src={obj.programImages}
-                    alt="user-image"
-                    class="wid-40 rounded"
-                  />
-                </div>
-                <div class="col">
-                  <h6 class="mb-1">{text}</h6>
-                  <p
-                    class="text-muted f-12 mb-0"
-                    style={{
-                      width: "20rem",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {obj.programDetails}
-                  </p>
-                </div>
+              <div class="col-auto pe-0">
+                <img
+                  src={obj.programImages}
+                  alt="user-image"
+                  class="wid-40 rounded"
+                />
               </div>
+              <div class="col">
+                <h6 class="mb-1">{text}</h6>
+                <p
+                  class="text-muted f-12 mb-0"
+                  style={{
+                    width: "13rem",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    // height:"46px",
+                    overflow: "hidden"
+                  }}
+                  // dangerouslySetInnerHTML={{ __html: obj.about }}
+                >
+                  {obj.programDetails}
+                </p>
+              </div>
+            </div>
             );
           },
         },
@@ -123,14 +146,6 @@ export default function Home() {
               </p>
             );
           },
-        },
-        {
-          title: "Registered On",
-          dataIndex: "createdAt",
-          key: "createdAt",
-          render: (text) => {
-            return <p>{text}</p>;
-          }
         },
         {
           title: "Actions",
@@ -248,10 +263,8 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="table-responsive">
-
                     <Table columns={columns} dataSource={programs} pagination={{ pageSize: 7 }} />
-
-                  </div>
+                    </div>
                 </div>
               </div>
             </div>

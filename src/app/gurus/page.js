@@ -34,9 +34,6 @@ export default function Home() {
             dataIndex: "name",
             key: "name",
             render: (text, obj) => {
-              {
-                console.log(text, obj);
-              }
               return (
                 <div class="row">
                   <div class="col-auto pe-0">

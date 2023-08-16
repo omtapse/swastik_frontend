@@ -37,6 +37,7 @@ export const routes = {
         },
         PUT_PROGRAM:async(id)=>{
             return await apiPut(`/updateprogram/${id}`,routes.BASE_PATH)
+        },            
         ADD_GURU:async(data)=>{
             return await apiPost("/gurus",routes.BASE_PATH,data)
         },
@@ -45,7 +46,7 @@ export const routes = {
         },
         UPDATE_GURU:async(id,data)=>{
             return await apiPut(`/gurus/${id}`,routes.BASE_PATH,data)
-        }
+        },
         
     }
 
