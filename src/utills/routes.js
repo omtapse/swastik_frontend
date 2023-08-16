@@ -34,8 +34,22 @@ export const routes = {
         },
         UPDATE_GURU:async(id,data)=>{
             return await apiPut(`/gurus/${id}`,routes.BASE_PATH,data)
+        },
+        ADD_PILLAR:async(data)=>{
+            return await apiPost("/pillar",routes.BASE_PATH,data)
+        },
+        GET_ALL_PILLARS:async()=>{
+            return await apiGet("/pillar",routes.BASE_PATH)
+        },
+        DELETE_PILLAR:async(id)=>{
+            return await apiDelete(`/pillar/${id}`,routes.BASE_PATH)
+        },
+        GET_PILLAR_BY_ID:async(id)=>{
+            return await apiGet(`/pillar/${id}`,routes.BASE_PATH)
+        },
+        UPDATE_PILLAR:async(id,data)=>{
+            return await apiPut(`/pillar/${id}`,routes.BASE_PATH,data)
         }
-        
     }
 
 
