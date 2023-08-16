@@ -23,7 +23,7 @@ const Sidebar = () => {
         <div className="navbar-wrapper">
           <div className="m-header">
             <a href="#" className="b-brand text-primary">
-              <img src="../assets/images/logo-dark.svg" />
+              <img src="/assets/images/logo-dark.svg" />
               <span className="badge bg-light-success rounded-pill ms-2 theme-version">
                 v9.0
               </span>
@@ -39,7 +39,7 @@ const Sidebar = () => {
                         e.stopPropagation();
                         console.log("click");
                       }}
-                      src="../assets/images/user/avatar-1.jpg"
+                      src="/assets/images/user/avatar-1.jpg"
                       alt="user-image"
                       className="user-avtar wid-45 rounded-circle"
                     />

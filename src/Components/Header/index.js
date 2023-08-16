@@ -396,7 +396,7 @@ const Header = () => {
                   aria-expanded="false"
                 >
                   <img
-                    src="../assets/images/user/avatar-2.jpg"
+                    src="/assets/images/user/avatar-2.jpg"
                     alt="user-image"
                     class="user-avtar"
                   />
