@@ -26,6 +26,88 @@ export default function Home() {
   const [fileList, setFileList] = useState([]);
   const [imageUrl, setImageUrl] = useState();
 
+  
+  const [data, setData] = useState({
+    programImages:'',
+    programName: '',
+    programPrice: '',
+    programDuration: '',
+    programStatus: '',
+    programDate: ''
+});
+
+const submitHandler = async (e) => {
+    try {
+        const { pName, pillarname, gurus, status, selectdate } = data;
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${params.id}`, {
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                programImages:'',programName: '', programPrice: '', programDuration: '', programStatus: '', programDate: ''
+            })
+        });
+        console.log(params.id);
+
+        console.log(res)
+        if (res.status === 200) {
+            console.log("Program edited successfully");
+            navigate("/ViewProgram")
+        } else {
+            console.log("Failed to edit program");
+        }
+    } catch (error) {
+        console.log("An error occurred:", error);
+    }
+}
+
+const getChange = (e, name) => {
+    if (name) {
+        console.log(e, name)
+        setData((prev) => ({
+            ...prev,
+            [name]: e
+        }))
+    } else {
+
+        setData((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+}
+
+
+
+
+const getProgramById = async () => {
+    try {
+
+        const response = await fetch(`http://localhost:5000/getProgramById/${params.id}`, {
+            method: "GET",
+
+        });
+        let data = await response.json();
+        setData(data);
+
+    } catch (error) {
+        console.log("Error while fetching programs", error);
+    }
+
+}
+// useEffect(() => {
+    
+// }, [])
+useEffect(() => {
+    getProgramById();
+    console.log(data)
+}, [data])
+
+
 
 
   const uploadButton = (
@@ -503,7 +585,7 @@ const customWeekStartEndFormat = (value) =>
                               <div\
                               class="' +
                 String(classNames.item) +
-                ' ' +
+                ' ' +    
                 String(classNames.itemChoice) +
                 ' ' +
                 String(data.disabled ? classNames.itemDisabled : classNames.itemSelectable) +
@@ -563,7 +645,7 @@ const customWeekStartEndFormat = (value) =>
                 </div>
                 <div class="col-md-12">
                   <div class="page-header-title">
-                    <h2 class="mb-0">Add Program</h2>
+                    <h2 class="mb-0">Update Program</h2>
                   </div>
                 </div>
               </div>
@@ -579,24 +661,24 @@ const customWeekStartEndFormat = (value) =>
                     <div class="form-group row">
                       <div class="col-lg-6">
                         <label class="form-label">Program Name:</label>
-                        <input type="email" class="form-control" placeholder="Enter full name" />
+                        <input type="email" class="form-control" placeholder="Enter full name" value={data.programName} onChange={getChange}/>
                         <small class="form-text text-muted">Please enter your full name</small>
                       </div>
                       <div class="col-lg-6">
                         <label class="form-label">Program Duration</label>
-                        <input type="number" class="form-control" placeholder="Enter duration in days" />
+                        <input type="number" class="form-control" placeholder="Enter duration in days" value={data.programDuration} onChange={getChange}/>
                         <small class="form-text text-muted">Please Enter Duration </small>
                       </div>
                       <div class="col-lg-6">
                         <label class="form-label">Program Price</label>
-                        <input type="number" class="form-control" placeholder="Enter Price in INR" />
+                        <input type="number" class="form-control" placeholder="Enter Price in INR" value={data.programPrice} onChange={getChange}/>
                         <small class="form-text text-muted">Please Enter price </small>
                       </div>
                       <div class="form-group row">
                           <div class="col-lg-12">
                             <label class="form-label">About the program</label>
                             <div class="input-group search-form">
-                              <Editor placeholder={"Write something..."} />
+                              <Editor placeholder={"Write something..."}/>
                             </div>
                             {/* <small class="form-text text-muted">
                           Please enter your Password
@@ -691,35 +773,10 @@ const customWeekStartEndFormat = (value) =>
                       <div class="date">
                         <Space direction="vertical" size={12}>
                           <DatePicker defaultValue={dayjs('2015/01/01', dateFormat)} format={dateFormat} />
-                          {/* <DatePicker defaultValue={dayjs('01/01/2015', dateFormatList[0])} format={dateFormatList} />
-                          <DatePicker defaultValue={dayjs('2015/01', monthFormat)} format={monthFormat} picker="month" />
-                          <DatePicker defaultValue={dayjs()} format={customWeekStartEndFormat} picker="week" />
-                          <RangePicker
-                            defaultValue={[dayjs('2015/01/01', dateFormat), dayjs('2015/01/01', dateFormat)]}
-                            format={dateFormat}
-                          />
-                          <DatePicker defaultValue={dayjs('2015/01/01', dateFormat)} format={customFormat} /> */}
                         </Space>
                       </div>
                     </div>
-                    {/* <div class="form-group row">
-                      <div class="col-lg-6">
-                        <label class="form-label">Password:</label>
-                        <div class="input-group search-form">
-                          <input type="Password" class="form-control" placeholder="Please enter your Password" />
-                          <span class="input-group-text bg-transparent"><i class="feather icon-lock"></i></span>
-                        </div>
-                        <small class="form-text text-muted">Please enter your Password</small>
-                      </div>
-                      <div class="col-lg-6">
-                        <label class="form-label">Profile URL:</label>
-                        <div class="input-group search-form">
-                          <input type="text" class="form-control" placeholder="Please enter your Profile URL" />
-                          <span class="input-group-text bg-transparent"><i class="feather icon-link"></i></span>
-                        </div>
-                        <small class="form-text text-muted">Please enter your Profile URL</small>
-                      </div>
-                    </div> */}
+                   
                     <div class="form-group row">
                       <div class="col-lg-6">
                         <label class="form-label">Program Status</label>
