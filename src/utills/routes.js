@@ -56,13 +56,36 @@ export const routes = {
         ADD_PILLAR:async(data)=>{
             return await apiPost("/pillar",routes.BASE_PATH,data)
         },
-        GET_PILLAR:async(data)=>{
-            return await apiGet("/pillar",routes.BASE_PATH,data)
+        GET_ALL_PILLARS:async()=>{
+            return await apiGet("/pillar",routes.BASE_PATH)
         },
-        GET_VIHAR:async(data)=>{
-            return await apiGet("/getvihar",routes.BASE_PATH,data)
+        DELETE_PILLAR:async(id)=>{
+            return await apiDelete(`/pillar/${id}`,routes.BASE_PATH)
+        },
+        GET_PILLAR_BY_ID:async(id)=>{
+            return await apiGet(`/pillar/${id}`,routes.BASE_PATH)
+        },
+        UPDATE_PILLAR:async(id,data)=>{
+            return await apiPut(`/pillar/${id}`,routes.BASE_PATH,data)
+        },
+        ADD_VIHAR:async(data)=>{
+            return await apiPost("/vihar",routes.BASE_PATH,data)
+        },
+        GET_ALL_VIHARS:async()=>{
+            return await apiGet("/vihar",routes.BASE_PATH)
+        },
+        GET_VIHAR_BY_ID:async(id)=>{
+            return await apiGet(`/vihar/${id}`,routes.BASE_PATH)
+        },
+        GET_ALL_ACTIVITIES_VIHARS:async()=>{
+            return await apiGet("/vihar/activities",routes.BASE_PATH)
+        },
+        DELETE_VIHAR:async(id)=>{
+            return await apiDelete(`/vihar/${id}`,routes.BASE_PATH)
+        },
+        UPDATE_VIHAR:async(id,data)=>{
+            return await apiPut(`/vihar/${id}`,routes.BASE_PATH,data)
         }
-        
     }
 
 
