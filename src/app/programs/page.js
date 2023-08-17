@@ -17,7 +17,7 @@ export default function Home() {
 
   const fetchPrograms = async () => {
     const res = await routes.APIS.Get_ALL_Program();
-
+    console.log("res", res)
     if (res) {
       setPrograms(res.programs);
       setColumns([
@@ -61,7 +61,7 @@ export default function Home() {
               <div class="row">
               <div class="col-auto pe-0">
                 <img
-                  src={obj.programImages}
+                  src={obj.programImage}
                   alt="user-image"
                   class="wid-40 rounded"
                 />
@@ -198,7 +198,6 @@ export default function Home() {
                   <div
                     class="avtar avtar-xs btn-link-danger btn-pc-default"
                     onClick={()=> {
-                      console.log("HEREEEE", obj._id)
                       routes.APIS.DELETE_PROGRAM(obj._id).then((res) => {
                         notification.success({ message: res.message })
                         fetchPrograms()
