@@ -174,8 +174,7 @@ export default function Home() {
                   data-bs-toggle="tooltip"
                   title="Edit"
                 >
-                  <div
-                    class="avtar avtar-xs btn-link-danger btn-pc-default"
+                  {/* <div class="avtar avtar-xs btn-link-danger btn-pc-default"
                     onClick={() => {
                       console.log("HEREEEE", obj._id)
                       routes.APIS.PUT_PROGRAM(obj._id).then((res) => {
@@ -183,9 +182,9 @@ export default function Home() {
                         fetchPrograms()
                       })
                     }}
-                  ></div>
+                  ></div> */}
                   <Link
-                    href="/programs/editForm"
+                    href={`/programs/editForm/${obj._id}`}
                     class="avtar avtar-xs btn-link-success btn-pc-default"
                   >
                     <i class="ti ti-edit-circle f-18"></i>

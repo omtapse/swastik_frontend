@@ -27,7 +27,10 @@ export const routes = {
             return await apiPostImage("/uploadImageToS3",routes.BASE_PATH,data)
         },
         Get_ALL_Program:async(data)=>{
-            return await apiGet("/getprogram",routes.BASE_PATH)
+            return await apiGet("/getprogram",routes.BASE_PATH,data)
+        },
+        GET_PROGRAM_BY_ID:async(id)=>{
+            return await apiGet(`/getprogram/${id}`,routes.BASE_PATH)
         },
         DELETE_PROGRAM:async(id)=>{
             return await apiDelete(`/deleteprogram/${id}`,routes.BASE_PATH)
@@ -47,6 +50,18 @@ export const routes = {
         UPDATE_GURU:async(id,data)=>{
             return await apiPut(`/gurus/${id}`,routes.BASE_PATH,data)
         },
+        ADD_PROGRAM:async(data)=>{
+            return await apiPost("/createprogram",routes.BASE_PATH,data);
+        },
+        ADD_PILLAR:async(data)=>{
+            return await apiPost("/pillar",routes.BASE_PATH,data)
+        },
+        GET_PILLAR:async(data)=>{
+            return await apiGet("/pillar",routes.BASE_PATH,data)
+        },
+        GET_VIHAR:async(data)=>{
+            return await apiGet("/getvihar",routes.BASE_PATH,data)
+        }
         
     }
 

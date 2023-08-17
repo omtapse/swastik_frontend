@@ -160,7 +160,7 @@ export default function Home() {
                           message: responce.message,
                         });
                         router.push("/gurus")
-                      }
+                      }programStatus
                       console.log(responce)
                     }}
                   >
