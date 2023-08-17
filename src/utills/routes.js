@@ -26,6 +26,21 @@ export const routes = {
         UPLOAD_IMAGE:async(data)=>{
             return await apiPostImage("/uploadImageToS3",routes.BASE_PATH,data)
         },
+        Get_ALL_Program:async(data)=>{
+            return await apiGet("/getprogram",routes.BASE_PATH,data)
+        },
+        GET_PROGRAM_BY_ID:async(id)=>{
+            return await apiGet(`/getprogram/${id}`,routes.BASE_PATH)
+        },
+        DELETE_PROGRAM:async(id)=>{
+            return await apiDelete(`/deleteprogram/${id}`,routes.BASE_PATH)
+        },
+        POST_PROGRAM:async(data)=>{
+            return await apiPost('/createprogram',routes.BASE_PATH,data)
+        },
+        PUT_PROGRAM:async(id)=>{
+            return await apiPut(`/updateprogram/${id}`,routes.BASE_PATH)
+        },            
         ADD_GURU:async(data)=>{
             return await apiPost("/gurus",routes.BASE_PATH,data)
         },
@@ -34,6 +49,9 @@ export const routes = {
         },
         UPDATE_GURU:async(id,data)=>{
             return await apiPut(`/gurus/${id}`,routes.BASE_PATH,data)
+        },
+        ADD_PROGRAM:async(data)=>{
+            return await apiPost("/createprogram",routes.BASE_PATH,data);
         },
         ADD_PILLAR:async(data)=>{
             return await apiPost("/pillar",routes.BASE_PATH,data)
@@ -72,4 +90,6 @@ export const routes = {
 
 
 }
+
+
 
