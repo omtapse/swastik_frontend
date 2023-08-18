@@ -85,7 +85,10 @@ export const routes = {
         },
         UPDATE_VIHAR:async(id,data)=>{
             return await apiPut(`/vihar/${id}`,routes.BASE_PATH,data)
-        }
+        },
+        UPDATE_PROGRAM:async(id,data)=>{
+            return await apiPut(`/updateprogram/${id}`,routes.BASE_PATH,data)
+        },
     }
 
 
