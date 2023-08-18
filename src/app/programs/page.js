@@ -78,9 +78,9 @@ export default function Home() {
                     // height:"46px",
                     overflow: "hidden"
                   }}
-                  // dangerouslySetInnerHTML={{ __html: obj.about }}
+                  dangerouslySetInnerHTML={{ __html: obj.programDetails }}
                 >
-                  {obj.programDetails}
+                  {/* {obj.programDetails} */}
                 </p>
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function Home() {
                     }}
                   ></div> */}
                   <Link
-                    href={`/programs/editForm/${obj._id}`}
+                    href={`/programs/editPrograms/${obj._id}`}
                     class="avtar avtar-xs btn-link-success btn-pc-default"
                   >
                     <i class="ti ti-edit-circle f-18"></i>

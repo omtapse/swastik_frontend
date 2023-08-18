@@ -187,8 +187,6 @@ export default function Home() {
     },
   ];
 
-
-
   // const MyComponent = () => (
   //   <Select options={options} />
   // )
@@ -289,10 +287,11 @@ export default function Home() {
                       programDetails: "",
                       programPrice: "",
                       programImages: "",
-                      vihar:[],
-                      pillar:[],
-                      guru:"",
-                      programDate:"2023/08/01",
+                      vihar: [],
+                      pillar: [],
+                      guru: "",
+                      programDate: "2023/08/01",
+                      focusOfProgram: "",
                     }}
                     validate={(values) => {
                       console.log("values", values);
@@ -331,9 +330,10 @@ export default function Home() {
                         programPrice: values.programPrice,
                         programImage: imageUrl,
                         programDate: values.programDate,
-                        vihar:values.vihar.map((item) => item.value),
-                        pillar:values.pillar.map((item) => item.value),
-                        guru:values.guru.value,
+                        vihar: values.vihar.map((item) => item.value),
+                        pillar: values.pillar.map((item) => item.value),
+                        guru: values.guru,
+                        focusOfProgram: values.focusOfProgram,
                         // programImages: fileList.map((item) => item.url),
                       };
                       const response = await routes.APIS.ADD_PROGRAM(data);
@@ -451,7 +451,7 @@ export default function Home() {
                               <div class="input-group search-form">
                                 <Editor
                                   onChange={setFieldValue}
-                                  fieldName={"focus"}
+                                  fieldName={"focusOfProgram"}
                                   placeholder={"Write something..."}
                                   error={errors.focus}
                                 />
@@ -481,7 +481,6 @@ export default function Home() {
                                   name="image"
                                   listType="picture-card"
                                   className="avatar-uploader"
-                                  value={values.programImage}
                                   showUploadList={false}
                                   accept="image/*"
                                   beforeUpload={beforeUpload}
@@ -535,22 +534,29 @@ export default function Home() {
                                   options={pillar}
                                   className="basic-multi-select"
                                   classNamePrefix="select"
-                                  onChange={(values) => handleChange({
-                                    target: {
-                                      value: values,
-                                      name: "pillar",
-                                    },
-                                  })}
+                                  onChange={(values) =>
+                                    handleChange({
+                                      target: {
+                                        value: values,
+                                        name: "pillar",
+                                      },
+                                    })
+                                  }
                                 />
                                 <div class="select_gurus">
-                          <label class="form-label">Gurus:</label>
-                          <Select options={gurus} onChange={(values) => handleChange({
-                                    target: {
-                                      value: values,
-                                      name: "guru",
-                                    },
-                                  })} />
-                          </div>
+                                  <label class="form-label">Gurus:</label>
+                                  <Select
+                                    options={gurus}
+                                    onChange={(values) =>
+                                      handleChange({
+                                        target: {
+                                          value: values,
+                                          name: "guru",
+                                        },
+                                      })
+                                    }
+                                  />
+                                </div>
 
                                 {/* <Space wrap> 
                               <Dropdown menu={menuProps}>
@@ -575,12 +581,14 @@ export default function Home() {
                                 options={vihar}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={(values) => handleChange({
-                                  target: {
-                                    value: values,
-                                    name: "vihar",
-                                  },
-                                })}
+                                onChange={(values) =>
+                                  handleChange({
+                                    target: {
+                                      value: values,
+                                      name: "vihar",
+                                    },
+                                  })
+                                }
                               />
                               {/* <Space wrap> 
                               <Dropdown menu={menuProps}>
