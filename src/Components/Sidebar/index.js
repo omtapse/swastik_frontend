@@ -127,7 +127,7 @@ const Sidebar = () => {
                   </li>
                 </ul>
               </li>
-              <li className="pc-item pc-hasmenu">
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -164,7 +164,7 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
               <li className="pc-item pc-caption">
                 <label>Widget</label>
                 <svg className="pc-icon">
@@ -271,7 +271,7 @@ const Sidebar = () => {
                   <span className="pc-mtext">Pillars</span>
                 </Link>
               </li>
-              <li className="pc-item">
+              {/* <li className="pc-item">
                 <a href="../widget/w_data.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -280,8 +280,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Data</span>
                 </a>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../widget/w_chart.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -290,14 +290,14 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Chart</span>
                 </a>
-              </li>
-              <li className="pc-item pc-caption">
+              </li> */}
+              {/* <li className="pc-item pc-caption">
                 <label>UI Components</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-box-1"></use>
                 </svg>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a
                   href="../elements/bc_alert.html"
                   className="pc-link"
@@ -310,8 +310,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Components</span>
                 </a>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -356,14 +356,14 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-caption">
+              </li> */}
+              {/* <li className="pc-item pc-caption">
                 <label>Forms</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-element-plus"></use>
                 </svg>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -423,8 +423,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -470,8 +470,8 @@ const Sidebar = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="pc-item pc-hasmenu">
+                  </li> */}
+                  {/* <li className="pc-item pc-hasmenu">
                     <a className="pc-link" href="#">
                       Select
                       <span className="pc-arrow">
@@ -488,8 +488,8 @@ const Sidebar = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="pc-item">
+                  </li> */}
+                  {/* <li className="pc-item">
                     <a className="pc-link" href="../forms/form2_recaptcha.html">
                       Google reCaptcha
                     </a>
@@ -523,8 +523,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -595,8 +595,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -642,8 +642,8 @@ const Sidebar = () => {
                     </a>{" "}
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -728,8 +728,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -808,8 +808,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -848,8 +848,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -952,14 +952,14 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-caption">
+              </li> */}
+              {/* <li className="pc-item pc-caption">
                 <label>Charts</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-graph"></use>
                 </svg>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -978,14 +978,14 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-caption">
+              </li> */}
+              {/* <li className="pc-item pc-caption">
                 <label>Application</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-shopping-bag"></use>
                 </svg>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../application/calendar.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -994,8 +994,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Calendar</span>
                 </a>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../application/chat.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1004,8 +1004,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Chat</span>
                 </a>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a
                   href="../application/cust_customer_list.html"
                   className="pc-link"
@@ -1017,8 +1017,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Customer</span>
                 </a>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1072,8 +1072,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../application/file-manager.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1082,8 +1082,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">File manager</span>
                 </a>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../application/mail.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1092,8 +1092,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Mail</span>
                 </a>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1123,15 +1123,15 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
 
-              <li className="pc-item pc-caption">
+              {/* <li className="pc-item pc-caption">
                 <label>Pages</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-flag"></use>
                 </svg>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1207,8 +1207,8 @@ const Sidebar = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="pc-item pc-hasmenu">
+                  </li> */}
+                  {/* <li className="pc-item pc-hasmenu">
                     <a href="#!" className="pc-link">
                       Authentication 2
                       <span className="pc-arrow">
@@ -1271,8 +1271,8 @@ const Sidebar = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="pc-item">
+                  </li> */}
+                  {/* <li className="pc-item">
                     <a
                       href="../pages/login-v3.html"
                       target="_blank"
@@ -1282,8 +1282,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1424,9 +1424,9 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Landing</span>
                 </a>
-              </li>
+              </li> */}
 
-              <li className="pc-item pc-caption">
+              {/* <li className="pc-item pc-caption">
                 <label>Other</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-notification-status"></use>
@@ -1531,8 +1531,8 @@ const Sidebar = () => {
                     </ul>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../other/sample-page.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1541,7 +1541,7 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Sample page</span>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

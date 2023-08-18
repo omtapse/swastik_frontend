@@ -741,23 +741,49 @@ const customWeekStartEndFormat = (value) =>
                       <div class="col-lg-6">
                         <label class="form-label">Program Name:</label>
                         <input type="email" class="form-control" placeholder="Enter full name" value={data.programName} onChange={getChange}/>
-                        <small class="form-text text-muted">Please enter your full name</small>
+                        <small class="form-text text-muted">Please enter program name</small>
                       </div>
                       <div class="col-lg-6">
                         <label class="form-label">Program Duration</label>
                         <input type="number" class="form-control" placeholder="Enter duration in days" value={data.programDuration} onChange={getChange}/>
+                        {errors.programName && (
+                              <small className={`form-text text-muted ${styles.errorMessage}`}>
+                                Please enter program duration
+                              </small>
+                            )}
                         <small class="form-text text-muted">Please Enter Duration </small>
                       </div>
                       <div class="col-lg-6">
                         <label class="form-label">Program Price</label>
                         <input type="number" class="form-control" placeholder="Enter Price in INR" value={data.programPrice} onChange={getChange}/>
+                        {errors.programPrice && (
+                              <small className={`form-text text-muted ${styles.errorMessage}`}>
+                                Please enter program name
+                              </small>
+                            )}
                         <small class="form-text text-muted">Please Enter price </small>
                       </div>
                       <div class="form-group row">
                           <div class="col-lg-12">
                             <label class="form-label">About the program</label>
                             <div class="input-group search-form">
-                              <Editor placeholder={"Write something..."}/>
+                              <Editor
+                              onChange={setFieldValue}
+                              fieldName={"about"}
+                              placeholder={"Write something..."}
+                              value={values.about}    
+                              />
+                              {errors.about && (
+                                <small
+                                  style={{
+                                    marginTop: "-20px",
+                                    marginBottom: "20px",
+                                  }}
+                                  className={`form-text text-muted ${styles.errorMessage}`}
+                                >
+                                  {errors.about}
+                                </small>
+                              )}
                             </div>
                             {/* <small class="form-text text-muted">
                           Please enter your Password
@@ -768,7 +794,12 @@ const customWeekStartEndFormat = (value) =>
                           <div class="col-lg-12">
                             <label class="form-label">Focus of the program</label>
                             <div class="input-group search-form">
-                              <Editor placeholder={"Write something..."} />
+                              <Editor 
+                               onChange={setFieldValue}
+                               fieldName={"focus"}
+                               placeholder={"Write something..."}
+                               value={values.focus} 
+                              />
                             </div>
                             {/* <small class="form-text text-muted">
                           Please enter your Password
@@ -784,6 +815,7 @@ const customWeekStartEndFormat = (value) =>
                                 listType="picture-card"
                                 className="avatar-uploader"
                                 showUploadList={false}
+                                accept="image"
                                 beforeUpload={beforeUpload}
                                 onChange={handleChange}
                                 action={null}
