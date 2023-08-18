@@ -37,54 +37,38 @@ export default function Home() {
   const [vihar, setVihar] = useState([]);
   const [gurus, setGurus] = useState([]);
   const [programStatus, setProgramStatus] = useState("Active");
-
-  const [value, setValue] = useState(1);
-
-  const onChange = (e) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
-  };
+  const router = useRouter();
 
   const fetchPillar = async () => {
     const res = await routes.APIS.GET_ALL_PILLARS();
-    console.log(">>>>>>>>>>>>>>>>>>>>>", res);
     if (res.message === "Pillars fetched successfully") {
       let data = res.data.map((pillar) => {
         return { label: pillar.pillarTitle, value: pillar._id };
       });
-      console.log("data===>", data);
       setPillar(data);
     }
   };
 
   const fetchVihar = async () => {
     const res = await routes.APIS.GET_ALL_VIHARS();
-    console.log("///////////////", res);
     if (res) {
       let data = res.vihars.map((vihar) => {
         return { label: vihar.viharName, value: vihar._id };
       });
-      console.log(">>>>>>>>", data);
       setVihar(data);
     }
   };
 
   const fetchGurus = async () => {
     const res = await routes.APIS.GET_ALL_GURUS();
-    console.log(")))))))))", res);
     if (res.message === "Gurus fetched successfully") {
       let result = res.data.map((guru) => {
         return { value: guru._id, label: guru.name };
       });
-      console.log(result);
       setGurus(result);
     }
   };
 
-  const handleStatusChange = (e) => {
-    console.log(e.target.value);
-    setProgramStatus(e.target.value);
-  };
 
   const uploadButton = (
     <div>
@@ -111,22 +95,8 @@ export default function Home() {
       console.log("error", error);
     }
   };
-  // const beforeUploadProgramImages = async (file) => {
-  //   try {
-  //     setLoading(true);
-  //     const formData = new FormData();
-  //     formData.append("image", file);
-  //     const res = await routes.APIS.UPLOAD_IMAGE(formData);
-  //     setFileList([...fileList, { url: res.url }]);
-  //     setLoading(false);
-  //     return false; // Prevent default upload
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
   const handleChangeImg = async (info) => {
     if (info.file.status === "uploading") {
-      console.log("info", info.file);
       setLoading(true);
       let formData = new FormData();
       formData.append("image", info.file);
@@ -136,107 +106,9 @@ export default function Home() {
     }
   };
 
-  const { RangePicker } = DatePicker;
 
   const dateFormat = "YYYY/MM/DD";
-  const weekFormat = "MM/DD";
-  const monthFormat = "YYYY/MM";
 
-  const customFormat = (value) => `custom format: ${value.format(dateFormat)}`;
-
-  const customWeekStartEndFormat = (value) =>
-    `${dayjs(value).startOf("week").format(weekFormat)} ~ ${dayjs(value)
-      .endOf("week")
-      .format(weekFormat)}`;
-
-  const handleMenuClick = (e) => {
-    message.info("Click on menu item.");
-    console.log("click", e);
-  };
-
-  // const renderButtons = ([leftButton, rightButton]) => [
-  //   <Tooltip title="tooltip" key="leftButton">
-  //     {leftButton}
-  //   </Tooltip>,
-  //   React.cloneElement(rightButton, { loading: true }),
-  // ];
-
-  const items = [
-    {
-      label: "pillar1",
-      key: "1",
-      icon: <UserOutlined />,
-    },
-    {
-      label: "pillar2",
-      key: "2",
-      icon: <UserOutlined />,
-    },
-    {
-      label: "pillar3",
-      key: "3",
-      icon: <UserOutlined />,
-      danger: true,
-    },
-    {
-      label: "pillar4",
-      key: "4",
-      icon: <UserOutlined />,
-      danger: true,
-      disabled: true,
-    },
-  ];
-
-  // const MyComponent = () => (
-  //   <Select options={options} />
-  // )
-
-  // const options = [
-  //   {
-  //     value: 0,
-  //     text: 'Angular',
-  //     selected: true,
-  //   },
-  //   {
-  //     value: 1,
-  //     text: 'Bootstrap',
-  //     selected: true,
-  //     disabled: true,
-  //   },
-  //   {
-  //     value: 2,
-  //     text: 'React.js',
-  //   },
-  //   {
-  //     value: 3,
-  //     text: 'Vue.js',
-  //   },
-  //   {
-  //     label: 'backend',
-  //     options: [
-  //       {
-  //         value: 4,
-  //         text: 'Django',
-  //       },
-  //       {
-  //         value: 5,
-  //         text: 'Laravel',
-  //         selected: true,
-  //       },
-  //       {
-  //         value: 6,
-  //         text: 'Node.js',
-  //       },
-  //     ],
-  //   },
-  // ]
-
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
-
-  const router = useRouter();
 
   useEffect(() => {
     fetchPillar();
@@ -294,7 +166,6 @@ export default function Home() {
                       focusOfProgram: "",
                     }}
                     validate={(values) => {
-                      console.log("values", values);
                       const errors = {};
                       if (values.programName === "") {
                         errors.programName = "Please enter full name";
@@ -303,10 +174,6 @@ export default function Home() {
                         errors.programDuration =
                           "Please enter duration experties";
                       }
-                      console.log(
-                        "values.programDuration",
-                        values.programDuration === ""
-                      );
                       // if (values.programStatus === "") {
                       //   errors.programStatus = "Please select status";
                       // }
@@ -317,11 +184,9 @@ export default function Home() {
                       if (values.programPrice === "") {
                         errors.programPrice = "Please enter price of program";
                       }
-                      console.log("errors", errors);
                       return errors;
                     }}
                     onSubmit={async (values, { setSubmitting }) => {
-                      console.log("all submit", values);
                       let data = {
                         programName: values.programName,
                         programDuration: values.programDuration,
@@ -343,7 +208,6 @@ export default function Home() {
                         });
                         router.push("/programs");
                       }
-                      console.log(response);
                     }}
                   >
                     {({
