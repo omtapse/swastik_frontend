@@ -213,6 +213,15 @@ export default function Home() {
                         if (values.programPrice === "") {
                           errors.programPrice = "Please enter price of program";
                         }
+                        if (!values.pillar || values.pillar.length === 0) {
+                          errors.pillar = "Please select at least one pillar.";
+                        }
+                        if (!values.vihar || values.vihar.length === 0) {
+                          errors.vihar = "Please select at least one vihar.";
+                        }
+                        if (!values.guru || values.guru.length === 0) {
+                          errors.guru = "Please select at least one vihar.";
+                        }
                         return errors;
                       }}
                       onSubmit={async (values, { setSubmitting }) => {
@@ -428,7 +437,7 @@ export default function Home() {
                                   <label class="form-label">Pillar:</label>
                                   <Select
                                     isMulti
-                                    name="colors"
+                                    name="pillar"
                                     options={pillar}
                                     value={values.pillar}
                                     className="basic-multi-select"
@@ -442,6 +451,13 @@ export default function Home() {
                                       })
                                     }
                                   />
+                                   {errors.pillar && (
+                              <small
+                                className={`form-text text-muted ${styles.errorMessage}`}
+                              >
+                                Please select atleast one pillar{" "}
+                              </small>
+                            )}
                                   <div class="select_gurus">
                                     <label class="form-label">Gurus:</label>
                                     <Select
@@ -456,6 +472,13 @@ export default function Home() {
                                         })
                                       }
                                     />
+                                     {errors.guru && (
+                                        <small
+                                          className={`form-text text-muted ${styles.errorMessage}`}
+                                        >
+                                          Please select atleast one guru{" "}
+                                        </small>
+                                      )}
                                   </div>
                                 </div>
                               </div>
@@ -466,7 +489,7 @@ export default function Home() {
                                 <Select
                                   // defaultValue={[ViharOptions[2], ViharOptions[3]]}
                                   isMulti
-                                  name="colors"
+                                  name="vihar"
                                   options={vihar}
                                   value={values.vihar}
                                   className="basic-multi-select"
@@ -480,6 +503,13 @@ export default function Home() {
                                     })
                                   }
                                 />
+                                {errors.vihar && (
+                              <small
+                                className={`form-text text-muted ${styles.errorMessage}`}
+                              >
+                                Please select atleast one vihar{" "}
+                              </small>
+                            )}
                               </div>
                             </div>
                             <div class="date">
@@ -498,6 +528,7 @@ export default function Home() {
                                     dateFormat
                                   )}
                                   format={dateFormat}
+                                  value={values.programDate}
                                 />
                               </Space>
                             </div>
