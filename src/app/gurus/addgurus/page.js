@@ -106,9 +106,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-
-            {/* <div className="guruform"> */}
             <div className="row">
               <div class="col-lg-12">
                 <div class="card">
