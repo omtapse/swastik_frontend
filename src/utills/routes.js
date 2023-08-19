@@ -8,7 +8,6 @@ export const routes = {
     BASE_PATH:baseURL,
     APIS:{
         ADMIN_LOGIN:async(data)=>{
-            console.log("data",baseURL)
             return await apiPost("/admin/adminLogin",routes.BASE_PATH,data)
         },
         GENERATE_RESET_PASSWORD_LINK:async(data)=>{
