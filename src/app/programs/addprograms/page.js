@@ -155,7 +155,7 @@ export default function Home() {
                     initialValues={{
                       programName: "",
                       programDuration: "",
-                      programStatus: "",
+                      programStatus: "Active",
                       programDetails: "",
                       programPrice: "",
                       programImages: "",
@@ -192,6 +192,9 @@ export default function Home() {
                       }
                       if (!values.guru || values.guru.length === 0) {
                         errors.guru = "Please select guru.";
+                      }
+                      if(!values.programStatus){
+                        errors.programStatus = "Please select status";
                       }
                       return errors;
                     }}
