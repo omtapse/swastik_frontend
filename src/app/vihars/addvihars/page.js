@@ -79,7 +79,7 @@ export default function Home() {
 
   const handleChangeSelect = (value) => {
     console.log("value", value);
-  };
+  }
 
   const getAllActivities = async () => {
     try {
@@ -150,11 +150,17 @@ export default function Home() {
                       if (!values.tagline) {
                         errors.tagline = "Please enter tagline";
                       }
+                      if (values.vihardescription === "" ||  values.vihardescription  ==="<p><br></p>" ||  values.vihardescription  ==="<p></p>") {
+                        errors.vihardescription = "Please enter details about program";
+                      }
                       if (!activities) {
                         errors.activities = "Please enter activities";
                       }
                       if (!imageUrl) {
                         errors.imageUrl = "Please upload image";
+                      }
+                      if (!values.activities || values.activities.length === 0) {
+                        errors.activities = "Please select at least one pillar.";
                       }
                       console.log("errors",activities, errors);
                       return errors;
@@ -178,7 +184,7 @@ export default function Home() {
                       }
                       console.log(responce);
                     }}
-                  >
+                  >-+9*
                     {({
                       values,
                       errors,
@@ -250,7 +256,14 @@ export default function Home() {
                                 options={options}
                                 value={activities}
                               />
-                              {errors.about && (
+                               {errors.activities && (
+                                  <small
+                                    className={`form-text text-muted ${styles.errorMessage}`}
+                                  >
+                                    Please select atleast one activities{" "}
+                                  </small>
+                                )}
+                              {/* {errors.about && (
                                 <small
                                   style={{
                                     marginTop: "-20px",
@@ -260,7 +273,7 @@ export default function Home() {
                                 >
                                   {errors.about}
                                 </small>
-                              )}
+                              )} */}
                             </div>
                           </div>
                           <div class="col-lg-3 mt-4">
@@ -333,12 +346,12 @@ export default function Home() {
                                   fieldName={"vihardescription"}
                                   placeholder={"Write something..."}
                                 />
-                                {errors.Testimonials && (
+                                {errors.vihardescription && (
                                   <small
                                     style={{ marginTop: "-20px" }}
                                     className={`form-text text-muted ${styles.errorMessage}`}
                                   >
-                                    {errors.Testimonials}
+                                    {errors.vihardescription}
                                   </small>
                                 )}
                               </div>

@@ -37,6 +37,7 @@ export default function Home() {
   const [vihar, setVihar] = useState([]);
   const [gurus, setGurus] = useState([]);
   const [programStatus, setProgramStatus] = useState("Active");
+  // const [dateError, setDateError] = useState('');
   const router = useRouter();
 
   const fetchPillar = async () => {
@@ -108,6 +109,9 @@ export default function Home() {
 
 
   const dateFormat = "YYYY/MM/DD";
+  // function onChange(date, dateString) {
+  //   console.log(date, dateString);
+  // }
 
 
   useEffect(() => {
@@ -162,7 +166,7 @@ export default function Home() {
                       vihar: [],
                       pillar: [],
                       guru: "",
-                      programDate: "2023/08/01",
+                      programDate: "2023/08/02",
                       focusOfProgram: "",
                     }}
                     validate={(values) => {
@@ -171,15 +175,16 @@ export default function Home() {
                         errors.programName = "Please enter full name";
                       }
                       if (values.programDuration === "") {
-                        errors.programDuration =
-                          "Please enter duration experties";
+                        errors.programDuration ="Please enter duration experties";
                       }
                       if (!values.programStatus) {
                         errors.programStatus = "Please select status";
                       }
                       if (values.programDetails === "") {
-                        errors.programDetails =
-                          "Please enter details about program";
+                        errors.programDetails ="Please enter details about program";
+                      }
+                      if(values.focusOfProgram===""){
+                        errors.focusOfProgram="please mention focus of the program"
                       }
                       if (values.programPrice === "") {
                         errors.programPrice = "Please enter price of program";
@@ -193,6 +198,17 @@ export default function Home() {
                       if (!values.guru || values.guru.length === 0) {
                         errors.guru = "Please select guru.";
                       }
+                      // const selectedDate = dayjs(values.programDate, dateFormat);
+                      // if (selectedDate.isBefore(dayjs(), "day")) {
+                      //   console.log(errors.programDate)
+                      //   errors.programDate = "Selected date must be in the future";
+                      // }dayjs("2023/08/02", dateFormat)
+                  
+                      if(!values.programDate)
+                      {
+                        errors.programDate = "Selected date must be in the future";
+                      }
+                      
                       if (!values.programStatus) {
                         errors.programStatus = "Please select status";
                       }
@@ -302,21 +318,15 @@ export default function Home() {
                                   placeholder={"Write something..."}
                                 //  error={errors.programDetails}
                                 />
-                                {errors.programDetails && (
+                              </div>
+                              {errors.programDetails && (
                                   <small
-                                    style={{
-                                      marginTop: "-20px",
-                                      marginBottom: "20px",
-                                    }}
                                     className={`form-text text-muted ${styles.errorMessage}`}
                                   >
                                     {errors.programDetails}
                                   </small>
                                 )}
-                              </div>
-                              {/* <small class="form-text text-muted">
-                          Please enter your Password
-                        </small> */}
+
                             </div>
                           </div>
                           <div class="form-group row">
@@ -326,23 +336,19 @@ export default function Home() {
                               </label>
                               <div class="input-group search-form">
                                 <Editor
-                                  onChange={setFieldValue}
+                                  onChange={setFieldValue}  
                                   fieldName={"focusOfProgram"}
                                   placeholder={"Write something..."}
                                   error={errors.focus}
                                 />
-                                {errors.focus && (
+                              </div>
+                              {errors.focusOfProgram && (
                                   <small
-                                    style={{
-                                      marginTop: "-20px",
-                                      marginBottom: "20px",
-                                    }}
                                     className={`form-text text-muted ${styles.errorMessage}`}
                                   >
-                                    {errors.focus}
+                                    {errors.focusOfProgram}
                                   </small>
                                 )}
-                              </div>
                               {/* <small class="form-text text-muted">
                           Please enter your Password
                         </small> */}
@@ -505,7 +511,7 @@ export default function Home() {
                             <label class="form-label">Program Date</label>
                             <div>
                               <Space direction="vertical" size={12}>
-                                <DatePicker
+                                {/* <DatePicker
                                   onChange={(date, string) =>
                                     handleChange({
                                       target: {
@@ -514,39 +520,29 @@ export default function Home() {
                                       },
                                     })
                                   }
-                                  defaultValue={dayjs("2023/08/01", dateFormat)}
+                                  
+                                  value={dayjs("2023/08/02", dateFormat)}
                                   format={dateFormat}
+                                /> */}
+                                <DatePicker 
+                                onChange={(date, string) =>
+                                  handleChange({
+                                    target: {
+                                      value: string,
+                                      name: "programDate",
+                                    },
+                                  })
+                                }
                                 />
-                                {/* <DatePicker defaultValue={dayjs('01/01/2015', dateFormatList[0])} format={dateFormatList} />
-                          <DatePicker defaultValue={dayjs('2015/01', monthFormat)} format={monthFormat} picker="month" />
-                          <DatePicker defaultValue={dayjs()} format={customWeekStartEndFormat} picker="week" />
-                          <RangePicker
-                            defaultValue={[dayjs('2015/01/01', dateFormat), dayjs('2015/01/01', dateFormat)]}
-                            format={dateFormat}
-                          />
-                          <DatePicker defaultValue={dayjs('2015/01/01', dateFormat)} format={customFormat} /> */}
+                                {errors.programDate && (
+                                  <small className={`form-text text-muted ${styles.errorMessage}`}>
+                                    {errors.programDate}
+                                  </small>
+                                )}
                               </Space>
                             </div>
                           </div>
                         </div>
-                        {/* <div class="form-group row">
-                      <div class="col-lg-6">
-                        <label class="form-label">Password:</label>
-                        <div class="input-group search-form">
-                          <input type="Password" class="form-control" placeholder="Please enter your Password" />
-                          <span class="input-group-text bg-transparent"><i class="feather icon-lock"></i></span>
-                        </div>
-                        <small class="form-text text-muted">Please enter your Password</small>
-                      </div>
-                      <div class="col-lg-6">
-                        <label class="form-label">Profile URL:</label>
-                        <div class="input-group search-form">
-                          <input type="text" class="form-control" placeholder="Please enter your Profile URL" />
-                          <span class="input-group-text bg-transparent"><i class="feather icon-link"></i></span>
-                        </div>
-                        <small class="form-text text-muted">Please enter your Profile URL</small>
-                      </div>
-                    </div> */}
                         <div class="form-group row">
                           <label class="form-label">Program Status</label>
                           <div class="col-lg-6">
@@ -582,7 +578,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-    </section >
+      </section >
     </>
   );
 }

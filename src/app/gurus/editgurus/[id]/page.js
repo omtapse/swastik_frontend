@@ -142,16 +142,14 @@ export default function Home() {
                       if (values.experties === "") {
                         errors.experties = "Please enter gurus experties";
                       }
-                      console.log(
-                        "values.Testimonials",
-                        values.Testimonials=== ""
-                      );
-                      if (values.Testimonials === "") {
+                      console.log( "values.Testimonials", values.Testimonials=== "");
+                      if (values.Testimonials === "" ||  values.Testimonials  ==="<p><br></p>" ||  values.Testimonials  ==="<p></p>") {
                         errors.Testimonials = "Please enter Testimonials";
                       }
-                      if (values.about === "") {
-                        errors.about = "Please enter information about guru";
+                      if (values.about === "" ||  values.about  ==="<p><br></p>" ||  values.about  ==="<p></p>") {
+                        errors.about = "Please enter details about program";
                       }
+                
                       console.log("errors", errors);
                       return errors;
                     }}

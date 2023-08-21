@@ -81,7 +81,7 @@ export default function Home() {
     <>
       <Sidebar />
       <Header />
-      <section class="pc-container" style={{ paddingTop: 0 }}>
+      <section class="pc-container"style={{ paddingTop: 0 }}>
         <div class="pc-content">
           <div class="page-header">
             <div class="page-block">
@@ -133,11 +133,12 @@ export default function Home() {
                           "values.Testimonials",
                           values.Testimonials === ""
                         );
+                      
                         if (values.Testimonials === "") {
                           errors.Testimonials = "Please enter Testimonials";
                         }
-                        if (values.about === "") {
-                          errors.about = "Please enter information about guru";
+                        if (values.about === "" ||  values.about  ==="<p><br></p>" ||  values.about  ==="<p></p>") {
+                          errors.about = "Please enter details about program";
                         }
                         console.log("errors", errors);
                         return errors;

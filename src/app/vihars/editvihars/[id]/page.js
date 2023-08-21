@@ -167,7 +167,7 @@ if(data?.viharName){
                       if (!values.tagline) {
                         errors.tagline = "Please enter tagline";
                       }
-                      if (!activities) {
+                      if (!values.activities) {
                         errors.activities = "Please enter activities";
                       }
                       if (!imageUrl) {
@@ -260,6 +260,14 @@ if(data?.viharName){
                                 flexDirection: "column",
                               }}
                             >
+                              {errors.activities && (
+                              <small
+                                className={`form-text text-muted ${styles.errorMessage}`}
+                              >
+                                Please select atleast one activity
+                                {/* {errors.activities} */}
+                              </small>
+                            )}
                               <Select
                                 mode="tags"
                                 style={{ width: "100%" ,padding:"10px 0px"}}

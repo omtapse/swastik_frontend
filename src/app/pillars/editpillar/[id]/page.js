@@ -135,11 +135,12 @@ export default function Home() {
                       console.log("values", values);
                       const errors = {};
                       if (values.title === "") {
-                        errors.name = "Please enter Program title";
+                        errors.title = "Please enter Program title";
                       }
-                      if(values.breif === ""){
+                      if(values.breif === "" ||  values.breif  ==="<p><br></p>" ||  values.breif  ==="<p></p>"){
                         errors.breif = "Please enter Breif of program"
                       }
+                      
                       if(!imageUrl){
                         errors.image = "Please upload image"
                       }

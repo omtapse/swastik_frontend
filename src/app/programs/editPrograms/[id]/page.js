@@ -127,11 +127,11 @@ export default function Home() {
         programPrice: res.program.programPrice,
         programDate: res.program.programDate,
         pillar: res?.program?.pillars.map((item) => {
-            return {label:item.pillarTitle,value:item._id}
+          return { label: item.pillarTitle, value: item._id }
         }),
-        guru: {label:res.program?.guru?.name,value:res.program?.guru?._id},
+        guru: { label: res.program?.guru?.name, value: res.program?.guru?._id },
         vihar: res.program.vihars.map((item) => {
-            return {label:item.viharName,value:item._id}
+          return { label: item.viharName, value: item._id }
         }),
         focusOfProgram: res.program.focusOfProgram,
       });
@@ -166,13 +166,13 @@ export default function Home() {
                         <a href="javascript: void(0)">Programs</a>
                       </li>
                       <li class="breadcrumb-item" aria-current="page">
-                        Edit Program
+                      Update Program
                       </li>
                     </ul>
                   </div>
                   <div class="col-md-12">
                     <div class="page-header-title">
-                      <h2 class="mb-0">Edit Program</h2>
+                      <h2 class="mb-0">Update Program</h2>
                     </div>
                   </div>
                 </div>
@@ -203,15 +203,20 @@ export default function Home() {
                           errors.programName = "Please enter full name";
                         }
                         if (values.programDuration === "") {
-                          errors.programDuration =
-                            "Please enter duration experties";
+                          errors.programDuration = "Please enter duration experties";
                         }
-                        if (values.programDetails === "") {
-                          errors.programDetails =
-                            "Please enter details about program";
+                        if (values.programDetails === "" ||  values.programDetails  ==="<p><br></p>" ||  values.programDetails  ==="<p></p>") {
+                          errors.programDetails = "Please enter details about program";
+                        }
+                        if (values.focusOfProgram === "" ||  values.focusOfProgram  ==="<p><br></p>" ||  values.focusOfProgram  ==="<p></p>") { 
+                          errors.focusOfProgram = "please mention focus of the program"
                         }
                         if (values.programPrice === "") {
                           errors.programPrice = "Please enter price of program";
+                        }
+                        if(!values.programDate)
+                        {
+                          errors.programDate = "Selected date must be in the future";
                         }
                         if (!values.pillar || values.pillar.length === 0) {
                           errors.pillar = "Please select at least one pillar.";
@@ -239,10 +244,8 @@ export default function Home() {
                           focusOfProgram: values.focusOfProgram,
                           // programImages: fileList.map((item) => item.url),
                         };
-                        const response = await routes.APIS.UPDATE_PROGRAM(params.id,data);
-                        if (
-                          response.message === "Program updated successfully"
-                        ) {
+                        const response = await routes.APIS.UPDATE_PROGRAM(params.id, data);
+                        if (response.message === "Program updated successfully") {
                           notification.success({
                             message: response.message,
                           });
@@ -328,24 +331,17 @@ export default function Home() {
                                     onChange={setFieldValue}
                                     fieldName={"programDetails"}
                                     placeholder={"Write something..."}
-                                    //  error={errors.programDetails}
+                                     error={errors.programDetails}
                                     value={values.programDetails}
-                                  />
-                                  {errors.programDetails && (
+                                  />  
+                                </div>
+                                {errors.programDetails && (
                                     <small
-                                      style={{
-                                        marginTop: "-20px",
-                                        marginBottom: "20px",
-                                      }}
                                       className={`form-text text-muted ${styles.errorMessage}`}
                                     >
                                       {errors.programDetails}
                                     </small>
                                   )}
-                                </div>
-                                {/* <small class="form-text text-muted">
-                          Please enter your Password
-                        </small> */}
                               </div>
                             </div>
                             <div class="form-group row">
@@ -361,18 +357,14 @@ export default function Home() {
                                     error={errors.focusOfProgram}
                                     value={values.focusOfProgram}
                                   />
-                                  {errors.focus && (
-                                    <small
-                                      style={{
-                                        marginTop: "-20px",
-                                        marginBottom: "20px",
-                                      }}
-                                      className={`form-text text-muted ${styles.errorMessage}`}
-                                    >
-                                      {errors.focus}
-                                    </small>
-                                  )}
                                 </div>
+                                {errors.focusOfProgram && (
+                                  <small
+                                    className={`form-text text-muted ${styles.errorMessage}`}
+                                  >
+                                    {errors.focusOfProgram}
+                                  </small>
+                                )}
                                 {/* <small class="form-text text-muted">
                           Please enter your Password
                         </small> */}
@@ -451,13 +443,14 @@ export default function Home() {
                                       })
                                     }
                                   />
-                                   {errors.pillar && (
-                              <small
-                                className={`form-text text-muted ${styles.errorMessage}`}
-                              >
-                                Please select atleast one pillar{" "}
-                              </small>
-                            )}
+                                  {errors.pillar && (
+                                    <small
+                                      className={`form-text text-muted ${styles.errorMessage}`}
+                                    >
+                                      Please select atleast one pillar{" "}
+                                    </small>
+                                  )}
+                                  <br/>
                                   <div class="select_gurus">
                                     <label class="form-label">Gurus:</label>
                                     <Select
@@ -472,13 +465,13 @@ export default function Home() {
                                         })
                                       }
                                     />
-                                     {errors.guru && (
-                                        <small
-                                          className={`form-text text-muted ${styles.errorMessage}`}
-                                        >
-                                          Please select atleast one guru{" "}
-                                        </small>
-                                      )}
+                                    {errors.guru && (
+                                      <small
+                                        className={`form-text text-muted ${styles.errorMessage}`}
+                                      >
+                                        Please select atleast one guru{" "}
+                                      </small>
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -504,16 +497,17 @@ export default function Home() {
                                   }
                                 />
                                 {errors.vihar && (
-                              <small
-                                className={`form-text text-muted ${styles.errorMessage}`}
-                              >
-                                Please select atleast one vihar{" "}
-                              </small>
-                            )}
+                                  <small
+                                    className={`form-text text-muted ${styles.errorMessage}`}
+                                  >
+                                    Please select atleast one vihar{" "}
+                                  </small>
+                                )}
                               </div>
                             </div>
                             <div class="date">
                               <Space direction="vertical" size={12}>
+                              <label class="form-label">Program Date</label>
                                 <DatePicker
                                   onChange={(date, string) =>
                                     handleChange({
@@ -523,17 +517,19 @@ export default function Home() {
                                       },
                                     })
                                   }
-                                  defaultValue={dayjs(
-                                    values.programDate,
-                                    dateFormat
+                                  defaultValue={dayjs(values.programDate,dateFormat
                                   )}
-                                  format={dateFormat}
-                                  value={values.programDate}
                                 />
+                                {errors.programDate && (
+                                  <small className={`form-text text-muted ${styles.errorMessage}`}>
+                                    {errors.programDate}
+                                  </small>
+                                )}
                               </Space>
                             </div>
                           </div>
                           <div class="form-group row">
+                          <label class="form-label">Program Status</label>
                             <div class="col-lg-6">
                               <Radio.Group
                                 name="programStatus"
@@ -546,9 +542,9 @@ export default function Home() {
                               {/* {errors.programStatus &&(
                             <small className={`form-text text-muted ${styles.errorMessage}`}>Please select user type</small>
                          )} */}
-                              <small class="form-text text-muted">
+                              {/* <small class="form-text text-muted">
                                 Please select user type
-                              </small>
+                              </small> */}
                             </div>
                           </div>
                           <button
