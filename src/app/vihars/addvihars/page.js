@@ -17,14 +17,18 @@ import Editor from "@/Components/Editor/Editor";
 import { Formik } from "formik";
 import styles from "./styles.module.css";
 
+import { useGlobalLoader } from "../../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
   const [fileList, setFileList] = useState([]);
   const [value, setValue] = useState("");
-  const [activities , setActivities] = useState();
-  const [options , setOptions] = useState([])
+  const [activities, setActivities] = useState();
+  const [options, setOptions] = useState([])
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -83,12 +87,16 @@ export default function Home() {
 
   const getAllActivities = async () => {
     try {
+      showLoader();
       const res = await routes.APIS.GET_ALL_ACTIVITIES_VIHARS();
       console.log("resssss", res);
-      let data = res.activities.map((item) =>{return {label:item.activityName,value:item.activityName}});
+      let data = res.activities.map((item) => { return { label: item.activityName, value: item.activityName } });
       setOptions(data);
     } catch (error) {
       console.log("error", error);
+    }
+    finally {
+      hideLoader();
     }
   };
 
@@ -139,7 +147,7 @@ export default function Home() {
                     initialValues={{
                       viharName: "",
                       tagline: "",
-                      activities:activities,
+                      activities: activities,
                       vihardescription: "",
                     }}
                     validate={(values) => {
@@ -156,7 +164,7 @@ export default function Home() {
                       if (!imageUrl) {
                         errors.imageUrl = "Please upload image";
                       }
-                      console.log("errors",activities, errors);
+                      console.log("errors", activities, errors);
                       return errors;
                     }}
                     onSubmit={async (values, { setSubmitting }) => {
@@ -166,15 +174,23 @@ export default function Home() {
                         masterImage: imageUrl,
                         activities: activities,
                         facilityImages: fileList.map((item) => item.url),
-                        vihardescription:values.vihardescription,
+                        vihardescription: values.vihardescription,
                       };
                       console.log("HERE", data);
-                      const responce = await routes.APIS.ADD_VIHAR(data);
-                      if (responce.message === "Vihar created successfully") {
-                        notification.success({
-                          message: responce.message,
-                        });
-                        router.push("/vihars");
+                      try {
+                        showLoader();
+                        const responce = await routes.APIS.ADD_VIHAR(data);
+                        if (responce.message === "Vihar created successfully") {
+                          notification.success({
+                            message: responce.message,
+                          });
+                          router.push("/vihars");
+                        }
+                      } catch (error) {
+                        console.log("error", error);
+                      }
+                      finally {
+                        hideLoader();
                       }
                       console.log(responce);
                     }}
@@ -216,7 +232,7 @@ export default function Home() {
                           <div class="col-lg-6">
                             <label class="form-label">Tag Line:</label>
                             <input
-                               type="text"
+                              type="text"
                               class="form-control"
                               placeholder="Enter tag line"
                               value={values.tagline}
@@ -244,8 +260,8 @@ export default function Home() {
                             >
                               <Select
                                 mode="tags"
-                                style={{ width: "100%" ,padding:"10px 0px"}}
-                                onChange={e=>setActivities(e)}
+                                style={{ width: "100%", padding: "10px 0px" }}
+                                onChange={e => setActivities(e)}
                                 tokenSeparators={[","]}
                                 options={options}
                                 value={activities}

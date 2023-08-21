@@ -13,7 +13,7 @@
     "@ckeditor/ckeditor5-react": "^6.1.0",
     "@coreui/react": "^5.0.0-alpha.0",
     "@coreui/react-pro": "^4.12.4",
-    "antd": "^5.8.2",
+    "antd": "^5.8.4",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
     "formik": "^2.4.3",

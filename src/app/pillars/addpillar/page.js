@@ -17,7 +17,12 @@ import Editor from "@/Components/Editor/Editor";
 import { Formik } from "formik";
 import styles from './styles.module.css'
 
+import { useGlobalLoader } from "../../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
@@ -75,7 +80,7 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <>
@@ -87,7 +92,7 @@ export default function Home() {
             <div class="page-block">
               <div class="row align-items-center">
                 <div class="col-md-12">
-                <ul class="breadcrumb mb-3">
+                  <ul class="breadcrumb mb-3">
                     <li class="breadcrumb-item">
                       <a href="../navigation/index.html">Home</a>
                     </li>
@@ -126,16 +131,16 @@ export default function Home() {
                       if (values.title === "") {
                         errors.name = "Please enter Program title";
                       }
-                      if(values.breif === ""){
+                      if (values.breif === "") {
                         errors.breif = "Please enter Breif of program"
                       }
-                      if(!imageUrl){
+                      if (!imageUrl) {
                         errors.image = "Please upload image"
                       }
                       console.log("errors", errors);
                       return errors;
                     }}
-                    onSubmit={async(values, { setSubmitting }) => {
+                    onSubmit={async (values, { setSubmitting }) => {
                       console.log("HERE", values);
                       let data = {
                         pillarTitle: values.title,
@@ -143,8 +148,9 @@ export default function Home() {
                         pillarImage: imageUrl,
                       };
                       try {
+                        showLoader();
                         const responce = await routes.APIS.ADD_PILLAR(data)
-                        if(responce.message === "Pillar created successfully"){
+                        if (responce.message === "Pillar created successfully") {
                           notification.success({
                             message: responce.message,
                           });
@@ -153,7 +159,10 @@ export default function Home() {
                       } catch (error) {
                         notification.error({
                           message: error.message,
-                        });                        
+                        });
+                      }
+                      finally {
+                        hideLoader();
                       }
                     }}
                   >
@@ -224,17 +233,17 @@ export default function Home() {
                           </div>
                         </div>
                         <div class="form-group row">
-                         
+
                         </div>
                         <div class="form-group row">
-                         
+
                         </div>
-                        
+
                         <div class="form-group row">
                           <div class="col-lg-8">
                             <label class="form-label">Brief of pillar :</label>
                             <div>
-                              <div class="input-group search-form" style={{display:'flex',flexDirection:'column'}}>
+                              <div class="input-group search-form" style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Editor
                                   onChange={setFieldValue}
                                   fieldName={"breif"}

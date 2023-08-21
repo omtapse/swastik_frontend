@@ -11,13 +11,18 @@ import Editor from "@/Components/Editor/Editor";
 import { Formik } from "formik";
 import styles from './styles.module.css'
 
+import { useGlobalLoader } from "../../../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
   const [fileList, setFileList] = useState([]);
-  const [data,setData] = useState({})
+  const [data, setData] = useState({})
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -71,12 +76,19 @@ export default function Home() {
   };
 
   const fetchData = async () => {
-    let data = await routes.APIS.GET_GURU_BY_ID(params.id)
-    data = data.guru
-    setData(data)
-    setImageUrl(data.image)
-    setFileList(data.programImages.map((item)=>({url:item})))
-
+    try {
+      showLoader();
+      let data = await routes.APIS.GET_GURU_BY_ID(params.id)
+      data = data.guru
+      setData(data)
+      setImageUrl(data.image)
+      setFileList(data.programImages.map((item) => ({ url: item })))
+    } catch (error) {
+      console.log("error", error);
+    }
+    finally {
+      hideLoader();
+    }
 
   }
 
@@ -85,7 +97,7 @@ export default function Home() {
     if (params.id) {
       fetchData()
     }
-    }, []);
+  }, []);
 
   return (
     <>
@@ -128,7 +140,7 @@ export default function Home() {
                   {console.log(data)}
                   <Formik
                     initialValues={{
-                      name:data.name,
+                      name: data.name,
                       experties: data.experties,
                       Testimonials: data.testimonials,
                       about: data.about,
@@ -144,7 +156,7 @@ export default function Home() {
                       }
                       console.log(
                         "values.Testimonials",
-                        values.Testimonials=== ""
+                        values.Testimonials === ""
                       );
                       if (values.Testimonials === "") {
                         errors.Testimonials = "Please enter Testimonials";
@@ -155,7 +167,7 @@ export default function Home() {
                       console.log("errors", errors);
                       return errors;
                     }}
-                    onSubmit={async(values, { setSubmitting }) => {
+                    onSubmit={async (values, { setSubmitting }) => {
                       console.log("HERE", values);
                       let data = {
                         name: values.name,
@@ -165,14 +177,22 @@ export default function Home() {
                         guruImage: imageUrl,
                         programImages: fileList.map((item) => item.url),
                       };
-                      const responce = await routes.APIS.UPDATE_GURU(params.id,data)
-                      if(responce.message === "Guru updated successfully"){
-                        notification.success({
-                          message: responce.message,
-                        });
-                        router.push("/gurus")
+                      try {
+                        showLoader();
+                        const responce = await routes.APIS.UPDATE_GURU(params.id, data)
+                        if (responce.message === "Guru updated successfully") {
+                          notification.success({
+                            message: responce.message,
+                          });
+                          router.push("/gurus")
+                        }
+                        console.log(responce)
+                      } catch (error) {
+                        console.log("error", error);
                       }
-                      console.log(responce)
+                      finally {
+                        hideLoader();
+                      }
                     }}
                   >
                     {({
@@ -220,7 +240,7 @@ export default function Home() {
                                 onChange={setFieldValue}
                                 fieldName={"about"}
                                 placeholder={"Write something..."}
-                                value={values.about}                                
+                                value={values.about}
                               />
                               {errors.about && (
                                 <small
@@ -289,7 +309,7 @@ export default function Home() {
                         </small> */}
                           </div>
                           <div class="col-lg-6">
-                          <label class="form-label">Program Images:</label>
+                            <label class="form-label">Program Images:</label>
                             <Upload
                               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                               listType="picture-card"
@@ -302,22 +322,22 @@ export default function Home() {
                               {fileList.length >= 8 ? null : uploadButton}
                             </Upload>
                           </div>
-                         
+
                         </div>
                         <div class="form-group row">
-                         
+
                         </div>
-                        
+
                         <div class="form-group row">
                           <div class="col-lg-8">
                             <label class="form-label">Testimonials:</label>
                             <div>
-                              <div class="input-group search-form" style={{display:'flex',flexDirection:'column'}}>
+                              <div class="input-group search-form" style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Editor
                                   onChange={setFieldValue}
                                   fieldName={"Testimonials"}
                                   placeholder={"Write something..."}
-                                  value={values.Testimonials}     
+                                  value={values.Testimonials}
                                 />
                                 {errors.Testimonials && (
                                   <small

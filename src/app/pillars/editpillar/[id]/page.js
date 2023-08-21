@@ -11,13 +11,18 @@ import Editor from "@/Components/Editor/Editor";
 import { Formik } from "formik";
 import styles from './styles.module.css'
 
+import { useGlobalLoader } from "../../../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
   const [fileList, setFileList] = useState([]);
-  const [data,setData] = useState({})
+  const [data, setData] = useState({})
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -71,12 +76,18 @@ export default function Home() {
   };
 
   const fetchData = async () => {
-    let data = await routes.APIS.GET_PILLAR_BY_ID(params.id)
-    data = data.pillar
-    setData(data)
-    setImageUrl(data.pillarImage)
-    // setFileList(data.programImages.map((item)=>({url:item})))
-
+    try {
+      showLoader();
+      let data = await routes.APIS.GET_PILLAR_BY_ID(params.id)
+      data = data.pillar
+      setData(data)
+      setImageUrl(data.pillarImage)
+      // setFileList(data.programImages.map((item)=>({url:item})))
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      hideLoader();
+    }
 
   }
 
@@ -85,7 +96,7 @@ export default function Home() {
     if (params.id) {
       fetchData()
     }
-    }, []);
+  }, []);
 
   return (
     <>
@@ -126,7 +137,7 @@ export default function Home() {
                 <h5></h5>
               </div> */}
                 <div class="card-body">
-                <Formik
+                  <Formik
                     initialValues={{
                       title: data.pillarTitle,
                       breif: data.pillarDescription,
@@ -137,16 +148,16 @@ export default function Home() {
                       if (values.title === "") {
                         errors.name = "Please enter Program title";
                       }
-                      if(values.breif === ""){
+                      if (values.breif === "") {
                         errors.breif = "Please enter Breif of program"
                       }
-                      if(!imageUrl){
+                      if (!imageUrl) {
                         errors.image = "Please upload image"
                       }
                       console.log("errors", errors);
                       return errors;
                     }}
-                    onSubmit={async(values, { setSubmitting }) => {
+                    onSubmit={async (values, { setSubmitting }) => {
                       console.log("HERE", values);
                       let data = {
                         pillarTitle: values.title,
@@ -154,8 +165,9 @@ export default function Home() {
                         pillarImage: imageUrl,
                       };
                       try {
-                        const responce = await routes.APIS.UPDATE_PILLAR(params.id,data)
-                        if(responce.message === "Pillar updated successfully"){
+                        showLoader();
+                        const responce = await routes.APIS.UPDATE_PILLAR(params.id, data)
+                        if (responce.message === "Pillar updated successfully") {
                           notification.success({
                             message: responce.message,
                           });
@@ -164,7 +176,10 @@ export default function Home() {
                       } catch (error) {
                         notification.error({
                           message: error.message,
-                        });                        
+                        });
+                      }
+                      finally {
+                        hideLoader();
                       }
                     }}
                   >
@@ -235,17 +250,17 @@ export default function Home() {
                           </div>
                         </div>
                         <div class="form-group row">
-                         
+
                         </div>
                         <div class="form-group row">
-                         
+
                         </div>
-                        
+
                         <div class="form-group row">
                           <div class="col-lg-8">
                             <label class="form-label">Brief of pillar :</label>
                             <div>
-                              <div class="input-group search-form" style={{display:'flex',flexDirection:'column'}}>
+                              <div class="input-group search-form" style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Editor
                                   onChange={setFieldValue}
                                   fieldName={"breif"}

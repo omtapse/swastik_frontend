@@ -29,7 +29,12 @@ import styles from "./styles.module.css";
 import Select from "react-select";
 // import { colourOptions } from './docs/data';
 
+import { useGlobalLoader } from "../../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [imageUrl, setImageUrl] = useState();
@@ -40,32 +45,53 @@ export default function Home() {
   const router = useRouter();
 
   const fetchPillar = async () => {
-    const res = await routes.APIS.GET_ALL_PILLARS();
-    if (res.message === "Pillars fetched successfully") {
-      let data = res.data.map((pillar) => {
-        return { label: pillar.pillarTitle, value: pillar._id };
-      });
-      setPillar(data);
+    try {
+      showLoader();
+      const res = await routes.APIS.GET_ALL_PILLARS();
+      if (res.message === "Pillars fetched successfully") {
+        let data = res.data.map((pillar) => {
+          return { label: pillar.pillarTitle, value: pillar._id };
+        });
+        setPillar(data);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+    finally {
+      hideLoader();
     }
   };
 
   const fetchVihar = async () => {
-    const res = await routes.APIS.GET_ALL_VIHARS();
-    if (res) {
-      let data = res.vihars.map((vihar) => {
-        return { label: vihar.viharName, value: vihar._id };
-      });
-      setVihar(data);
+    try {
+      showLoader();
+      const res = await routes.APIS.GET_ALL_VIHARS();
+      if (res) {
+        let data = res.vihars.map((vihar) => {
+          return { label: vihar.viharName, value: vihar._id };
+        });
+        setVihar(data);
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      hideLoader();
     }
   };
 
   const fetchGurus = async () => {
-    const res = await routes.APIS.GET_ALL_GURUS();
-    if (res.message === "Gurus fetched successfully") {
-      let result = res.data.map((guru) => {
-        return { value: guru._id, label: guru.name };
-      });
-      setGurus(result);
+    try {
+      const res = await routes.APIS.GET_ALL_GURUS();
+      if (res.message === "Gurus fetched successfully") {
+        let result = res.data.map((guru) => {
+          return { value: guru._id, label: guru.name };
+        });
+        setGurus(result);
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      hideLoader();
     }
   };
 
@@ -201,12 +227,19 @@ export default function Home() {
                         focusOfProgram: values.focusOfProgram,
                         // programImages: fileList.map((item) => item.url),
                       };
-                      const response = await routes.APIS.ADD_PROGRAM(data);
-                      if (response.message === "program created successfully") {
-                        notification.success({
-                          message: response.message,
-                        });
-                        router.push("/programs");
+                      try {
+                        showLoader();
+                        const response = await routes.APIS.ADD_PROGRAM(data);
+                        if (response.message === "program created successfully") {
+                          notification.success({
+                            message: response.message,
+                          });
+                          router.push("/programs");
+                        }
+                      } catch (error) {
+                        console.log("error", error);
+                      } finally {
+                        hideLoader();
                       }
                     }}
                   >
@@ -288,7 +321,7 @@ export default function Home() {
                                   onChange={setFieldValue}
                                   fieldName={"programDetails"}
                                   placeholder={"Write something..."}
-                                  //  error={errors.programDetails}
+                                //  error={errors.programDetails}
                                 />
                                 {errors.programDetails && (
                                   <small

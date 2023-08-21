@@ -14,6 +14,8 @@ import "@/styles/Template Styles/css/fonts/inter/inter.css";
 import "@/styles/Template Styles/css/fonts/fontawesome.css";
 import Script from 'next/script';
 
+import { GlobalLoaderProvider } from "../contexts/GlobalLoaderContext.js"
+// import 'antd/dist/antd.css';
 
 import 'react-quill/dist/quill.snow.css';
 
@@ -28,8 +30,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
-      <Script  src="/assets/js/plugins/choices.min.js"></Script>
+      <body className={inter.className}>
+        <GlobalLoaderProvider>
+
+          {children}
+
+        </GlobalLoaderProvider>
+
+      </body>
+      <Script src="/assets/js/plugins/choices.min.js"></Script>
     </html>
   )
 }
+
+
+

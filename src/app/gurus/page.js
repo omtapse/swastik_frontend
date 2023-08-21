@@ -11,24 +11,30 @@ import Link from "next/link";
 import { routes } from "@/utills/routes";
 import { Table, notification } from "antd";
 
+import { useGlobalLoader } from "../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
   const [gurus, setGurus] = useState([]);
   const [columns, setColumns] = useState([]);
   const router = useRouter();
 
-  const fetchGurus =async () => {
-    const res = await routes.APIS.GET_ALL_GURUS();
-    if (res.message === "Gurus fetched successfully") {
+  const { showLoader, hideLoader } = useGlobalLoader();
+
+  const fetchGurus = async () => {
+    try {
+      showLoader();
+      const res = await routes.APIS.GET_ALL_GURUS();
+      if (res.message === "Gurus fetched successfully") {
         setGurus(res.data);
         setColumns([
-            {
+          {
             title: "#",
             dataIndex: "id",
             key: "id",
-            render: (text,obj,index) => {
-                return <h6 class="mb-1">{index+1}</h6>
+            render: (text, obj, index) => {
+              return <h6 class="mb-1">{index + 1}</h6>
             }
-            },
+          },
           {
             title: "Name",
             dataIndex: "name",
@@ -89,8 +95,8 @@ export default function Home() {
             dataIndex: "createdAt",
             key: "createdAt",
             render: (text) => {
-                return <p>{text}</p>;
-                }
+              return <p>{text}</p>;
+            }
           },
           {
             title: "Actions",
@@ -132,12 +138,21 @@ export default function Home() {
                   >
                     <div
                       class="avtar avtar-xs btn-link-danger btn-pc-default"
-                        onClick={()=>{
-                            console.log("HEREEEE",obj._id)
-                            routes.APIS.DELETE_GURU(obj._id).then((res)=>{
-                            notification.success({message:res.message})
+                      onClick={() => {
+                        console.log("HEREEEE", obj._id)
+                        try {
+                          showLoader();
+                          routes.APIS.DELETE_GURU(obj._id).then((res) => {
+                            notification.success({ message: res.message })
                             fetchGurus()
-                        })}}
+
+                          })
+                        } catch (err) {
+                          console.log(err)
+                        } finally {
+                          hideLoader();
+                        }
+                      }}
                     >
                       <i class="ti ti-trash f-18"></i>
                     </div>
@@ -147,6 +162,11 @@ export default function Home() {
             },
           },
         ]);
+      }
+    } catch (err) {
+      console.log(err)
+    } finally {
+      hideLoader();
     }
   }
   useEffect(() => {
@@ -197,7 +217,7 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="table-responsive">
-                    <Table columns={columns} dataSource={gurus} pagination={{pageSize:7}} />
+                    <Table columns={columns} dataSource={gurus} pagination={{ pageSize: 7 }} />
                   </div>
                 </div>
               </div>

@@ -29,7 +29,12 @@ import styles from "./styles.module.css";
 import Select from "react-select";
 // import { colourOptions } from './docs/data';
 
+import { useGlobalLoader } from "../../../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [imageUrl, setImageUrl] = useState();
@@ -43,32 +48,55 @@ export default function Home() {
   const [value, setValue] = useState({});
 
   const fetchPillar = async () => {
-    const res = await routes.APIS.GET_ALL_PILLARS();
-    if (res.message === "Pillars fetched successfully") {
-      let data = res.data.map((pillar) => {
-        return { label: pillar.pillarTitle, value: pillar._id };
-      });
-      setPillar(data);
+    try {
+      showLoader();
+      const res = await routes.APIS.GET_ALL_PILLARS();
+      if (res.message === "Pillars fetched successfully") {
+        let data = res.data.map((pillar) => {
+          return { label: pillar.pillarTitle, value: pillar._id };
+        });
+        setPillar(data);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+    finally {
+      hideLoader();
     }
   };
 
   const fetchVihar = async () => {
-    const res = await routes.APIS.GET_ALL_VIHARS();
-    if (res) {
-      let data = res.vihars.map((vihar) => {
-        return { label: vihar.viharName, value: vihar._id };
-      });
-      setVihar(data);
+    try {
+      showLoader();
+      const res = await routes.APIS.GET_ALL_VIHARS();
+      if (res) {
+        let data = res.vihars.map((vihar) => {
+          return { label: vihar.viharName, value: vihar._id };
+        });
+        setVihar(data);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+    finally {
+      hideLoader();
     }
   };
 
   const fetchGurus = async () => {
-    const res = await routes.APIS.GET_ALL_GURUS();
-    if (res.message === "Gurus fetched successfully") {
-      let result = res.data.map((guru) => {
-        return { value: guru._id, label: guru.name };
-      });
-      setGurus(result);
+    try {
+      const res = await routes.APIS.GET_ALL_GURUS();
+      if (res.message === "Gurus fetched successfully") {
+        let result = res.data.map((guru) => {
+          return { value: guru._id, label: guru.name };
+        });
+        setGurus(result);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+    finally {
+      hideLoader();
     }
   };
 
@@ -115,26 +143,34 @@ export default function Home() {
 
 
   const fetchProgram = async () => {
-    const res = await routes.APIS.GET_PROGRAM_BY_ID(params.id);
-    if (res.message === "program fetched successfully") {
-      setImageUrl(res.program.programImage);
-      setProgramStatus(res.program.programStatus);
-      setValue({
-        programName: res.program.programName,
-        programDuration: res.program.programDuration,
-        programStatus: res.program.programStatus,
-        programDetails: res.program.programDetails,
-        programPrice: res.program.programPrice,
-        programDate: res.program.programDate,
-        pillar: res?.program?.pillars.map((item) => {
-            return {label:item.pillarTitle,value:item._id}
-        }),
-        guru: {label:res.program?.guru?.name,value:res.program?.guru?._id},
-        vihar: res.program.vihars.map((item) => {
-            return {label:item.viharName,value:item._id}
-        }),
-        focusOfProgram: res.program.focusOfProgram,
-      });
+    try {
+      showLoader();
+      const res = await routes.APIS.GET_PROGRAM_BY_ID(params.id);
+      if (res.message === "program fetched successfully") {
+        setImageUrl(res.program.programImage);
+        setProgramStatus(res.program.programStatus);
+        setValue({
+          programName: res.program.programName,
+          programDuration: res.program.programDuration,
+          programStatus: res.program.programStatus,
+          programDetails: res.program.programDetails,
+          programPrice: res.program.programPrice,
+          programDate: res.program.programDate,
+          pillar: res?.program?.pillars.map((item) => {
+            return { label: item.pillarTitle, value: item._id }
+          }),
+          guru: { label: res.program?.guru?.name, value: res.program?.guru?._id },
+          vihar: res.program.vihars.map((item) => {
+            return { label: item.viharName, value: item._id }
+          }),
+          focusOfProgram: res.program.focusOfProgram,
+        });
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+    finally {
+      hideLoader();
     }
   };
 
@@ -230,14 +266,22 @@ export default function Home() {
                           focusOfProgram: values.focusOfProgram,
                           // programImages: fileList.map((item) => item.url),
                         };
-                        const response = await routes.APIS.UPDATE_PROGRAM(params.id,data);
-                        if (
-                          response.message === "Program updated successfully"
-                        ) {
-                          notification.success({
-                            message: response.message,
-                          });
-                          router.push("/programs");
+                        try {
+                          showLoader();
+                          const response = await routes.APIS.UPDATE_PROGRAM(params.id, data);
+                          if (
+                            response.message === "Program updated successfully"
+                          ) {
+                            notification.success({
+                              message: response.message,
+                            });
+                            router.push("/programs");
+                          }
+                        } catch (error) {
+                          console.log("error", error);
+                        }
+                        finally {
+                          hideLoader();
                         }
                       }}
                     >

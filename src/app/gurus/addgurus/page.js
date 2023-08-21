@@ -17,7 +17,12 @@ import Editor from "@/Components/Editor/Editor";
 import { Formik } from "formik";
 import styles from './styles.module.css'
 
+import { useGlobalLoader } from "../../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
@@ -75,7 +80,7 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <>
@@ -133,7 +138,7 @@ export default function Home() {
                       }
                       console.log(
                         "values.Testimonials",
-                        values.Testimonials=== ""
+                        values.Testimonials === ""
                       );
                       if (values.Testimonials === "") {
                         errors.Testimonials = "Please enter Testimonials";
@@ -144,7 +149,7 @@ export default function Home() {
                       console.log("errors", errors);
                       return errors;
                     }}
-                    onSubmit={async(values, { setSubmitting }) => {
+                    onSubmit={async (values, { setSubmitting }) => {
                       console.log("HERE", values);
                       let data = {
                         name: values.name,
@@ -154,14 +159,21 @@ export default function Home() {
                         guruImage: imageUrl,
                         programImages: fileList.map((item) => item.url),
                       };
-                      const responce = await routes.APIS.ADD_GURU(data)
-                      if(responce.message === "Guru created successfully"){
-                        notification.success({
-                          message: responce.message,
-                        });
-                        router.push("/gurus")
-                      }programStatus
-                      console.log(responce)
+                      try {
+                        showLoader();
+                        const responce = await routes.APIS.ADD_GURU(data)
+                        if (responce.message === "Guru created successfully") {
+                          notification.success({
+                            message: responce.message,
+                          });
+                          router.push("/gurus")
+                        } programStatus
+                        console.log(responce)
+                      } catch (error) {
+                        console.log(error)
+                      } finally {
+                        hideLoader();
+                      }
                     }}
                   >
                     {({
@@ -278,7 +290,7 @@ export default function Home() {
                         </small> */}
                           </div>
                           <div class="col-lg-6">
-                          <label class="form-label">Program Images:</label>
+                            <label class="form-label">Program Images:</label>
                             <Upload
                               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                               listType="picture-card"
@@ -291,17 +303,17 @@ export default function Home() {
                               {fileList.length >= 8 ? null : uploadButton}
                             </Upload>
                           </div>
-                         
+
                         </div>
                         <div class="form-group row">
-                         
+
                         </div>
-                        
+
                         <div class="form-group row">
                           <div class="col-lg-8">
                             <label class="form-label">Testimonials:</label>
                             <div>
-                              <div class="input-group search-form" style={{display:'flex',flexDirection:'column'}}>
+                              <div class="input-group search-form" style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Editor
                                   onChange={setFieldValue}
                                   fieldName={"Testimonials"}

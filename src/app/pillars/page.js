@@ -11,24 +11,31 @@ import Link from "next/link";
 import { routes } from "@/utills/routes";
 import { Table, notification } from "antd";
 
+import { useGlobalLoader } from "../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const [gurus, setGurus] = useState([]);
   const [columns, setColumns] = useState([]);
   const router = useRouter();
 
-  const FetchPillars =async () => {
-    const res = await routes.APIS.GET_ALL_PILLARS();
-    if (res.message === "Pillars fetched successfully") {
+  const FetchPillars = async () => {
+    try {
+      showLoader();
+      const res = await routes.APIS.GET_ALL_PILLARS();
+      if (res.message === "Pillars fetched successfully") {
         setGurus(res.data);
         setColumns([
-            {
+          {
             title: "#",
             dataIndex: "id",
             key: "id",
-            render: (text,obj,index) => {
-                return <h6 class="mb-1">{index+1}</h6>
+            render: (text, obj, index) => {
+              return <h6 class="mb-1">{index + 1}</h6>
             }
-            },
+          },
           {
             title: "Pillar Name",
             dataIndex: "pillarTitle",
@@ -47,7 +54,7 @@ export default function Home() {
                     />
                   </div>
                   <div class="col">
-                    <h6 class="mb-1" style={{width:'fit-content'}}>{text}</h6>
+                    <h6 class="mb-1" style={{ width: 'fit-content' }}>{text}</h6>
                     <p
                       class="text-muted f-12 mb-0"
                       style={{
@@ -92,16 +99,16 @@ export default function Home() {
             dataIndex: "createdAt",
             key: "createdAt",
             render: (text) => {
-                return <p>{text.split('T')[0]}</p>;
-                }
+              return <p>{text.split('T')[0]}</p>;
+            }
           },
           {
             title: "Updated On",
             dataIndex: "createdAt",
             key: "createdAt",
             render: (text) => {
-                return <p>{text.split('T')[0]}</p>;
-                }
+              return <p>{text.split('T')[0]}</p>;
+            }
           },
           {
             title: "Actions",
@@ -143,12 +150,20 @@ export default function Home() {
                   >
                     <div
                       class="avtar avtar-xs btn-link-danger btn-pc-default"
-                        onClick={()=>{
-                            console.log("HEREEEE",obj._id)
-                            routes.APIS.DELETE_PILLAR(obj._id).then((res)=>{
-                            notification.success({message:res.message})
+                      onClick={() => {
+                        console.log("HEREEEE", obj._id)
+                        try {
+                          showLoader();
+                          routes.APIS.DELETE_PILLAR(obj._id).then((res) => {
+                            notification.success({ message: res.message })
                             FetchPillars()
-                        })}}
+                          })
+                        } catch (err) {
+                          console.log(err);
+                        } finally {
+                          hideLoader();
+                        }
+                      }}
                     >
                       <i class="ti ti-trash f-18"></i>
                     </div>
@@ -158,6 +173,11 @@ export default function Home() {
             },
           },
         ]);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      hideLoader();
     }
   }
   useEffect(() => {
@@ -208,7 +228,7 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="table-responsive">
-                    <Table columns={columns} dataSource={gurus} pagination={{pageSize:7}} />
+                    <Table columns={columns} dataSource={gurus} pagination={{ pageSize: 7 }} />
                   </div>
                 </div>
               </div>

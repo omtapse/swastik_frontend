@@ -11,202 +11,216 @@ import Link from "next/link";
 import { routes } from "@/utills/routes";
 import { Table, notification } from "antd";
 
+import { useGlobalLoader } from "../../contexts/GlobalLoaderContext.js"
+
 export default function Home() {
+
+  const { showLoader, hideLoader } = useGlobalLoader();
+
   const [programs, setPrograms] = useState([]);
   const [columns, setColumns] = useState([]);
 
   const fetchPrograms = async () => {
-    const res = await routes.APIS.Get_ALL_Program();
-    if (res) {
-      setPrograms(res.programs);
-      setColumns([
-        {
-          title: "Sr.No",
-          dataIndex: "id",
-          key: "id",
-          render: (text, obj, index) => {
-            return <h6 class="mb-1">{index + 1}</h6>
-          }
-        },
-        {
-          title: "Program Name",
-          dataIndex: "programName",
-          key: "programName",
-          render: (text, obj) => {
-            return (
-              // <div class="row">
-              //   <div class="col-auto pe-0">
-              //     <img
-              //       src={obj.programImages}
-              //       alt="user-image"
-              //       class="wid-40 rounded"
-              //     />
-              //   </div>
-              //   <div class="col">
-              //     <h6 class="mb-1">{text}</h6>
-              //     <p
-              //       class="text-muted f-12 mb-0"
-              //       style={{
-              //         width: "20rem",
-              //         whiteSpace: "nowrap",
-              //         overflow: "hidden",
-              //         textOverflow: "ellipsis",
-              //       }}
-              //     >
-              //       {obj.programDetails}
-              //     </p>
-              //   </div>
-              // </div>
-              <div class="row">
-              <div class="col-auto pe-0">
-                <img
-                  src={obj.programImage}
-                  alt="user-image"
-                  class="wid-40 rounded"
-                />
-              </div>
-              <div class="col">
-                <h6 class="mb-1">{text}</h6>
+    try {
+      showLoader();
+      const res = await routes.APIS.Get_ALL_Program();
+      if (res) {
+        setPrograms(res.programs);
+        setColumns([
+          {
+            title: "Sr.No",
+            dataIndex: "id",
+            key: "id",
+            render: (text, obj, index) => {
+              return <h6 class="mb-1">{index + 1}</h6>
+            }
+          },
+          {
+            title: "Program Name",
+            dataIndex: "programName",
+            key: "programName",
+            render: (text, obj) => {
+              return (
+                // <div class="row">
+                //   <div class="col-auto pe-0">
+                //     <img
+                //       src={obj.programImages}
+                //       alt="user-image"
+                //       class="wid-40 rounded"
+                //     />
+                //   </div>
+                //   <div class="col">
+                //     <h6 class="mb-1">{text}</h6>
+                //     <p
+                //       class="text-muted f-12 mb-0"
+                //       style={{
+                //         width: "20rem",
+                //         whiteSpace: "nowrap",
+                //         overflow: "hidden",
+                //         textOverflow: "ellipsis",
+                //       }}
+                //     >
+                //       {obj.programDetails}
+                //     </p>
+                //   </div>
+                // </div>
+                <div class="row">
+                  <div class="col-auto pe-0">
+                    <img
+                      src={obj.programImage}
+                      alt="user-image"
+                      class="wid-40 rounded"
+                    />
+                  </div>
+                  <div class="col">
+                    <h6 class="mb-1">{text}</h6>
+                    <p
+                      class="text-muted f-12 mb-0"
+                      style={{
+                        width: "13rem",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        // height:"46px",
+                        overflow: "hidden"
+                      }}
+                      dangerouslySetInnerHTML={{ __html: obj.programDetails }}
+                    >
+                      {/* {obj.programDetails} */}
+                    </p>
+                  </div>
+                </div>
+              );
+            },
+          },
+          {
+            title: "Price",
+            dataIndex: "programPrice",
+            key: "programPrice",
+            render: (text) => {
+              return (
                 <p
                   class="text-muted f-12 mb-0"
                   style={{
-                    width: "13rem",
+                    width: "10rem",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    // height:"46px",
-                    overflow: "hidden"
                   }}
-                  dangerouslySetInnerHTML={{ __html: obj.programDetails }}
                 >
-                  {/* {obj.programDetails} */}
+                  {text}
                 </p>
-              </div>
-            </div>
-            );
+              );
+            },
           },
-        },
-        {
-          title: "Price",
-          dataIndex: "programPrice",
-          key: "programPrice",
-          render: (text) => {
-            return (
-              <p
-                class="text-muted f-12 mb-0"
-                style={{
-                  width: "10rem",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {text}
-              </p>
-            );
-          },
-        },
-        {
-          title: "Duration",
-          dataIndex: "programDuration",
-          key: "programDuration",
-          render: (text) => {
-            return (
-              <p
-                class="text-muted f-12 mb-0"
-                style={{
-                  width: "10rem",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {text}
-              </p>
-            );
-          },
-        },
-        {
-          title: "Status",
-          dataIndex: "programStatus",
-          key: "programStatus",
-          render: (text) => {
-            return (
-              <p
-                class="text-muted f-12 mb-0"
-                style={{
-                  width: "10rem",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {text}
-              </p>
-            );
-          },
-        },
-        {
-          title: "Actions",
-          dataIndex: "Action",
-          key: "Action",
-          render: (text, obj) => {
-            return (
-              <ul class="list-inline me-auto mb-0">
-                <li
-                  class="list-inline-item align-bottom"
-                  data-bs-toggle="tooltip"
-                  title="View"
+          {
+            title: "Duration",
+            dataIndex: "programDuration",
+            key: "programDuration",
+            render: (text) => {
+              return (
+                <p
+                  class="text-muted f-12 mb-0"
+                  style={{
+                    width: "10rem",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
                 >
-                  <a
-                    href=""
-                    class="avtar avtar-xs btn-link-secondary btn-pc-default"
-                    data-bs-toggle="modal"
-                    data-bs-target="#cust-modal"
-                  >
-                    <i class="ti ti-eye f-18"></i>
-                  </a>
-                </li>
-                
-                <li
-                  class="list-inline-item align-bottom"
-                  data-bs-toggle="tooltip"
-                  title="Edit"
-                >
-                  <Link
-                    href={`/programs/editPrograms/${obj._id}`}
-                    class="avtar avtar-xs btn-link-success btn-pc-default"
-                  >
-                    <i class="ti ti-edit-circle f-18"></i>
-                  </Link>
-                </li>
-                <li
-                  class="list-inline-item align-bottom"
-                  data-bs-toggle="tooltip"
-                  title="Delete"
-                >
-                  <div
-                    class="avtar avtar-xs btn-link-danger btn-pc-default"
-                    onClick={()=> {
-                      routes.APIS.DELETE_PROGRAM(obj._id).then((res) => {
-                        notification.success({ message: res.message })
-                        fetchPrograms()
-                      })
-                    }}
-                  >
-                    <i class="ti ti-trash f-18"></i>
-                  </div>
-                </li>
-              </ul>
-            );
+                  {text}
+                </p>
+              );
+            },
           },
-        },
-      ]);
+          {
+            title: "Status",
+            dataIndex: "programStatus",
+            key: "programStatus",
+            render: (text) => {
+              return (
+                <p
+                  class="text-muted f-12 mb-0"
+                  style={{
+                    width: "10rem",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {text}
+                </p>
+              );
+            },
+          },
+          {
+            title: "Actions",
+            dataIndex: "Action",
+            key: "Action",
+            render: (text, obj) => {
+              return (
+                <ul class="list-inline me-auto mb-0">
+                  <li
+                    class="list-inline-item align-bottom"
+                    data-bs-toggle="tooltip"
+                    title="View"
+                  >
+                    <a
+                      href=""
+                      class="avtar avtar-xs btn-link-secondary btn-pc-default"
+                      data-bs-toggle="modal"
+                      data-bs-target="#cust-modal"
+                    >
+                      <i class="ti ti-eye f-18"></i>
+                    </a>
+                  </li>
+
+                  <li
+                    class="list-inline-item align-bottom"
+                    data-bs-toggle="tooltip"
+                    title="Edit"
+                  >
+                    <Link
+                      href={`/programs/editPrograms/${obj._id}`}
+                      class="avtar avtar-xs btn-link-success btn-pc-default"
+                    >
+                      <i class="ti ti-edit-circle f-18"></i>
+                    </Link>
+                  </li>
+                  <li
+                    class="list-inline-item align-bottom"
+                    data-bs-toggle="tooltip"
+                    title="Delete"
+                  >
+                    <div
+                      class="avtar avtar-xs btn-link-danger btn-pc-default"
+                      onClick={() => {
+                        routes.APIS.DELETE_PROGRAM(obj._id).then((res) => {
+                          notification.success({ message: res.message })
+                          fetchPrograms()
+                        })
+                      }}
+                    >
+                      <i class="ti ti-trash f-18"></i>
+                    </div>
+                  </li>
+                </ul>
+              );
+            },
+          },
+        ]);
+      }
+    } catch (err) {
+      console.log(err)
+    } finally {
+      hideLoader();
     }
   }
   useEffect(() => {
     fetchPrograms();
   }, []);
+
+
 
   return (
     <>
@@ -253,7 +267,7 @@ export default function Home() {
                   </div>
                   <div class="table-responsive">
                     <Table columns={columns} dataSource={programs} pagination={{ pageSize: 7 }} />
-                    </div>
+                  </div>
                 </div>
               </div>
             </div>
