@@ -45,4 +45,16 @@ export default {
             return removeValueFromLocalStorage(this.key);
         }
     },
+    ROLE:{
+        key : "ROLE" ,
+        get:function(){
+            return getValuefromLocalStorage(this.key);
+        },
+        set : function(data){
+            return setValuefromLocalStorage(this.key , data);
+        },
+        remove : function(){
+            return removeValueFromLocalStorage(this.key);
+        }
+    },
 }

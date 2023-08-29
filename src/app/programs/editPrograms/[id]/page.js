@@ -222,6 +222,11 @@ export default function Home() {
                         if (!values.guru || values.guru.length === 0) {
                           errors.guru = "Please select at least one vihar.";
                         }
+                        if(values.focusOfProgram===""){
+                          errors.focusOfProgram = "Please enter focus of program."
+                        }
+
+                        console.log(values,errors)
                         return errors;
                       }}
                       onSubmit={async (values, { setSubmitting }) => {
@@ -528,7 +533,7 @@ export default function Home() {
                                     dateFormat
                                   )}
                                   format={dateFormat}
-                                  value={values.programDate}
+                                  // value={values.programDate}
                                 />
                               </Space>
                             </div>
