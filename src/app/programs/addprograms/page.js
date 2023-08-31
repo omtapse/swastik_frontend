@@ -155,7 +155,7 @@ export default function Home() {
                     initialValues={{
                       programName: "",
                       programDuration: "",
-                      programStatus: "",
+                      programStatus: "Active",
                       programDetails: "",
                       programPrice: "",
                       programImages: "",
@@ -174,15 +174,27 @@ export default function Home() {
                         errors.programDuration =
                           "Please enter duration experties";
                       }
-                      // if (values.programStatus === "") {
-                      //   errors.programStatus = "Please select status";
-                      // }
+                      if (!values.programStatus) {
+                        errors.programStatus = "Please select status";
+                      }
                       if (values.programDetails === "") {
                         errors.programDetails =
                           "Please enter details about program";
                       }
                       if (values.programPrice === "") {
                         errors.programPrice = "Please enter price of program";
+                      }
+                      if (!values.pillar || values.pillar.length === 0) {
+                        errors.pillar = "Please select at least one pillar.";
+                      }
+                      if (!values.vihar || values.vihar.length === 0) {
+                        errors.vihar = "Please select at least one vihar.";
+                      }
+                      if (!values.guru || values.guru.length === 0) {
+                        errors.guru = "Please select guru.";
+                      }
+                      if (!values.programStatus) {
+                        errors.programStatus = "Please select status";
                       }
                       return errors;
                     }}
@@ -288,7 +300,7 @@ export default function Home() {
                                   onChange={setFieldValue}
                                   fieldName={"programDetails"}
                                   placeholder={"Write something..."}
-                                  //  error={errors.programDetails}
+                                //  error={errors.programDetails}
                                 />
                                 {errors.programDetails && (
                                   <small
@@ -391,13 +403,14 @@ export default function Home() {
                           <div class="col-lg-6">
                             <div class="form-group row">
                               <div class="pillar">
-                                <label class="form-label">Pillar:</label>
+                                <label class="form-label">Pillar</label>
                                 <Select
                                   isMulti
-                                  name="colors"
+                                  name="pillar"
                                   options={pillar}
                                   className="basic-multi-select"
                                   classNamePrefix="select"
+                                  value={values.pillar}
                                   onChange={(values) =>
                                     handleChange({
                                       target: {
@@ -407,8 +420,16 @@ export default function Home() {
                                     })
                                   }
                                 />
+                                {errors.pillar && (
+                                  <small
+                                    className={`form-text text-muted ${styles.errorMessage}`}
+                                  >
+                                    Please select atleast one pillar{" "}
+                                  </small>
+                                )}
+                                <br />
                                 <div class="select_gurus">
-                                  <label class="form-label">Gurus:</label>
+                                  <label class="form-label">Gurus</label>
                                   <Select
                                     options={gurus}
                                     onChange={(values) =>
@@ -420,6 +441,13 @@ export default function Home() {
                                       })
                                     }
                                   />
+                                  {errors.guru && (
+                                    <small
+                                      className={`form-text text-muted ${styles.errorMessage}`}
+                                    >
+                                      Please select guru{" "}
+                                    </small>
+                                  )}
                                 </div>
 
                                 {/* <Space wrap> 
@@ -437,11 +465,11 @@ export default function Home() {
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group row">
-                              <label class="form-label">Vihar:</label>
+                              <label class="form-label">Vihar</label>
                               <Select
                                 // defaultValue={[ViharOptions[2], ViharOptions[3]]}
                                 isMulti
-                                name="colors"
+                                name="vihar"
                                 options={vihar}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
@@ -454,6 +482,13 @@ export default function Home() {
                                   })
                                 }
                               />
+                              {errors.vihar && (
+                                <small
+                                  className={`form-text text-muted ${styles.errorMessage}`}
+                                >
+                                  Please select atleast one vihar{" "}
+                                </small>
+                              )}
                               {/* <Space wrap> 
                               <Dropdown menu={menuProps}>
                                 <Button>
@@ -467,20 +502,22 @@ export default function Home() {
                             </div>
                           </div>
                           <div class="date">
-                            <Space direction="vertical" size={12}>
-                              <DatePicker
-                                onChange={(date, string) =>
-                                  handleChange({
-                                    target: {
-                                      value: string,
-                                      name: "programDate",
-                                    },
-                                  })
-                                }
-                                defaultValue={dayjs("2023/08/01", dateFormat)}
-                                format={dateFormat}
-                              />
-                              {/* <DatePicker defaultValue={dayjs('01/01/2015', dateFormatList[0])} format={dateFormatList} />
+                            <label class="form-label">Program Date</label>
+                            <div>
+                              <Space direction="vertical" size={12}>
+                                <DatePicker
+                                  onChange={(date, string) =>
+                                    handleChange({
+                                      target: {
+                                        value: string,
+                                        name: "programDate",
+                                      },
+                                    })
+                                  }
+                                  defaultValue={dayjs("2023/08/01", dateFormat)}
+                                  format={dateFormat}
+                                />
+                                {/* <DatePicker defaultValue={dayjs('01/01/2015', dateFormatList[0])} format={dateFormatList} />
                           <DatePicker defaultValue={dayjs('2015/01', monthFormat)} format={monthFormat} picker="month" />
                           <DatePicker defaultValue={dayjs()} format={customWeekStartEndFormat} picker="week" />
                           <RangePicker
@@ -488,7 +525,8 @@ export default function Home() {
                             format={dateFormat}
                           />
                           <DatePicker defaultValue={dayjs('2015/01/01', dateFormat)} format={customFormat} /> */}
-                            </Space>
+                              </Space>
+                            </div>
                           </div>
                         </div>
                         {/* <div class="form-group row">
@@ -510,6 +548,7 @@ export default function Home() {
                       </div>
                     </div> */}
                         <div class="form-group row">
+                          <label class="form-label">Program Status</label>
                           <div class="col-lg-6">
                             <Radio.Group
                               name="programStatus"
@@ -519,12 +558,10 @@ export default function Home() {
                               <Radio value="Active">Active</Radio>
                               <Radio value="Inactive">Inactive</Radio>
                             </Radio.Group>
-                            {/* {errors.programStatus &&(
-                            <small className={`form-text text-muted ${styles.errorMessage}`}>Please select user type</small>
-                         )} */}
-                            <small class="form-text text-muted">
-                              Please select user type
-                            </small>
+                            {errors.programStatus && (
+                              <small className={`form-text text-muted ${styles.errorMessage}`}>Please select Status</small>
+                            )}
+
                           </div>
                         </div>
                         <button
@@ -545,7 +582,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+    </section >
     </>
   );
 }

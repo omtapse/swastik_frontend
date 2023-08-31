@@ -109,15 +109,6 @@ export default function Home() {
     },
   ];
 
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   if (!Localstorage.JWT_TOKEN.get()) {
-  //     router.push('/login')
-  //   }else{
-  //     router.push('/')
-  //   }
-  // }, [Localstorage.JWT_TOKEN.get()])
 
   return (
     <>

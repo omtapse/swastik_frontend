@@ -284,7 +284,7 @@
   left: -400px;
   bottom: 0px;
   top: 0px;
-  transition: transform 1s linear;
+  transition: transform 1s linear 2s  ;
   transform-origin: left center;
   background-color: rgb(255, 171, 0);
 }

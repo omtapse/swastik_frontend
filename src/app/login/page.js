@@ -18,6 +18,7 @@ export default function Page() {
       let message = await routes.APIS.ADMIN_LOGIN(data)
       if(message.message ==='Login Successfull'){
         Localstorage.JWT_TOKEN.set(message.token)
+        Localstorage.ROLE.set(message.role)
         console.log("here",message)
         router.push('/')
       }
@@ -25,6 +26,14 @@ export default function Page() {
       console.log("err",err)
     }
   }
+
+  const googleAuth = () => {
+		window.open(
+			`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/callback`,
+			"_self"
+		);
+	};
+
 
   return (
     <>
@@ -68,6 +77,7 @@ export default function Page() {
                     <button
                       type="button"
                       className="btn mt-2 btn-light-primary bg-light text-muted"
+                      onClick={googleAuth}
                     >
                       <img
                         src="../assets/images/authentication/google.svg"
