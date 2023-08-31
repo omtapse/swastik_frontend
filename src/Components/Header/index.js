@@ -1,6 +1,7 @@
 import styles from "./styles.module.css";
 
 const Header = () => {
+  
   const barOnClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -17,28 +18,29 @@ const Header = () => {
   };
 
   const handleSidebar = (e) => {
-    if(document.querySelector('.pc-sidebar').classList.contains('pc-sidebar-hide')){
+    if (document.querySelector('.pc-sidebar').classList.contains('pc-sidebar-hide')) {
       document.querySelector('.pc-sidebar').classList.remove('pc-sidebar-hide')
-    }else{
-      document.querySelector('.pc-sidebar').classList.add('pc-sidebar-hide') 
+    } else {
+      document.querySelector('.pc-sidebar').classList.add('pc-sidebar-hide')
     }
   }
 
   const handleShowSearch = (e) => {
-    if(document.querySelector('#serachTextBox').classList.contains('show')){
+    if (document.querySelector('#serachTextBox').classList.contains('show')) {
       document.querySelector('.pc-h-item').classList.remove('show')
-    }else{
-      document.querySelector('.pc-h-item').classList.add('show') 
+    } else {
+      document.querySelector('.pc-h-item').classList.add('show')
     }
   }
 
   const handleOpenSettings = (e) => {
-    if(document.querySelector('#settingDropDown').classList.contains('show')){
+    if (document.querySelector('#settingDropDown').classList.contains('show')) {
       document.querySelector('#settingDropDown').classList.remove('show')
-    }else{
-      document.querySelector('#settingDropDown').classList.add('show') 
+    } else {
+      document.querySelector('#settingDropDown').classList.add('show')
     }
   }
+
 
   return (
     <>
@@ -386,6 +388,23 @@ const Header = () => {
                 </div>
               </li>
               <li class="dropdown pc-h-item header-user-profile">
+                {/* <div className={styles.profileBody}>
+                <div className={styles.dropdown}>
+                    <button className={styles.userIcon}>
+                        <img
+                          src="/assets/images/user/avatar-2.jpg"
+                          alt="#"
+                          class="user-avtar"
+                        />
+                    </button>
+                  <div className={styles.dropdownOptions}>
+                    <a href="#">Dashboard</a>
+                    <a href="#">Setting</a>
+                    <a href="#">Logout</a>
+                  </div>
+                </div> 
+                </div>    */}
+                 
                 <a
                   class="pc-head-link dropdown-toggle arrow-none me-0"
                   data-bs-toggle="dropdown"
@@ -410,190 +429,195 @@ const Header = () => {
                       class="profile-notification-scroll position-relative"
                       style={{ maxHeight: "calc(100vh - 225px)" }}
                     >
-                      <div class="d-flex mb-1">
-                        <div class="flex-shrink-0">
-                          <img
-                            src="../assets/images/user/avatar-2.jpg"
-                            alt="user-image"
-                            class="user-avtar wid-35"
-                          />
+                      <div class="simplebar-wrapper" style={{ margin: "0px" }}>
+                        <div class="simplebar-height-auto-observer-wrapper">
+                          <div class="simplebar-height-auto-observer"></div>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                          <h6 class="mb-1">Carson Darrin 🖖</h6>
-                          <span>carson.darrin@company.io</span>
-                        </div>
-                      </div>
-                      <hr class="border-secondary border-opacity-50" />
-                      <div class="card">
-                        <div class="card-body py-3">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0 d-inline-flex align-items-center">
-                              <svg class="pc-icon text-muted me-2">
-                                <use xlinkHref="#custom-notification-outline"></use>
-                              </svg>
-                              Notification
-                            </h5>
-                            <div class="form-check form-switch form-check-reverse m-0">
-                              <input
-                                class="form-check-input f-18"
-                                type="checkbox"
-                                role="switch"
-                              />
+                                <div class="d-flex mb-1">
+                                  <div class="flex-shrink-0">
+                                    <img
+                                      src="../assets/images/user/avatar-2.jpg"
+                                      alt="user-image"
+                                      class="user-avtar wid-35"
+                                    />
+                                  </div>
+                                  <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-1">Carson Darrin 🖖</h6>
+                                    <span>carson.darrin@company.io</span>
+                                  </div>
+                                </div>
+                                <hr class="border-secondary border-opacity-50" />
+                                <div class="card">
+                                  <div class="card-body py-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                      <h5 class="mb-0 d-inline-flex align-items-center">
+                                        <svg class="pc-icon text-muted me-2">
+                                          <use xlinkHref="#custom-notification-outline"></use>
+                                        </svg>
+                                        Notification
+                                      </h5>
+                                      <div class="form-check form-switch form-check-reverse m-0">
+                                        <input
+                                          class="form-check-input f-18"
+                                          type="checkbox"
+                                          role="switch"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <p class="text-span">Manage</p>
+                                <a href="#" class="dropdown-item">
+                                  <span>
+                                    <svg class="pc-icon text-muted me-2">
+                            <use xlinkHref="#custom-setting-outline"></use>
+                          </svg>
+                                    <img
+                                      class="pc-icon text-muted me-2"
+                                      src="/assets/images/settings.png"
+                                    />
+                                    <span>Settings</span>
+                                  </span>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                  <span>
+                                    <svg class="pc-icon text-muted me-2">
+                                      <use xlinkHref="#custom-share-bold"></use>
+                                    </svg>
+                                    <span>Share</span>
+                                  </span>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                  <span>
+                                    <svg class="pc-icon text-muted me-2">
+                                      <use xlinkHref="#custom-lock-outline"></use>
+                                    </svg>
+                                    <span>Change Password</span>
+                                  </span>
+                                </a>
+                                <hr class="border-secondary border-opacity-50" />
+                                <p class="text-span">Team</p>
+                                <a href="#" class="dropdown-item">
+                                  <span>
+                                    <svg class="pc-icon text-muted me-2">
+                                      <use xlinkHref="#custom-profile-2user-outline"></use>
+                                    </svg>
+                                    <span>UI Design team</span>
+                                  </span>
+                                  <div class="user-group">
+                                    <img
+                                      src="../assets/images/user/avatar-1.jpg"
+                                      alt="user-image"
+                                      class="avtar"
+                                    />
+                                    <span class="avtar bg-danger text-white">K</span>
+                                    <span class="avtar bg-success text-white">
+                                      <svg class="pc-icon m-0">
+                                        <use xlinkHref="#custom-user"></use>
+                                      </svg>
+                                    </span>
+                                    <span class="avtar bg-light-primary text-primary">
+                                      +2
+                                    </span>
+                                  </div>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                  <span>
+                                    <svg class="pc-icon text-muted me-2">
+                                      <use xlinkHref="#custom-profile-2user-outline"></use>
+                                    </svg>
+                                    <span>Friends Groups</span>
+                                  </span>
+                                  <div class="user-group">
+                                    <img
+                                      src="../assets/images/user/avatar-1.jpg"
+                                      alt="user-image"
+                                      class="avtar"
+                                    />
+                                    <span class="avtar bg-danger text-white">K</span>
+                                    <span class="avtar bg-success text-white">
+                                      <svg class="pc-icon m-0">
+                                        <use xlinkHref="#custom-user"></use>
+                                      </svg>
+                                    </span>
+                                  </div>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                  <span>
+                                    <svg class="pc-icon text-muted me-2">
+                                      <use xlinkHref="#custom-add-outline"></use>
+                                    </svg>
+                                    <span>Add new</span>
+                                  </span>
+                                  <div class="user-group">
+                                    <span class="avtar bg-primary text-white">
+                                      <svg class="pc-icon m-0">
+                                        <use xlinkHref="#custom-add-outline"></use>
+                                      </svg>
+                                    </span>
+                                  </div>
+                                </a>
+                                <hr class="border-secondary border-opacity-50" />
+                                <div class="d-grid mb-3">
+                                  <button class="btn btn-primary">
+                                    <svg class="pc-icon me-2">
+                                      <use xlinkHref="#custom-logout-1-outline"></use>
+                                    </svg>
+                                    Logout
+                                  </button>
+                                </div>
+                                <div
+                                  class="card border-0 shadow-none drp-upgrade-card mb-0"
+                                  style={{
+                                    backgroundImage: `url(/assets/images/layout/img-profile-card.jpg)`,
+                                  }}
+                                >
+                                  <div class="card-body">
+                                    <div class="user-group">
+                                      <img
+                                        src="../assets/images/user/avatar-1.jpg"
+                                        alt="user-image"
+                                        class="avtar"
+                                      />
+                                      <img
+                                        src="../assets/images/user/avatar-2.jpg"
+                                        alt="user-image"
+                                        class="avtar"
+                                      />
+                                      <img
+                                        src="../assets/images/user/avatar-3.jpg"
+                                        alt="user-image"
+                                        class="avtar"
+                                      />
+                                      <img
+                                        src="../assets/images/user/avatar-4.jpg"
+                                        alt="user-image"
+                                        class="avtar"
+                                      />
+                                      <img
+                                        src="../assets/images/user/avatar-5.jpg"
+                                        alt="user-image"
+                                        class="avtar"
+                                      />
+                                      <span class="avtar bg-light-primary text-primary">
+                                        +20
+                                      </span>
+                                    </div>
+                                    <h3 class="my-3 text-dark">
+                                      245.3k <small class="text-muted">Followers</small>
+                                    </h3>
+                                    <div class="btn btn btn-warning">
+                                      <svg class="pc-icon me-2">
+                                        <use xlinkHref="#custom-logout-1-outline"></use>
+                                      </svg>
+                                      Upgrade to Business
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <p class="text-span">Manage</p>
-                      <a href="#" class="dropdown-item">
-                        <span>
-                          {/* <svg class="pc-icon text-muted me-2">
-                            <use xlinkHref="#custom-setting-outline"></use>
-                          </svg> */}
-                          <img
-                            class="pc-icon text-muted me-2"
-                            src="/assets/images/settings.png"
-                          />
-                          <span>Settings</span>
-                        </span>
-                      </a>
-                      <a href="#" class="dropdown-item">
-                        <span>
-                          <svg class="pc-icon text-muted me-2">
-                            <use xlinkHref="#custom-share-bold"></use>
-                          </svg>
-                          <span>Share</span>
-                        </span>
-                      </a>
-                      <a href="#" class="dropdown-item">
-                        <span>
-                          <svg class="pc-icon text-muted me-2">
-                            <use xlinkHref="#custom-lock-outline"></use>
-                          </svg>
-                          <span>Change Password</span>
-                        </span>
-                      </a>
-                      <hr class="border-secondary border-opacity-50" />
-                      <p class="text-span">Team</p>
-                      <a href="#" class="dropdown-item">
-                        <span>
-                          <svg class="pc-icon text-muted me-2">
-                            <use xlinkHref="#custom-profile-2user-outline"></use>
-                          </svg>
-                          <span>UI Design team</span>
-                        </span>
-                        <div class="user-group">
-                          <img
-                            src="../assets/images/user/avatar-1.jpg"
-                            alt="user-image"
-                            class="avtar"
-                          />
-                          <span class="avtar bg-danger text-white">K</span>
-                          <span class="avtar bg-success text-white">
-                            <svg class="pc-icon m-0">
-                              <use xlinkHref="#custom-user"></use>
-                            </svg>
-                          </span>
-                          <span class="avtar bg-light-primary text-primary">
-                            +2
-                          </span>
-                        </div>
-                      </a>
-                      <a href="#" class="dropdown-item">
-                        <span>
-                          <svg class="pc-icon text-muted me-2">
-                            <use xlinkHref="#custom-profile-2user-outline"></use>
-                          </svg>
-                          <span>Friends Groups</span>
-                        </span>
-                        <div class="user-group">
-                          <img
-                            src="../assets/images/user/avatar-1.jpg"
-                            alt="user-image"
-                            class="avtar"
-                          />
-                          <span class="avtar bg-danger text-white">K</span>
-                          <span class="avtar bg-success text-white">
-                            <svg class="pc-icon m-0">
-                              <use xlinkHref="#custom-user"></use>
-                            </svg>
-                          </span>
-                        </div>
-                      </a>
-                      <a href="#" class="dropdown-item">
-                        <span>
-                          <svg class="pc-icon text-muted me-2">
-                            <use xlinkHref="#custom-add-outline"></use>
-                          </svg>
-                          <span>Add new</span>
-                        </span>
-                        <div class="user-group">
-                          <span class="avtar bg-primary text-white">
-                            <svg class="pc-icon m-0">
-                              <use xlinkHref="#custom-add-outline"></use>
-                            </svg>
-                          </span>
-                        </div>
-                      </a>
-                      <hr class="border-secondary border-opacity-50" />
-                      <div class="d-grid mb-3">
-                        <button class="btn btn-primary">
-                          <svg class="pc-icon me-2">
-                            <use xlinkHref="#custom-logout-1-outline"></use>
-                          </svg>
-                          Logout
-                        </button>
-                      </div>
-                      <div
-                        class="card border-0 shadow-none drp-upgrade-card mb-0"
-                        style={{
-                          backgroundImage: `url(/assets/images/layout/img-profile-card.jpg)`,
-                        }}
-                      >
-                        <div class="card-body">
-                          <div class="user-group">
-                            <img
-                              src="../assets/images/user/avatar-1.jpg"
-                              alt="user-image"
-                              class="avtar"
-                            />
-                            <img
-                              src="../assets/images/user/avatar-2.jpg"
-                              alt="user-image"
-                              class="avtar"
-                            />
-                            <img
-                              src="../assets/images/user/avatar-3.jpg"
-                              alt="user-image"
-                              class="avtar"
-                            />
-                            <img
-                              src="../assets/images/user/avatar-4.jpg"
-                              alt="user-image"
-                              class="avtar"
-                            />
-                            <img
-                              src="../assets/images/user/avatar-5.jpg"
-                              alt="user-image"
-                              class="avtar"
-                            />
-                            <span class="avtar bg-light-primary text-primary">
-                              +20
-                            </span>
-                          </div>
-                          <h3 class="my-3 text-dark">
-                            245.3k <small class="text-muted">Followers</small>
-                          </h3>
-                          <div class="btn btn btn-warning">
-                            <svg class="pc-icon me-2">
-                              <use xlinkHref="#custom-logout-1-outline"></use>
-                            </svg>
-                            Upgrade to Business
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </li>
             </ul>
           </div>

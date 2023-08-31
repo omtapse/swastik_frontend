@@ -520,11 +520,7 @@ export default function Home() {
                                   defaultValue={dayjs(values.programDate,dateFormat
                                   )}
                                 />
-                                {errors.programDate && (
-                                  <small className={`form-text text-muted ${styles.errorMessage}`}>
-                                    {errors.programDate}
-                                  </small>
-                                )}
+                                
                               </Space>
                             </div>
                           </div>
