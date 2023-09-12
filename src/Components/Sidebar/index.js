@@ -24,9 +24,9 @@ const Sidebar = () => {
           <div className="m-header">
             <a href="#" className="b-brand text-primary">
               <img src="/assets/logo.png" style={{height:"4rem"}}/>
-              <span className="badge bg-light-success rounded-pill ms-2 theme-version">
+              {/* <span className="badge bg-light-success rounded-pill ms-2 theme-version">
                 v1.0
-              </span>
+              </span> */}
             </a>
           </div>
           <div className={`navbar-content ${styles.scrollbar}`}>
