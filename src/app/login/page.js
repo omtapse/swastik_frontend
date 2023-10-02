@@ -51,7 +51,7 @@ export default function Page() {
               <div className="card-body">
                 <div className="text-center">
                   <a href="#">
-                    <img src="../assets/images/logo-dark.svg" alt="img" />
+                    <img style={{width:'5rem'}} src="../assets/logo.png" alt="img" />
                   </a>
                   <div className="d-grid my-3">
                     <button

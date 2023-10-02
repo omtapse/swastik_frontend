@@ -23,10 +23,10 @@ import { useRouter } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-  title: 'Swastik Nyati-group',
-  description: '',
-}
+// export const metadata = {
+//   title: 'Swastik Nyati-group',
+//   description: '',
+// }
 
 
 export default function RootLayout({ children }) {
