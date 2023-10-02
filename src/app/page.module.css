@@ -97,7 +97,7 @@
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -106,6 +106,200 @@
 
 .logo {
   position: relative;
+}
+
+.cardContainers {
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  /* width: calc(100% * 4 / var(--Grid-columns)); */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.card {
+  background-color: rgb(255, 255, 255);
+  color: rgb(33, 43, 54);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-image: none;
+  overflow: hidden;
+  position: relative;
+  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
+    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+  border-radius: 16px;
+  z-index: 0;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  padding: 16px 16px 16px 24px;
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  width: calc(100% * 4 / 13);
+}
+.cardCountText {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+  line-height: 1.5;
+  /* font-size: 1.5rem; */
+  font-family: "Public Sans", sans-serif;
+}
+.cardDescription {
+  color: rgb(99, 115, 129);
+  font-weight: 600;
+  line-height: 1.57143;
+  font-size: 0.875rem;
+  font-family: "Public Sans", sans-serif;
+}
+.cardImage {
+  width: 100px;
+  height: 100px;
+  line-height: 0;
+  border-radius: 50%;
+  background-color: rgb(244, 246, 248);
+}
+
+.graphContainer {
+  /* width: 100%; */
+  /* height: 100%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+      135deg,
+      rgba(91, 228, 155, 0.2),
+      rgba(0, 167, 111, 0.2)
+    )
+    rgb(255, 255, 255);
+  padding: 24px;
+  border-radius: 16px;
+  color: rgb(0, 75, 80);
+  width: fit-content;
+  padding-bottom: 0;
+}
+
+.graphTextStyles {
+  margin-bottom: 8px;
+  font-weight: 600;
+  line-height: 1.57143;
+  font-size: 0.875rem;
+  font-family: "Public Sans", sans-serif;
+}
+
+.graphContent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.sideDivGraph {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+}
+.percentStyles {
+  font-weight: 600;
+  line-height: 1.57143;
+  font-size: 0.875rem;
+  font-family: "Public Sans", sans-serif;
+}
+
+.textStyles {
+  margin-top: 4px;
+  opacity: 0.8;
+  line-height: 1.57143;
+  font-size: 0.875rem;
+  font-family: "Public Sans", sans-serif;
+  font-weight: 400;
+}
+.amountStyles {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: "Public Sans", sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  font-family: "Public Sans", sans-serif;
+}
+
+.barChartConationer {
+  width: 40%;
+  background-color: rgb(255, 255, 255);
+  color: rgb(33, 43, 54);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-image: none;
+  overflow: hidden;
+  position: relative;
+  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
+    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+  border-radius: 16px;
+  z-index: 0;
+}
+
+.headerText {
+  font-size: 1.125rem;
+  margin: 0px;
+  font-weight: 700;
+  line-height: 1.55556;
+  font-size: 1.0625rem;
+  font-family: "Public Sans", sans-serif;
+  display: block;
+}
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
+
+.barsContainer {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.barStyles {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  z-index: 0;
+  border-radius: 4px;
+  height: 8px;
+  background-color: rgba(145, 158, 171, 0.16);
+}
+.progressBarStyles {
+  width: 100%;
+  position: absolute;
+  left: -400px;
+  bottom: 0px;
+  top: 0px;
+  transition: transform 1s linear 2s  ;
+  transform-origin: left center;
+  background-color: rgb(255, 171, 0);
+}
+.textStyles {
+  font-weight: 700;
+  line-height: 1.5;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-family: "Public Sans", sans-serif;
+}
+.headerContainer {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 24px 24px 0px;
 }
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {

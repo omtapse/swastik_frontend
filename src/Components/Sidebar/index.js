@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import styles from './styles.module.css'
+import Link from "next/link";
+import styles from "./styles.module.css";
 
 const Sidebar = () => {
   const barOnClick = (e) => {
@@ -7,9 +7,9 @@ const Sidebar = () => {
     e.stopPropagation();
     console.log(e.currentTarget.classList);
     if (e.currentTarget.classList.contains("pc-trigger")) {
-      console.log("remove")
-      e.currentTarget.classList.remove("pc-trigger")
-      return
+      console.log("remove");
+      e.currentTarget.classList.remove("pc-trigger");
+      return;
     } else {
       console.log("add");
       e.currentTarget.classList.add("pc-trigger");
@@ -17,20 +17,19 @@ const Sidebar = () => {
     }
   };
 
-
   return (
     <>
       <nav className="pc-sidebar">
         <div className="navbar-wrapper">
           <div className="m-header">
             <a href="#" className="b-brand text-primary">
-              <img src="../assets/images/logo-dark.svg" />
+              <img src="/assets/logo.png" style={{height:"4rem"}}/>
               <span className="badge bg-light-success rounded-pill ms-2 theme-version">
-                v9.0
+                v1.0
               </span>
             </a>
           </div>
-          <div className={`navbar-content ${styles.scrollbar}`} >
+          <div className={`navbar-content ${styles.scrollbar}`}>
             <div className="card pc-user-card">
               <div className="card-body">
                 <div className="d-flex align-items-center">
@@ -38,9 +37,8 @@ const Sidebar = () => {
                     <img
                       onClick={(e) => {
                         e.stopPropagation();
-                        console.log("click");
                       }}
-                      src="../assets/images/user/avatar-1.jpg"
+                      src="/assets/images/user/avatar-1.jpg"
                       alt="user-image"
                       className="user-avtar wid-45 rounded-circle"
                     />
@@ -89,46 +87,40 @@ const Sidebar = () => {
               <li className="pc-item pc-caption">
                 <label>Navigation</label>
               </li>
-              <li onClick={(e) => barOnClick(e)} className="pc-item pc-hasmenu">
-                <a href="#!" className="pc-link">
+              <li
+                // onClick={(e) => barOnClick(e)}
+                className="pc-item "
+              >
+                <Link href="/" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
-                      <use xlinkHref="#custom-status-up"></use>
+                      <path
+                        opacity="0.4"
+                        d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M6.88086 18.9001C6.47086 18.9001 6.13086 18.5601 6.13086 18.1501V16.0801C6.13086 15.6701 6.47086 15.3301 6.88086 15.3301C7.29086 15.3301 7.63086 15.6701 7.63086 16.0801V18.1501C7.63086 18.5701 7.29086 18.9001 6.88086 18.9001Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M12 18.9C11.59 18.9 11.25 18.56 11.25 18.15V14C11.25 13.59 11.59 13.25 12 13.25C12.41 13.25 12.75 13.59 12.75 14V18.15C12.75 18.57 12.41 18.9 12 18.9Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M17.1191 18.9002C16.7091 18.9002 16.3691 18.5602 16.3691 18.1502V11.9302C16.3691 11.5202 16.7091 11.1802 17.1191 11.1802C17.5291 11.1802 17.8691 11.5202 17.8691 11.9302V18.1502C17.8691 18.5702 17.5391 18.9002 17.1191 18.9002Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M17.871 5.8201C17.871 5.7701 17.851 5.7101 17.841 5.6601C17.831 5.6201 17.821 5.5701 17.811 5.5301C17.791 5.4901 17.761 5.4601 17.741 5.4201C17.711 5.3801 17.681 5.3301 17.641 5.3001C17.631 5.2901 17.631 5.2801 17.621 5.2801C17.591 5.2601 17.561 5.2501 17.531 5.2301C17.491 5.2001 17.441 5.1701 17.391 5.1501C17.341 5.1301 17.291 5.1301 17.241 5.1201C17.201 5.1101 17.171 5.1001 17.131 5.1001H14.201C13.791 5.1001 13.451 5.4401 13.451 5.8501C13.451 6.2601 13.791 6.6001 14.201 6.6001H15.451C13.071 9.1001 10.071 10.8601 6.70096 11.7101C6.30096 11.8101 6.05096 12.2201 6.15096 12.6201C6.23096 12.9601 6.54096 13.1901 6.88096 13.1901C6.94096 13.1901 7.00096 13.1801 7.06096 13.1701C10.631 12.2801 13.821 10.4301 16.371 7.8101V8.7801C16.371 9.1901 16.711 9.5301 17.121 9.5301C17.531 9.5301 17.871 9.1901 17.871 8.7801V5.8501C17.871 5.8401 17.871 5.8301 17.871 5.8201Z"
+                        fill="currentcolor"
+                      />
                     </svg>
                   </span>
                   <span className="pc-mtext">Dashboard</span>
-                  <span className="pc-arrow">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className="feather feather-chevron-right"
-                    >
-                      <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                  </span>
-                  <span className="pc-badge">2</span>
-                </a>
-                <ul className="pc-submenu">
-                  <li className="pc-item">
-                    <a className="pc-link" href="index.html">
-                      Default
-                    </a>
-                  </li>
-                  <li className="pc-item">
-                    <a className="pc-link" href="analytics.html">
-                      Analytics
-                    </a>
-                  </li>
-                </ul>
+                </Link>
               </li>
-              <li className="pc-item pc-hasmenu">
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -165,7 +157,7 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
               <li className="pc-item pc-caption">
                 <label>Widget</label>
                 <svg className="pc-icon">
@@ -173,16 +165,104 @@ const Sidebar = () => {
                 </svg>
               </li>
               <li className="pc-item">
-                <Link href="programs" className="pc-link">
+                <Link href="/programs" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
-                      <use xlinkHref="#custom-story"></use>
+                      <path
+                        d="M16.42 7.95012C18.86 10.3901 18.86 14.3501 16.42 16.7901C13.98 19.2301 10.02 19.2301 7.58 16.7901C5.14 14.3501 5.14 10.3901 7.58 7.95012C10.02 5.51012 13.98 5.51012 16.42 7.95012Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        opacity="0.4"
+                        d="M8.24906 22.3899C8.15906 22.3899 8.05906 22.3699 7.96906 22.3399C5.71906 21.4399 3.89905 19.8499 2.67905 17.7499C1.49905 15.6999 1.02905 13.3799 1.33905 11.0199C1.38905 10.6099 1.77905 10.3199 2.17905 10.3699C2.58905 10.4199 2.87904 10.7999 2.82904 11.2099C2.56904 13.2299 2.96907 15.2299 3.97907 16.9899C5.01907 18.7899 6.58905 20.1599 8.51905 20.9299C8.89905 21.0899 9.08906 21.5198 8.93906 21.9098C8.82906 22.2098 8.53906 22.3899 8.24906 22.3899Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        opacity="0.4"
+                        d="M5.84961 5.22986C5.62961 5.22986 5.40961 5.12988 5.25961 4.93988C4.99961 4.60988 5.05962 4.13989 5.38962 3.88989C7.29962 2.39989 9.57961 1.60986 11.9996 1.60986C14.3596 1.60986 16.6096 2.36988 18.4996 3.80988C18.8296 4.05988 18.8896 4.52986 18.6396 4.85986C18.3896 5.18986 17.9196 5.24988 17.5896 4.99988C15.9696 3.75988 14.0396 3.10986 11.9996 3.10986C9.91961 3.10986 7.9496 3.78989 6.3096 5.06989C6.1696 5.17989 6.00961 5.22986 5.84961 5.22986Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        opacity="0.4"
+                        d="M15.7507 22.3901C15.4507 22.3901 15.1707 22.2101 15.0507 21.9201C14.9007 21.5401 15.0807 21.1001 15.4707 20.9401C17.4007 20.1601 18.9707 18.8001 20.0107 17.0001C21.0307 15.2401 21.4307 13.2401 21.1607 11.2201C21.1107 10.8101 21.4007 10.4301 21.8107 10.3801C22.2107 10.3301 22.6007 10.6201 22.6507 11.0301C22.9507 13.3801 22.4907 15.7101 21.3107 17.7601C20.1007 19.8601 18.2707 21.4401 16.0207 22.3501C15.9407 22.3701 15.8507 22.3901 15.7507 22.3901Z"
+                        fill="currentcolor"
+                      />
                     </svg>
                   </span>
                   <span className="pc-mtext">Programs</span>
                 </Link>
               </li>
               <li className="pc-item">
+                <Link href="/vihars" className="pc-link">
+                  <span className="pc-micon">
+                    <svg className="pc-icon">
+                      <path
+                        d="M20 14.25C21.2426 14.25 22.25 13.2426 22.25 12C22.25 10.7574 21.2426 9.75 20 9.75C18.7574 9.75 17.75 10.7574 17.75 12C17.75 13.2426 18.7574 14.25 20 14.25Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M20 6.25C21.2426 6.25 22.25 5.24264 22.25 4C22.25 2.75736 21.2426 1.75 20 1.75C18.7574 1.75 17.75 2.75736 17.75 4C17.75 5.24264 18.7574 6.25 20 6.25Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M20 22.25C21.2426 22.25 22.25 21.2426 22.25 20C22.25 18.7574 21.2426 17.75 20 17.75C18.7574 17.75 17.75 18.7574 17.75 20C17.75 21.2426 18.7574 22.25 20 22.25Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M4 14.25C5.24264 14.25 6.25 13.2426 6.25 12C6.25 10.7574 5.24264 9.75 4 9.75C2.75736 9.75 1.75 10.7574 1.75 12C1.75 13.2426 2.75736 14.25 4 14.25Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        opacity="0.4"
+                        d="M19 12.75C19.41 12.75 19.75 12.41 19.75 12C19.75 11.59 19.41 11.25 19 11.25H11.75V7C11.75 5.42 12.42 4.75 14 4.75H19C19.41 4.75 19.75 4.41 19.75 4C19.75 3.59 19.41 3.25 19 3.25H14C11.58 3.25 10.25 4.58 10.25 7V11.25H5C4.59 11.25 4.25 11.59 4.25 12C4.25 12.41 4.59 12.75 5 12.75H10.25V17C10.25 19.42 11.58 20.75 14 20.75H19C19.41 20.75 19.75 20.41 19.75 20C19.75 19.59 19.41 19.25 19 19.25H14C12.42 19.25 11.75 18.58 11.75 17V12.75H19Z"
+                        fill="currentcolor"
+                      />
+                    </svg>
+                  </span>
+                  <span className="pc-mtext">Vihars</span>
+                </Link>
+              </li>
+              <li className="pc-item">
+                <Link href="/gurus" className="pc-link">
+                  <span className="pc-micon">
+                    <svg className="pc-icon">
+                      <path
+                        opacity="0.4"
+                        d="M22 7.81V16.19C22 19 20.71 20.93 18.44 21.66C17.78 21.89 17.02 22 16.19 22H7.81C6.98 22 6.22 21.89 5.56 21.66C3.29 20.93 2 19 2 16.19V7.81C2 4.17 4.17 2 7.81 2H16.19C19.83 2 22 4.17 22 7.81Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M18.4406 21.66C17.7806 21.89 17.0206 22 16.1906 22H7.81055C6.98055 22 6.22055 21.89 5.56055 21.66C5.91055 19.02 8.67055 16.97 12.0005 16.97C15.3305 16.97 18.0906 19.02 18.4406 21.66Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M15.5799 11.58C15.5799 13.56 13.9799 15.17 11.9999 15.17C10.0199 15.17 8.41992 13.56 8.41992 11.58C8.41992 9.60002 10.0199 8 11.9999 8C13.9799 8 15.5799 9.60002 15.5799 11.58Z"
+                        fill="currentcolor"
+                      />
+                    </svg>
+                  </span>
+                  <span className="pc-mtext">gurus</span>
+                </Link>
+              </li>
+              <li className="pc-item">
+                <Link href="/pillars" className="pc-link">
+                  <span className="pc-micon">
+                    <svg className="pc-icon">
+                      <path
+                        opacity="0.4"
+                        d="M19.9 13.5H4.1C2.6 13.5 2 14.14 2 15.73V19.77C2 21.36 2.6 22 4.1 22H19.9C21.4 22 22 21.36 22 19.77V15.73C22 14.14 21.4 13.5 19.9 13.5Z"
+                        fill="currentcolor"
+                      />
+                      <path
+                        d="M19.9 2H4.1C2.6 2 2 2.64 2 4.23V8.27C2 9.86 2.6 10.5 4.1 10.5H19.9C21.4 10.5 22 9.86 22 8.27V4.23C22 2.64 21.4 2 19.9 2Z"
+                        fill="currentcolor"
+                      />
+                    </svg>
+                  </span>
+                  <span className="pc-mtext">Pillars</span>
+                </Link>
+              </li>
+              {/* <li className="pc-item">
                 <a href="../widget/w_data.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -191,8 +271,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Data</span>
                 </a>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../widget/w_chart.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -201,14 +281,14 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Chart</span>
                 </a>
-              </li>
-              <li className="pc-item pc-caption">
+              </li> */}
+              {/* <li className="pc-item pc-caption">
                 <label>UI Components</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-box-1"></use>
                 </svg>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a
                   href="../elements/bc_alert.html"
                   className="pc-link"
@@ -221,8 +301,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Components</span>
                 </a>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -267,14 +347,14 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-caption">
+              </li> */}
+              {/* <li className="pc-item pc-caption">
                 <label>Forms</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-element-plus"></use>
                 </svg>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -334,8 +414,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -381,8 +461,8 @@ const Sidebar = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="pc-item pc-hasmenu">
+                  </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                     <a className="pc-link" href="#">
                       Select
                       <span className="pc-arrow">
@@ -399,8 +479,8 @@ const Sidebar = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="pc-item">
+                  </li> */}
+              {/* <li className="pc-item">
                     <a className="pc-link" href="../forms/form2_recaptcha.html">
                       Google reCaptcha
                     </a>
@@ -434,8 +514,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -506,8 +586,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -553,8 +633,8 @@ const Sidebar = () => {
                     </a>{" "}
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -639,8 +719,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -719,8 +799,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -759,8 +839,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -863,14 +943,14 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-caption">
+              </li> */}
+              {/* <li className="pc-item pc-caption">
                 <label>Charts</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-graph"></use>
                 </svg>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -889,14 +969,14 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-caption">
+              </li> */}
+              {/* <li className="pc-item pc-caption">
                 <label>Application</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-shopping-bag"></use>
                 </svg>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../application/calendar.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -905,8 +985,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Calendar</span>
                 </a>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../application/chat.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -915,8 +995,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Chat</span>
                 </a>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a
                   href="../application/cust_customer_list.html"
                   className="pc-link"
@@ -928,8 +1008,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Customer</span>
                 </a>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -983,8 +1063,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../application/file-manager.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -993,8 +1073,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">File manager</span>
                 </a>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../application/mail.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1003,8 +1083,8 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Mail</span>
                 </a>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1034,15 +1114,15 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
 
-              <li className="pc-item pc-caption">
+              {/* <li className="pc-item pc-caption">
                 <label>Pages</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-flag"></use>
                 </svg>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1118,8 +1198,8 @@ const Sidebar = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="pc-item pc-hasmenu">
+                  </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                     <a href="#!" className="pc-link">
                       Authentication 2
                       <span className="pc-arrow">
@@ -1182,8 +1262,8 @@ const Sidebar = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="pc-item">
+                  </li> */}
+              {/* <li className="pc-item">
                     <a
                       href="../pages/login-v3.html"
                       target="_blank"
@@ -1193,8 +1273,8 @@ const Sidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item pc-hasmenu">
+              </li> */}
+              {/* <li className="pc-item pc-hasmenu">
                 <a href="#!" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1335,9 +1415,9 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Landing</span>
                 </a>
-              </li>
+              </li> */}
 
-              <li className="pc-item pc-caption">
+              {/* <li className="pc-item pc-caption">
                 <label>Other</label>
                 <svg className="pc-icon">
                   <use xlinkHref="#custom-notification-status"></use>
@@ -1442,8 +1522,8 @@ const Sidebar = () => {
                     </ul>
                   </li>
                 </ul>
-              </li>
-              <li className="pc-item">
+              </li> */}
+              {/* <li className="pc-item">
                 <a href="../other/sample-page.html" className="pc-link">
                   <span className="pc-micon">
                     <svg className="pc-icon">
@@ -1452,7 +1532,7 @@ const Sidebar = () => {
                   </span>
                   <span className="pc-mtext">Sample page</span>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
