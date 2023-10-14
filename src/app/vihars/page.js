@@ -16,120 +16,121 @@ export default function Home() {
   const [columns, setColumns] = useState([]);
   const router = useRouter();
 
-  const fetchGurus =async () => {
+  const fetchGurus = async () => {
     const res = await routes.APIS.GET_ALL_VIHARS();
     if (res.message === "Vihars fetched successfully") {
-        setGurus(res.vihars);
-        setColumns([
+      setGurus(res.vihars);
+      setColumns([
+        {
+          title: "#",
+          dataIndex: "id",
+          key: "id",
+          render: (text, obj, index) => {
+            return <h6 class="mb-1">{index + 1}</h6>
+          }
+        },
+        {
+          title: "Vihar Name",
+          dataIndex: "viharName",
+          key: "viharName",
+          render: (text, obj) => {
             {
-            title: "#",
-            dataIndex: "id",
-            key: "id",
-            render: (text,obj,index) => {
-                return <h6 class="mb-1">{index+1}</h6>
+              console.log(text, obj);
             }
-            },
-          {
-            title: "Vihar Name",
-            dataIndex: "viharName",
-            key: "viharName",
-            render: (text, obj) => {
-              {
-                console.log(text, obj);
-              }
-              return (
-                <div class="row">
-                  <div class="col-auto pe-0">
-                    <img
-                      src={obj.masterImage}
-                      alt="user-image"
-                      class="wid-40 rounded"
-                    />
-                  </div>
-                  <div class="col">
-                    <h6 class="mb-1">{text}</h6>
-                    <p
-                      class="text-muted f-12 mb-0"
-                      style={{
-                        width: "20rem",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        // height:"46px",
-                        overflow: "hidden"
-                      }}
-                      dangerouslySetInnerHTML={{ __html: obj.tagLine }}
-                    >
-                      {/* {obj.about} */}
-                    </p>
-                  </div>
+            return (
+              <div class="row">
+                <div class="col-auto pe-0">
+                  <img
+                    src={obj.masterImage}
+                    alt="user-image"
+                    class="wid-50 rounded"
+                  />
                 </div>
-              );
-            },
-          },
-          {
-            title: "Updated On",
-            dataIndex: "updatedAt",
-            key: "updatedAt",
-            render: (text) => {
-                return <p>{text.split('T')[0]}</p>;
-                }
-          },
-          {
-            title: "Actions",
-            dataIndex: "Action",
-            key: "Action",
-            render: (text, obj) => {
-              return (
-                <ul class="list-inline me-auto mb-0">
-                  <li
-                    class="list-inline-item align-bottom"
-                    data-bs-toggle="tooltip"
-                    title="View"
+                <div class="col">
+                  <h6 class="mb-1">{text}</h6>
+                  <p
+                    class="text-muted f-16 mb-0"
+                    style={{
+                      width: "16rem",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      // height:"46px",
+                      // overflow: "hidden"
+                    }}
+                    dangerouslySetInnerHTML={{ __html: obj.tagLine }}
                   >
-                    <a
-                      href="#"
-                      class="avtar avtar-xs btn-link-secondary btn-pc-default"
-                      data-bs-toggle="modal"
-                      data-bs-target="#cust-modal"
-                    >
-                      <i class="ti ti-eye f-18"></i>
-                    </a>
-                  </li>
-                  <li
-                    class="list-inline-item align-bottom"
-                    data-bs-toggle="tooltip"
-                    title="Edit"
-                  >
-                    <Link
-                      href={`/vihars/editvihars/${obj._id}`}
-                      class="avtar avtar-xs btn-link-success btn-pc-default"
-                    >
-                      <i class="ti ti-edit-circle f-18"></i>
-                    </Link>
-                  </li>
-                  <li
-                    class="list-inline-item align-bottom"
-                    data-bs-toggle="tooltip"
-                    title="Delete"
-                  >
-                    <div
-                      class="avtar avtar-xs btn-link-danger btn-pc-default"
-                        onClick={()=>{
-                            console.log("HEREEEE",obj._id)
-                            routes.APIS.DELETE_VIHAR(obj._id).then((res)=>{
-                            notification.success({message:res.message})
-                            fetchGurus()
-                        })}}
-                    >
-                      <i class="ti ti-trash f-18"></i>
-                    </div>
-                  </li>
-                </ul>
-              );
-            },
+                    {/* {obj.about} */}
+                  </p>
+                </div>
+              </div>
+            );
           },
-        ]);
+        },
+        {
+          title: "Updated On",
+          dataIndex: "updatedAt",
+          key: "updatedAt",
+          render: (text) => {
+            return <p class="f-16 mb-0">{text.split('T')[0]}</p>;
+          }
+        },
+        {
+          title: "Actions",
+          dataIndex: "Action",
+          key: "Action",
+          render: (text, obj) => {
+            return (
+              <ul class="list-inline me-auto mb-0">
+                <li
+                  class="list-inline-item align-bottom"
+                  data-bs-toggle="tooltip"
+                  title="View"
+                >
+                  <a
+                    href="#"
+                    class="avtar avtar-xs btn-link-secondary btn-pc-default"
+                    data-bs-toggle="modal"
+                    data-bs-target="#cust-modal"
+                  >
+                    <i class="ti ti-eye f-18"></i>
+                  </a>
+                </li>
+                <li
+                  class="list-inline-item align-bottom"
+                  data-bs-toggle="tooltip"
+                  title="Edit"
+                >
+                  <Link
+                    href={`/vihars/editvihars/${obj._id}`}
+                    class="avtar avtar-xs btn-link-success btn-pc-default"
+                  >
+                    <i class="ti ti-edit-circle f-18"></i>
+                  </Link>
+                </li>
+                <li
+                  class="list-inline-item align-bottom"
+                  data-bs-toggle="tooltip"
+                  title="Delete"
+                >
+                  <div
+                    class="avtar avtar-xs btn-link-danger btn-pc-default"
+                    onClick={() => {
+                      console.log("HEREEEE", obj._id)
+                      routes.APIS.DELETE_VIHAR(obj._id).then((res) => {
+                        notification.success({ message: res.message })
+                        fetchGurus()
+                      })
+                    }}
+                  >
+                    <i class="ti ti-trash f-18"></i>
+                  </div>
+                </li>
+              </ul>
+            );
+          },
+        },
+      ]);
     }
   }
   useEffect(() => {
@@ -180,7 +181,7 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="table-responsive">
-                    <Table columns={columns} dataSource={gurus} pagination={{pageSize:7}} />
+                    <Table columns={columns} dataSource={gurus} pagination={{ pageSize: 7 }} />
                   </div>
                 </div>
               </div>

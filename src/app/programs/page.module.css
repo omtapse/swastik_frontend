@@ -1,0 +1,20 @@
+/* :where(.css-dev-only-do-not-override-fpg3f5).ant-table-wrapper .ant-table-tbody>tr>td,
+:where(.css-dev-only-do-not-override-fpg3f5).ant-table-wrapper tfoot>tr>th,
+:where(.css-dev-only-do-not-override-fpg3f5).ant-table-wrapper tfoot>tr>td {
+    position: relative;
+    padding: 15px 12px;
+    overflow-wrap: break-word;
+}
+
+.customTable tfoot>tr>th {
+    position: relative;
+    padding: 10px 10px !important;
+    overflow-wrap: break-word;
+} */
+:where(.css-dev-only-do-not-override-fpg3f5) .custom-table-class .ant-table-wrapper .ant-table-tbody>tr>td,
+:where(.css-dev-only-do-not-override-fpg3f5) .custom-table-class .ant-table-wrapper tfoot>tr>th,
+:where(.css-dev-only-do-not-override-fpg3f5) .custom-table-class .ant-table-wrapper tfoot>tr>td {
+    position: relative;
+    padding: 14px 12px;
+    overflow-wrap: break-word;
+}

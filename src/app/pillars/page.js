@@ -16,148 +16,149 @@ export default function Home() {
   const [columns, setColumns] = useState([]);
   const router = useRouter();
 
-  const FetchPillars =async () => {
+  const FetchPillars = async () => {
     const res = await routes.APIS.GET_ALL_PILLARS();
     if (res.message === "Pillars fetched successfully") {
-        setGurus(res.data);
-        setColumns([
+      setGurus(res.data);
+      setColumns([
+        {
+          title: "#",
+          dataIndex: "id",
+          key: "id",
+          render: (text, obj, index) => {
+            return <h6 class="mb-1">{index + 1}</h6>
+          }
+        },
+        {
+          title: "Pillar Name",
+          dataIndex: "pillarTitle",
+          key: "pillarTitle",
+          render: (text, obj) => {
             {
-            title: "#",
-            dataIndex: "id",
-            key: "id",
-            render: (text,obj,index) => {
-                return <h6 class="mb-1">{index+1}</h6>
+              console.log(text, obj);
             }
-            },
-          {
-            title: "Pillar Name",
-            dataIndex: "pillarTitle",
-            key: "pillarTitle",
-            render: (text, obj) => {
-              {
-                console.log(text, obj);
-              }
-              return (
-                <div class="row">
-                  <div class="col-auto pe-0">
-                    <img
-                      src={obj.pillarImage}
-                      alt="user-image"
-                      class="wid-40 rounded"
-                    />
-                  </div>
-                  <div class="col">
-                    <h6 class="mb-1" style={{width:'fit-content'}}>{text}</h6>
-                    <p
-                      class="text-muted f-12 mb-0"
-                      style={{
-                        width: "12rem",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        // height:"46px",
-                        overflow: "hidden"
-                      }}
-                      dangerouslySetInnerHTML={{ __html: obj.pillarDescription }}
-                    >
-                    </p>
-                  </div>
+            return (
+              <div class="row">
+                <div class="col-auto pe-0">
+                  <img
+                    src={obj.pillarImage}
+                    alt="user-image"
+                    class="wid-40 rounded"
+                  />
                 </div>
-              );
-            },
+                <div class="col">
+                  <h6 class="mb-1" style={{ width: 'fit-content' }}>{text}</h6>
+                  <p
+                    class="text-muted f-12 mb-0"
+                    style={{
+                      width: "12rem",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      // height:"46px",
+                      // overflow: "hidden"
+                    }}
+                    dangerouslySetInnerHTML={{ __html: obj.pillarDescription }}
+                  >
+                  </p>
+                </div>
+              </div>
+            );
           },
-          // {
-          //   title: "Experties",
-          //   dataIndex: "experties",
-          //   key: "experties",
-          //   render: (text) => {
-          //     return (
-          //       <p
-          //         class="text-muted f-12 mb-0"
-          //         style={{
-          //           width: "10rem",
-          //           whiteSpace: "nowrap",
-          //           overflow: "hidden",
-          //           textOverflow: "ellipsis",
-          //         }}
-          //       >
-          //         {text}
-          //       </p>
-          //     );
-          //   },
-          // },
+        },
+        // {
+        //   title: "Experties",
+        //   dataIndex: "experties",
+        //   key: "experties",
+        //   render: (text) => {
+        //     return (
+        //       <p
+        //         class="text-muted f-12 mb-0"
+        //         style={{
+        //           width: "10rem",
+        //           whiteSpace: "nowrap",
+        //           overflow: "hidden",
+        //           textOverflow: "ellipsis",
+        //         }}
+        //       >
+        //         {text}
+        //       </p>
+        //     );
+        //   },
+        // },
 
-          {
-            title: "Registered On",
-            dataIndex: "createdAt",
-            key: "createdAt",
-            render: (text) => {
-                return <p>{text.split('T')[0]}</p>;
-                }
-          },
-          {
-            title: "Updated On",
-            dataIndex: "createdAt",
-            key: "createdAt",
-            render: (text) => {
-                return <p>{text.split('T')[0]}</p>;
-                }
-          },
-          {
-            title: "Actions",
-            dataIndex: "Action",
-            key: "Action",
-            render: (text, obj) => {
-              return (
-                <ul class="list-inline me-auto mb-0">
-                  <li
-                    class="list-inline-item align-bottom"
-                    data-bs-toggle="tooltip"
-                    title="View"
+        {
+          title: "Registered On",
+          dataIndex: "createdAt",
+          key: "createdAt",
+          render: (text) => {
+            return <p class="f-16 mb-0">{text.split('T')[0]}</p>;
+          }
+        },
+        {
+          title: "Updated On",
+          dataIndex: "createdAt",
+          key: "createdAt",
+          render: (text) => {
+            return <p class="f-16 mb-0">{text.split('T')[0]}</p>;
+          }
+        },
+        {
+          title: "Actions",
+          dataIndex: "Action",
+          key: "Action",
+          render: (text, obj) => {
+            return (
+              <ul class="list-inline me-auto mb-0">
+                <li
+                  class="list-inline-item align-bottom"
+                  data-bs-toggle="tooltip"
+                  title="View"
+                >
+                  <a
+                    href="#"
+                    class="avtar avtar-xs btn-link-secondary btn-pc-default"
+                    data-bs-toggle="modal"
+                    data-bs-target="#cust-modal"
                   >
-                    <a
-                      href="#"
-                      class="avtar avtar-xs btn-link-secondary btn-pc-default"
-                      data-bs-toggle="modal"
-                      data-bs-target="#cust-modal"
-                    >
-                      <i class="ti ti-eye f-18"></i>
-                    </a>
-                  </li>
-                  <li
-                    class="list-inline-item align-bottom"
-                    data-bs-toggle="tooltip"
-                    title="Edit"
+                    <i class="ti ti-eye f-18"></i>
+                  </a>
+                </li>
+                <li
+                  class="list-inline-item align-bottom"
+                  data-bs-toggle="tooltip"
+                  title="Edit"
+                >
+                  <Link
+                    href={`/pillars/editpillar/${obj._id}`}
+                    class="avtar avtar-xs btn-link-success btn-pc-default"
                   >
-                    <Link
-                      href={`/pillars/editpillar/${obj._id}`}
-                      class="avtar avtar-xs btn-link-success btn-pc-default"
-                    >
-                      <i class="ti ti-edit-circle f-18"></i>
-                    </Link>
-                  </li>
-                  <li
-                    class="list-inline-item align-bottom"
-                    data-bs-toggle="tooltip"
-                    title="Delete"
+                    <i class="ti ti-edit-circle f-18"></i>
+                  </Link>
+                </li>
+                <li
+                  class="list-inline-item align-bottom"
+                  data-bs-toggle="tooltip"
+                  title="Delete"
+                >
+                  <div
+                    class="avtar avtar-xs btn-link-danger btn-pc-default"
+                    onClick={() => {
+                      console.log("HEREEEE", obj._id)
+                      routes.APIS.DELETE_PILLAR(obj._id).then((res) => {
+                        notification.success({ message: res.message })
+                        FetchPillars()
+                      })
+                    }}
                   >
-                    <div
-                      class="avtar avtar-xs btn-link-danger btn-pc-default"
-                        onClick={()=>{
-                            console.log("HEREEEE",obj._id)
-                            routes.APIS.DELETE_PILLAR(obj._id).then((res)=>{
-                            notification.success({message:res.message})
-                            FetchPillars()
-                        })}}
-                    >
-                      <i class="ti ti-trash f-18"></i>
-                    </div>
-                  </li>
-                </ul>
-              );
-            },
+                    <i class="ti ti-trash f-18"></i>
+                  </div>
+                </li>
+              </ul>
+            );
           },
-        ]);
+        },
+      ]);
     }
   }
   useEffect(() => {
@@ -208,7 +209,7 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="table-responsive">
-                    <Table columns={columns} dataSource={gurus} pagination={{pageSize:7}} />
+                    <Table columns={columns} dataSource={gurus} pagination={{ pageSize: 7 }} />
                   </div>
                 </div>
               </div>

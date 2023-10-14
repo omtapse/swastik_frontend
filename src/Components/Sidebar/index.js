@@ -44,7 +44,7 @@ const Sidebar = () => {
                     />
                   </div>
                   <div className="flex-grow-1 ms-3 me-2">
-                    <h6 className="mb-0">Jonh Smith</h6>
+                    <h6 className="mb-0">Glassberry Test</h6>
                     <small>Administrator</small>
                   </div>
                   <a

@@ -10,6 +10,8 @@ import Header from "@/Components/Header";
 import Link from "next/link";
 import { routes } from "@/utills/routes";
 import { Table, notification } from "antd";
+import styles from "./page.module.css";
+
 
 export default function Home() {
   const [programs, setPrograms] = useState([]);
@@ -58,31 +60,29 @@ export default function Home() {
               //   </div>
               // </div>
               <div class="row">
-              <div class="col-auto pe-0">
-                <img
-                  src={obj.programImage}
-                  alt="user-image"
-                  class="wid-40 rounded"
-                />
-              </div>
-              <div class="col">
-                <h6 class="mb-1">{text}</h6>
-                <p
-                  class="text-muted f-12 mb-0"
-                  style={{
-                    width: "13rem",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    // height:"46px",
-                    overflow: "hidden"
-                  }}
-                  dangerouslySetInnerHTML={{ __html: obj.programDetails }}
-                >
-                  {/* {obj.programDetails} */}
-                </p>
-              </div>
-            </div>
+                <div class="col-auto pe-0">
+                  <img
+                    src={obj.programImage}
+                    alt="user-image"
+                    class="wid-40 rounded"
+                  />
+                </div>
+                <div class="col">
+                  <h6 class="mb-1">{text}</h6>
+                  <p
+                    class="text-muted f-16 mb-0"
+                    style={{
+                      width: "10rem",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: obj.programDetails }}
+                  >
+                    {/* {obj.programDetails} */}
+                  </p>
+                </div>
+              </div >
             );
           },
         },
@@ -93,7 +93,7 @@ export default function Home() {
           render: (text) => {
             return (
               <p
-                class="text-muted f-12 mb-0"
+                class="text-muted f-16 mb-0"
                 style={{
                   width: "10rem",
                   whiteSpace: "nowrap",
@@ -113,7 +113,7 @@ export default function Home() {
           render: (text) => {
             return (
               <p
-                class="text-muted f-12 mb-0"
+                class="text-muted f-16 mb-0"
                 style={{
                   width: "10rem",
                   whiteSpace: "nowrap",
@@ -133,7 +133,7 @@ export default function Home() {
           render: (text) => {
             return (
               <p
-                class="text-muted f-12 mb-0"
+                class="text-muted f-16 mb-0"
                 style={{
                   width: "10rem",
                   whiteSpace: "nowrap",
@@ -167,7 +167,7 @@ export default function Home() {
                     <i class="ti ti-eye f-18"></i>
                   </a>
                 </li>
-                
+
                 <li
                   class="list-inline-item align-bottom"
                   data-bs-toggle="tooltip"
@@ -187,7 +187,7 @@ export default function Home() {
                 >
                   <div
                     class="avtar avtar-xs btn-link-danger btn-pc-default"
-                    onClick={()=> {
+                    onClick={() => {
                       routes.APIS.DELETE_PROGRAM(obj._id).then((res) => {
                         notification.success({ message: res.message })
                         fetchPrograms()
@@ -252,8 +252,13 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="table-responsive">
-                    <Table columns={columns} dataSource={programs} pagination={{ pageSize: 7 }} />
-                    </div>
+                    <Table
+                      class={`${styles.customTable} custom-table-class`}
+                      columns={columns}
+                      dataSource={programs}
+                      pagination={{ pageSize: 7 }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
