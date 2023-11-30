@@ -1,35 +1,15 @@
 import React, { useState } from 'react';
+import { Formik, Field, ErrorMessage } from 'formik';
 import {
     Grid,
-    InputAdornment,
     Button,
-    Typography,
-    Divider,
-    MenuItem,
-    IconButton,
     Stack
 } from '@mui/material';
-
-import { IconEye, IconEyeOff } from '@tabler/icons';
 import CustomFormLabel from '../../../forms/theme-elements/CustomFormLabel';
 import CustomTextField from '../../../forms/theme-elements/CustomTextField';
 import CustomOutlinedInput from '../../../forms/theme-elements/CustomOutlinedInput';
-import CustomSelect from '../../../forms/theme-elements/CustomSelect';
-import { Paper } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { styled } from '@mui/material/styles';
-
-// import Button from '@mui/material/Button';
-import PageContainer from '../../../container/PageContainer';
-import Breadcrumb from '../../../../layouts/full/shared/breadcrumb/Breadcrumb';
-import ParentCard from '../../../shared/ParentCard';
 import { Upload, message, notification } from "antd";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import routes from '../../../../utils/routes';
@@ -37,34 +17,6 @@ import { addGurus } from '../../../../store/apps/guru/GuruSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-
-
-
-const countries = [
-    {
-        value: 'india',
-        label: 'India',
-    },
-    {
-        value: 'uk',
-        label: 'United Kingdom',
-    },
-    {
-        value: 'srilanka',
-        label: 'Srilanka',
-    },
-];
-
-const lang = [
-    {
-        value: 'en',
-        label: 'English',
-    },
-    {
-        value: 'fr',
-        label: 'French',
-    },
-];
 
 const FormSeparator = () => {
     // country
@@ -75,7 +27,7 @@ const FormSeparator = () => {
     const [fileList, setFileList] = useState([]);
     const [imageUrl, setImageUrl] = useState();
     const [loading, setLoading] = useState(false);
-    const [expertise,setExperties] =useState();
+    const [expertise, setExpertise] = useState();
     const [name, setName] = useState();
 
     const handleChange = (event) => {
@@ -160,25 +112,69 @@ const FormSeparator = () => {
         </div>
     );
 
+    const [errors, setErrors] = useState({});
+
+    const validateForm = (values) => {
+        const errors = {};
+        if (!values.name.trim()) {
+            errors.name = 'Required';
+        }
+        if (!values.expertise.trim()) {
+            errors.expertise = 'Required';
+        }
+        if (!values.image) {
+            errors.image = 'Required';
+        }
+        if (!values.about.trim()) {
+            errors.about = 'Required';
+        }
+        if (!values.programImages || values.programImages.length === 0) {
+            errors.programImages = 'Required';
+        }
+        if (!values.testimonials.trim()) {
+            errors.testimonials = 'Required';
+        }
+
+        setErrors(errors);
+        return errors;
+    };
+
+
+
     const handleSubmitBtn = async () => {
+
+        const errors = validateForm({
+            name,
+            expertise,
+            image: imageUrl,
+            about: editorContent,
+            programImages: fileList,
+            testimonials: editorTestimonial,
+        });
+
+        if (Object.values(errors).some(error => error)) {
+            console.error("Validation errors:", errors);
+            return;
+        }
+
         try {
             const data = {
                 name: name,
                 image: imageUrl,
-                about:editorContent ,
+                about: editorContent,
                 experties: expertise,
                 programImages: fileList.map((file) => file.url),
                 testimonials: editorTestimonial,
             };
-    
+
             // Dispatch the action and wait for it to complete
             await dispatch(addGurus(data));
-            console.log(",,,,,,,",data)
-            if(data){
+            console.log(",,,,,,,", data)
+            if (data) {
                 navigate('/apps/gurus/gurus-list');
             }
-    
-            
+
+
         } catch (error) {
             console.error("Error:", error);
         }
@@ -187,24 +183,28 @@ const FormSeparator = () => {
 
     return (
         <div>
-            {/* <Typography variant="h6" mb={3}>
-          Account Details
-        </Typography> */}
-            {/* ------------------------------------------------------------------------------------------------ */}
-            {/* Basic Layout */}
-            {/* ------------------------------------------------------------------------------------------------ */}
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         Guru Name
                     </CustomFormLabel>
-                    <CustomTextField id="fs-uname" placeholder="Enter Guru name" fullWidth value ={name} onChange = {(e) => setName(e.target.value)}/>
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Guru name"
+                        fullWidth
+                        value={name}
+                        onChange={(e) => {
+                            setName(e.target.value);
+                            setErrors({ ...errors, name: "" });
+                        }}
+                    />
+                    {Boolean(errors.name) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.name}</p>
+                    )}
 
-                    {/* <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
-              Expertise
-            </CustomFormLabel>
-            <CustomTextField id="fs-uname" placeholder="John Deo" fullWidth /> */}
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Master Image</CustomFormLabel>
+                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">
+                        Master Image
+                    </CustomFormLabel>
                     <Upload
                         name="image"
                         listType="picture-card"
@@ -227,144 +227,86 @@ const FormSeparator = () => {
                             uploadButton
                         )}
                     </Upload>
-
-                    {/* <CustomFormLabel htmlFor="fs-pwd">Main Image</CustomFormLabel>
-            <CustomOutlinedInput
-              type={showPassword ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <IconEyeOff size="20" /> : <IconEye size="20" />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              id="fs-pwd"
-              placeholder="john.deo"
-              fullWidth
-            /> */}
+                    {Boolean(errors.image) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.image}</p>
+                    )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-email" sx={{ mt: { sm: 0 } }}>
                         Expertise
                     </CustomFormLabel>
                     <CustomOutlinedInput
-                        // endAdornment={<InputAdornment position="Start">Enter experise</InputAdornment>}
                         id="fs-email"
-                        placeholder="Enter experise"
+                        placeholder="Enter expertise"
                         fullWidth
                         value={expertise}
-                        onChange={(e) => setExperties(e.target.value) }
+                        // onChange={(e) => setExpertise(e.target.value)}
+                        onChange={(e) => {
+                            setExpertise(e.target.value);
+                            setErrors({ ...errors, expertise: "" });
+                        }}
                     />
-                    {/* <CustomFormLabel htmlFor="fs-pwd">Confirm Password</CustomFormLabel>
-                    <CustomOutlinedInput
-                        type={showPassword2 ? 'text' : 'password'}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword2}
-                                    onMouseDown={handleMouseDownPassword2}
-                                    edge="end"
-                                >
-                                    {showPassword2 ? <IconEyeOff size="20" /> : <IconEye size="20" />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        id="fs-pwd"
-                        placeholder="john.deo"
-                        fullWidth
-                    /> */}
-                       <CustomFormLabel htmlFor="fs-date">Program Images</CustomFormLabel>
-                       <Upload
-                        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    {Boolean(errors.expertise) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.expertise}</p>
+                    )}
+
+                    <CustomFormLabel htmlFor="fs-date">Program Images</CustomFormLabel>
+                    <Upload
                         listType="picture-card"
                         fileList={fileList}
-                        // onPreview={handlePreview}
-                        // onChange={handleChangeImage}
                         accept="image/*"
                         beforeUpload={beforeUploadProgramImages}
                     >
                         {fileList.length >= 8 ? null : uploadButton}
                     </Upload>
-
+                    {Boolean(errors.programImages) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.programImages}</p>
+                    )}
                 </Grid>
-                {/* <Grid item xs={12}>
-                    <Divider sx={{ mx: '-24px' }} />
-                    <Typography variant="h6" mt={2}>
-                        Personal Info
-                    </Typography>
-                </Grid> */}
 
-
-                {/* <Grid item xs={12} sm={6}>
-                    <CustomFormLabel htmlFor="fs-fname" sx={{ mt: 0 }}>
-                        First Name
-                    </CustomFormLabel>
-                    <CustomTextField id="fs-fname" placeholder="John" fullWidth />
-                    <CustomFormLabel htmlFor="fs-country">Country</CustomFormLabel>
-                    <CustomSelect
-                        id="standard-select-currency"
-                        value={country}
-                        onChange={handleChange}
-                        fullWidth
-                        variant="outlined"
-                    >
-                        {countries.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </CustomSelect>
-                    <CustomFormLabel htmlFor="fs-date">Birth Date</CustomFormLabel>
-                    <CustomTextField type="date" id="fs-date" placeholder="John Deo" fullWidth />
-                    
-                </Grid> */}
-
-                {/* <Grid item xs={12} sm={6}>
-                    <CustomFormLabel htmlFor="fs-lname" sx={{ mt: { sm: 0 } }}>
-                        Last Name
-                    </CustomFormLabel>
-                    <CustomTextField id="fs-lname" placeholder="Deo" fullWidth />
-                    <CustomFormLabel htmlFor="fs-language">Language</CustomFormLabel>
-                    <CustomSelect value={language} onChange={handleChange2} fullWidth variant="outlined">
-                        {lang.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </CustomSelect>
-
-                    <CustomFormLabel htmlFor="fs-phone">Phone no</CustomFormLabel>
-                    <CustomTextField id="fs-phone" placeholder="123 4567 201" fullWidth />
-                </Grid> */}
                 <Grid item xs={12} >
-                <CustomFormLabel htmlFor="fs-editor">About Program</CustomFormLabel>
-                <ReactQuill
-                    id="fs-editor"
-                    value={editorContent}
-                    onChange={(value) => setEditorContent(value)}
-                    style={{height:'10rem',marginBottom:'3rem'}}
-                />
-            </Grid>
+                    <CustomFormLabel htmlFor="fs-editor">About Program</CustomFormLabel>
+                    <ReactQuill
+                        id="fs-editor"
+                        value={editorContent}
+                        style={{ height: '10rem', marginBottom: '3rem' }}
+                        // onChange={(value) => setEditorContent(value)}
+                        onChange={(value) => {
+                            setEditorContent(value);
+                            setErrors({ ...errors, about: "" });
+                        }}
+                    />
+                    {Boolean(errors.about) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.about}</p>
+                    )}
+                </Grid>
 
-            <Grid item xs={12} >
-                <CustomFormLabel htmlFor="fs-editor">Testimonials</CustomFormLabel>
-                <ReactQuill
-                    id="fs-editor"
-                    value={editorTestimonial}
-                    onChange={(value) => setEditorTestimonial(value)}
-                    style={{height:'10rem',marginBottom:'3rem'}}
-                />
-            </Grid>
+                <Grid item xs={12} >
+                    <CustomFormLabel htmlFor="fs-editor">Testimonials</CustomFormLabel>
+                    <ReactQuill
+                        id="fs-editor"
+                        value={editorTestimonial}
+                        style={{ height: '10rem', marginBottom: '3rem' }}
+                        // onChange={(value) => setEditorTestimonial(value)}
+                        onChange={(value) => {
+                            setEditorTestimonial(value);
+                            setErrors({ ...errors, testimonials: "" });
+                        }}
+                    />
+                    {Boolean(errors.testimonials) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.testimonials}</p>
+                    )}
+                </Grid>
 
                 <Grid item xs={12}>
                     <Stack direction="row" spacing={2}>
-                        <Button variant="contained" color="primary" onClick={() => handleSubmitBtn()}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => handleSubmitBtn()}
+                            // onClick={e => scrollToError(errors, handleSubmit)}
+                            // onClick={e => scrollToError(errors, handleSubmitBtn)}
+                        >
                             Submit
                         </Button>
                         <Button variant="text" color="error">

@@ -40,42 +40,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 
 
-
-const countries = [
-    {
-        value: 'india',
-        label: 'India',
-    },
-    {
-        value: 'uk',
-        label: 'United Kingdom',
-    },
-    {
-        value: 'srilanka',
-        label: 'Srilanka',
-    },
-];
-
-const lang = [
-    {
-        value: 'en',
-        label: 'English',
-    },
-    {
-        value: 'fr',
-        label: 'French',
-    },
-];
-const BCrumb = [
-    {
-        to: '/',
-        title: 'Home',
-    },
-    {
-        title: 'Quill Editor',
-    },
-];
-
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -89,14 +53,6 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 
-//   const useStyles = makeStyles((theme) => ({
-//     root: {
-//       padding: theme.spacing(2),
-//     },
-//     editor: {
-//       minHeight: '200px',
-//     },
-//   }));
 
 
 const AddProgramForm = () => {
@@ -113,7 +69,7 @@ const AddProgramForm = () => {
     const [activityValue, setActivityValue] = useState()
     const [imageUrl, setImageUrl] = useState();
     const [title, setTitle] = useState();
-    const [tagline,setTagline] = useState();
+    const [tagline, setTagline] = useState();
 
 
     const dispatch = useDispatch();
@@ -243,22 +199,6 @@ const AddProgramForm = () => {
 
 
 
-
-    // const handleChangeimg = (info) => {
-    //     if (info.file.status === 'uploading') {
-    //         setLoading(true);
-    //         return;
-    //     }
-    //     if (info.file.status === 'done') {
-    //         // Get this url from response in the real world.
-    //         getBase64(info.file.originFileObj, (url) => {
-    //             setLoading(false);
-    //             setImageUrl(url);
-    //         });
-    //     }
-    // };
-
-
     const uploadButton = (
         <div>
             {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -266,9 +206,60 @@ const AddProgramForm = () => {
         </div>
     );
 
+    const [errors, setErrors] = useState({});
+    const validateForm = () => {
+        let errors = {};
+        if (!title) {
+            errors.title = "Title is required";
+        }
+        if (!tagline) {
+            errors.tagline = "Tagline is required";
+        }
+        if (!imageUrl) {
+            errors.imageUrl = "Master Image is required";
+        }
+        if (!editorContent) {
+            errors.editorContent = "Brief of Vihar is required";
+        }
+        if (!activities.length) {
+            errors.activities = "Activities is required";
+        }
+        if (!fileList.length) {
+            errors.fileList = "Facility Images is required";
+        }
+        setErrors(errors);
+        return errors;
+    };
 
+    const scrollToError = (errors, handleSubmitBtn) => {
+        if (errors) {
+            const errorField = Object.keys(errors)[0];
+            const field = document.querySelector(`[name=${errorField}]`);
+            if (field) {
+                field.focus();
+                field.scrollIntoView({ behavior: "smooth", block: "start" });
+
+            }
+            handleSubmitBtn();
+        } else {
+            handleSubmitBtn();
+        }
+    };
 
     const handleSubmitBtn = async () => {
+        const errors = validateForm(
+            title,
+            tagline,
+            imageUrl,
+            editorContent,
+            activities,
+            fileList
+        );
+
+        if (Object.keys(errors).length > 0) {
+            return;
+        }
+
         try {
             const data = {
                 viharName: title,
@@ -278,10 +269,10 @@ const AddProgramForm = () => {
                 vihardescription: editorContent,
                 facilityImages: fileList.map((file) => file.url),
             };
-    
+
             // Dispatch the action and wait for it to complete
             await dispatch(addVihar(data));
-    
+
             navigate('/apps/vihars/vihar-list');
         } catch (error) {
             console.error("Error:", error);
@@ -295,20 +286,47 @@ const AddProgramForm = () => {
             <Typography variant="h6" mb={3}>
                 Pillar Details
             </Typography>
-            {/* ------------------------------------------------------------------------------------------------ */}
-            {/* Basic Layout */}
-            {/* ------------------------------------------------------------------------------------------------ */}
+
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         Vihar Name
                     </CustomFormLabel>
-                    <CustomTextField id="fs-uname" placeholder="Enter Program" fullWidth value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Program"
+                        fullWidth
+                        value={title}
+                        // onChange={(e) => setTitle(e.target.value)}
+                        onChange={(e) => {
+                            setTitle(e.target.value);
+                            setErrors({ ...errors, title: "" });
+                        }}
+                    />
+
+                    {Boolean(errors.title) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.title}</p>
+                    )}
 
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         Tagline
                     </CustomFormLabel>
-                    <CustomTextField id="fs-uname" placeholder="Enter Tagline" fullWidth value={tagline} onChange={(e) => setTagline(e.target.value)} />
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Tagline"
+                        fullWidth
+                        value={tagline}
+                        // onChange={(e) => setTagline(e.target.value)}
+                        onChange={(e) => {
+                            setTagline(e.target.value);
+                            setErrors({ ...errors, tagline: "" });
+                        }}
+                    />
+                    {Boolean(errors.tagline) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.tagline}</p>
+                    )}
+
+
                     <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Master Image</CustomFormLabel>
                     <Upload
                         name="image"
@@ -332,10 +350,9 @@ const AddProgramForm = () => {
                             uploadButton
                         )}
                     </Upload>
-                    {/* <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
-              Program Duration
-            </CustomFormLabel>
-            <CustomTextField id="fs-uname" placeholder="Enter Program" fullWidth /> */}
+                    {Boolean(errors.imageUrl) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.imageUrl}</p>
+                    )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
@@ -348,7 +365,11 @@ const AddProgramForm = () => {
                         id="tags-outlined"
                         options={options || []}
                         // onChange={handleOnChangeOption}
-                        onChange={(event, value) => { handleSetActivity(value) }}
+                        // onChange={(event, value) => { handleSetActivity(value) }}
+                        onChange={(event, value) => {
+                            handleSetActivity(value);
+                            setErrors({ ...errors, activities: "" });
+                        }}
                         getOptionLabel={(option) => option.label}
                         defaultValue={activities}
                         filterSelectedOptions
@@ -366,50 +387,19 @@ const AddProgramForm = () => {
                         renderInput={(params) => (
                             <CustomTextField {...params} value={activityValue} aria-label="Favorites" />
                         )}
-
                     />
-                    {/* <CustomOutlinedInput
-              endAdornment={<InputAdornment position="end">@example.com</InputAdornment>}
-              id="fs-email"
-              placeholder="john.deo"
-              fullWidth
-            /> */}
-                    {/* <CustomFormLabel htmlFor="fs-pwd">Confirm Password</CustomFormLabel>
-            <CustomOutlinedInput
-              type={showPassword2 ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword2}
-                    onMouseDown={handleMouseDownPassword2}
-                    edge="end"
-                  >
-                    {showPassword2 ? <IconEyeOff size="20" /> : <IconEye size="20" />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              id="fs-pwd"
-              placeholder="john.deo"
-              fullWidth
-            /> */}
+                    {Boolean(errors.activities) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.activities}</p>
+                    )}
                 </Grid>
 
                 <Grid item xs={12}>
                     <Divider sx={{ mx: '-24px' }} />
-                    {/* <Typography variant="h6" mt={2}>
-                        Personal Info
-                    </Typography> */}
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                    {/* <CustomFormLabel htmlFor="fs-fname" sx={{ mt: 0 }}>
-              First Name
-            </CustomFormLabel> */}
-                    {/* <CustomTextField id="fs-fname" placeholder="John" fullWidth /> */}
                     <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Facility Image</CustomFormLabel>
                     <Upload
-                        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture-card"
                         fileList={fileList}
                         // onPreview={handlePreview}
@@ -419,81 +409,42 @@ const AddProgramForm = () => {
                     >
                         {fileList.length >= 8 ? null : uploadButton}
                     </Upload>
-
-
-
-                    {/* <CustomFormLabel htmlFor="fs-date">Program Date</CustomFormLabel>
-                    <CustomTextField type="date" id="fs-date" placeholder="John Deo" fullWidth /> */}
-
-
+                    {Boolean(errors.fileList) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.fileList}</p>
+                    )}
                 </Grid>
 
 
                 <Grid item xs={12} sm={6}>
-                    {/* <CustomFormLabel htmlFor="fs-lname" sx={{ mt: { sm: 0 } }}>
-              Last Name
-            </CustomFormLabel>
-            <CustomTextField id="fs-lname" placeholder="Deo" fullWidth /> */}
-                    {/* <CustomFormLabel sx={{m:0}}  htmlFor="fs-date">Facility Image</CustomFormLabel>
-                    <Button
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                    >
-                        Upload file
-                        <VisuallyHiddenInput type="file" />
-                    </Button> */}
-                    {/* <CustomFormLabel htmlFor="fs-phone"> Focus Of Program</CustomFormLabel>
-                    <CustomTextField id="fs-phone" placeholder="Enter focus of program" fullWidth /> */}
+
 
                 </Grid>
-                {/* <Grid item xs={12} sm={6}>
-                    <FormControl>
-                        <FormLabel id="demo-row-radio-buttons-group-label">Program Status</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                        >
-                            <FormControlLabel value="Active" control={<Radio />} label="Active" />
-                            <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
-                        </RadioGroup>
-                    </FormControl>
-                </Grid> */}
-                {/* <Grid item xs={12} sm={6}>
-                <CustomFormLabel sx={{m:0}}  htmlFor="fs-date">Program Image</CustomFormLabel>
-                    <Button
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                    >
-                        Upload file
-                        <VisuallyHiddenInput type="file" />
-                    </Button>
-                </Grid> */}
                 <Grid item xs={12} >
                     <CustomFormLabel htmlFor="fs-editor">Brief of Vihar</CustomFormLabel>
                     <ReactQuill
                         id="fs-editor"
                         value={editorContent}
-                        onChange={(value) => setEditorContent(value)}
                         style={{ height: '10rem', marginBottom: '3rem' }}
+                        // onChange={(value) => setEditorContent(value)}
+                        onChange={(value) => {
+                            setEditorContent(value);
+                            setErrors({ ...errors, editorContent: "" });
+                        }}
                     />
+                    {Boolean(errors.editorContent) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.editorContent}</p>
+                    )}
                 </Grid>
-                {/* <Grid item xs={12}>
-                <CustomFormLabel htmlFor="fs-editor">Focus of Program</CustomFormLabel>
-                <ReactQuill
-                    id="fs-editor"
-                    value={editorFocus}
-                    onChange={(value) => setEditorFocus(value)}
-                    style={{ height: '300px' }}
-                />
-            </Grid> */}
 
                 <Grid item xs={12} className='pt-50'>
                     <Stack direction="row" spacing={2}>
-                        <Button variant="contained" color="primary" onClick={() => handleSubmitBtn()} >
-                            {/* onClick={() => handleSubmitBtn()} */}
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            // onClick={() => handleSubmitBtn()}
+                            onClick={(e) => scrollToError(errors, handleSubmitBtn)}
+
+                        >
                             Submit
                         </Button>
                         <Button variant="text" color="error">

@@ -39,34 +39,6 @@ import { useNavigate } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
 import { updateViharById } from '../../../../store/apps/vihar/ViharSlice';
 
-
-
-
-const countries = [
-    {
-        value: 'india',
-        label: 'India',
-    },
-    {
-        value: 'uk',
-        label: 'United Kingdom',
-    },
-    {
-        value: 'srilanka',
-        label: 'Srilanka',
-    },
-];
-
-const lang = [
-    {
-        value: 'en',
-        label: 'English',
-    },
-    {
-        value: 'fr',
-        label: 'French',
-    },
-];
 const BCrumb = [
     {
         to: '/',
@@ -90,16 +62,6 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 
-//   const useStyles = makeStyles((theme) => ({
-//     root: {
-//       padding: theme.spacing(2),
-//     },
-//     editor: {
-//       minHeight: '200px',
-//     },
-//   }));
-
-
 const AddProgramForm = () => {
     // country
     const [country, setCountry] = React.useState('');
@@ -114,14 +76,14 @@ const AddProgramForm = () => {
     const [activityValue, setActivityValue] = useState()
     const [imageUrl, setImageUrl] = useState();
     const [title, setTitle] = useState();
-    const [tagline,setTagline] = useState();
+    const [tagline, setTagline] = useState();
 
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const selectedVihar = useSelector((state) => state.ViharReducer?.selectedVihar)
-    console.log("selectedVihar",selectedVihar)
+    console.log("selectedVihar", selectedVihar)
 
 
 
@@ -157,13 +119,6 @@ const AddProgramForm = () => {
         event.preventDefault();
     };
 
-
-
-    // const getBase64 = (img, callback) => {
-    //   const reader = new FileReader();
-    //   reader.addEventListener('load', () => callback(reader.result));
-    //   reader.readAsDataURL(img);
-    // };
 
     const beforeUpload = async (file) => {
         try {
@@ -219,14 +174,14 @@ const AddProgramForm = () => {
 
     const fetchActivityNames = async (activityIds) => {
         try {
-          const response = await fetchActivityNamesApi(activityIds); // Replace with your actual API call
-          const activityNames = response.map(activity => ({ label: activity.activityName, value: activity._id }));
-          return activityNames;
+            const response = await fetchActivityNamesApi(activityIds); // Replace with your actual API call
+            const activityNames = response.map(activity => ({ label: activity.activityName, value: activity._id }));
+            return activityNames;
         } catch (error) {
-          console.error('Error fetching activity names:', error);
-          return [];
+            console.error('Error fetching activity names:', error);
+            return [];
         }
-      };
+    };
 
 
     const handleSetActivity = (activity) => {
@@ -260,19 +215,6 @@ const AddProgramForm = () => {
 
 
 
-    // const handleChangeimg = (info) => {
-    //     if (info.file.status === 'uploading') {
-    //         setLoading(true);
-    //         return;
-    //     }
-    //     if (info.file.status === 'done') {
-    //         // Get this url from response in the real world.
-    //         getBase64(info.file.originFileObj, (url) => {
-    //             setLoading(false);
-    //             setImageUrl(url);
-    //         });
-    //     }
-    // };
 
 
     useEffect(() => {
@@ -298,14 +240,14 @@ const AddProgramForm = () => {
         setTagline(selectedVihar?.tagLine || '');
         setActivities(selectedVihar?.activities.map(activity => activity.activityName))
         setImageUrl(selectedVihar?.masterImage || '');
-        setFileList(selectedVihar?.facilityImages.map((item)=>({url:item})))
+        setFileList(selectedVihar?.facilityImages.map((item) => ({ url: item })))
         setEditorContent(selectedVihar?.vihardescription || '');
 
         // setActivities(selectedVihar?.)
 
 
-      }, [selectedVihar]);
-      console.log("urllllll",imageUrl)
+    }, [selectedVihar]);
+    console.log("urllllll", imageUrl)
 
 
     const uploadButton = (
@@ -315,9 +257,61 @@ const AddProgramForm = () => {
         </div>
     );
 
+    const [errors, setErrors] = useState({});
+    const validateForm = () => {
+        let errors = {};
+        if (!title) {
+            errors.title = "Title is required";
+        }
+        if (!tagline) {
+            errors.tagline = "Tagline is required";
+        }
+        if (!imageUrl) {
+            errors.imageUrl = "Master Image is required";
+        }
+        if (!activities) {
+            errors.activities = "Activities is required";
+        }
+        if (!editorContent) {
+            errors.editorContent = "Description is required";
+        }
+        if (!fileList) {
+            errors.fileList = "Facility Images is required";
+        }
+        setErrors(errors);
+        return errors;
+    };
+
+    const scrollToError = (errors, handleSubmitBtn) => {
+        if (errors) {
+            const errorField = Object.keys(errors)[0];
+            const field = document.querySelector(`[name=${errorField}]`);
+            if (field) {
+                field.focus();
+                field.scrollIntoView({ behavior: "smooth", block: "start" });
+
+            }
+            handleSubmitBtn();
+        } else {
+            handleSubmitBtn();
+        }
+    };
 
 
     const handleSubmitBtn = async () => {
+        const errors = validateForm(
+            title,
+            tagline,
+            imageUrl,
+            activities,
+            editorContent,
+            fileList
+        );
+        if (Object.keys(errors).length > 0) {
+            return;
+        }
+
+
         try {
             const data = {
                 viharName: title,
@@ -327,10 +321,10 @@ const AddProgramForm = () => {
                 vihardescription: editorContent,
                 facilityImages: fileList.map((file) => file.url),
             };
-    
+
             // Dispatch the action and wait for it to complete
-            await dispatch(updateViharById(selectedVihar._id,data));
-    
+            await dispatch(updateViharById(selectedVihar._id, data));
+
             navigate('/apps/vihars/vihar-list');
         } catch (error) {
             console.error("Error:", error);
@@ -344,20 +338,51 @@ const AddProgramForm = () => {
             <Typography variant="h6" mb={3}>
                 Pillar Details
             </Typography>
-            {/* ------------------------------------------------------------------------------------------------ */}
-            {/* Basic Layout */}
-            {/* ------------------------------------------------------------------------------------------------ */}
+
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         Vihar Name
                     </CustomFormLabel>
-                    <CustomTextField id="fs-uname" placeholder="Enter Program" fullWidth value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Program"
+                        fullWidth
+                        value={title}
+                        // onChange={(e) => setTitle(e.target.value)}
+
+                        onChange={(e) => {
+                            setTitle(e.target.value);
+                            setErrors({ ...errors, title: "" });
+                        }}
+                    />
+                    {Boolean(errors.title) && (
+                        <Typography variant="caption" color="error">
+                            {errors.title}
+                        </Typography>
+                    )}
 
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         Tagline
                     </CustomFormLabel>
-                    <CustomTextField id="fs-uname" placeholder="Enter Tagline" fullWidth value={tagline} onChange={(e) => setTagline(e.target.value)} />
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Tagline"
+                        fullWidth
+                        value={tagline}
+                        // onChange={(e) => setTagline(e.target.value)}
+                        onChange={(e) => {
+                            setTagline(e.target.value);
+                            setErrors({ ...errors, tagline: "" });
+                        }}
+                    />
+                    {Boolean(errors.tagline) && (
+                        <Typography variant="caption" color="error">
+                            {errors.tagline}
+                        </Typography>
+                    )}
+
+
                     <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Master Image</CustomFormLabel>
                     <Upload
                         name="image"
@@ -381,87 +406,23 @@ const AddProgramForm = () => {
                             uploadButton
                         )}
                     </Upload>
-                    {/* <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
-              Program Duration
-            </CustomFormLabel>
-            <CustomTextField id="fs-uname" placeholder="Enter Program" fullWidth /> */}
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
-                        activities
-                    </CustomFormLabel>
-                    <Autocomplete
-                        freeSolo
-                        multiple
-                        fullWidth
-                        id="tags-outlined"
-                        options={options || []}
-                        // onChange={handleOnChangeOption}
-                        onChange={(event, value) => { handleSetActivity(value) }}
-                        getOptionLabel={(option) => option.label}
-                        // defaultValue={activities}
-                        // defaultValue={activities}
-                        value={activities}
-                        // value={activities.map(activity => ({ label: activity, value: activity }))}
-                        filterSelectedOptions
-                        onInputChange={(event, newInputValue) => {
-                            // Add the new value to the options list
+                    {Boolean(errors.imageUrl) && (
+                        <Typography variant="caption" color="error">
+                            {errors.imageUrl}
+                        </Typography>
+                    )}
 
-                            // setOptions((prevOptions) =>{
-                            //     console.log("prevOptions",prevOptions);
-                            //     return[
-                            //     ...prevOptions,
-                            //     { label: newInputValue, value: newInputValue },
-                            // ]});
-                        }}
-
-                        renderInput={(params) => (
-                            <CustomTextField {...params} aria-label="Favorites" />
-                        )}
-
-                    />
-                    {/* <CustomOutlinedInput
-              endAdornment={<InputAdornment position="end">@example.com</InputAdornment>}
-              id="fs-email"
-              placeholder="john.deo"
-              fullWidth
-            /> */}
-                    {/* <CustomFormLabel htmlFor="fs-pwd">Confirm Password</CustomFormLabel>
-            <CustomOutlinedInput
-              type={showPassword2 ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword2}
-                    onMouseDown={handleMouseDownPassword2}
-                    edge="end"
-                  >
-                    {showPassword2 ? <IconEyeOff size="20" /> : <IconEye size="20" />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              id="fs-pwd"
-              placeholder="john.deo"
-              fullWidth
-            /> */}
                 </Grid>
 
                 <Grid item xs={12}>
                     <Divider sx={{ mx: '-24px' }} />
-                    {/* <Typography variant="h6" mt={2}>
-                        Personal Info
-                    </Typography> */}
+
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                    {/* <CustomFormLabel htmlFor="fs-fname" sx={{ mt: 0 }}>
-              First Name
-            </CustomFormLabel> */}
-                    {/* <CustomTextField id="fs-fname" placeholder="John" fullWidth /> */}
+
                     <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Facility Image</CustomFormLabel>
                     <Upload
-                        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture-card"
                         fileList={fileList}
                         // onPreview={handlePreview}
@@ -471,81 +432,42 @@ const AddProgramForm = () => {
                     >
                         {fileList.length >= 8 ? null : uploadButton}
                     </Upload>
-
-
-
-                    {/* <CustomFormLabel htmlFor="fs-date">Program Date</CustomFormLabel>
-                    <CustomTextField type="date" id="fs-date" placeholder="John Deo" fullWidth /> */}
-
-
-                </Grid>
-
-
-                <Grid item xs={12} sm={6}>
-                    {/* <CustomFormLabel htmlFor="fs-lname" sx={{ mt: { sm: 0 } }}>
-              Last Name
-            </CustomFormLabel>
-            <CustomTextField id="fs-lname" placeholder="Deo" fullWidth /> */}
-                    {/* <CustomFormLabel sx={{m:0}}  htmlFor="fs-date">Facility Image</CustomFormLabel>
-                    <Button
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                    >
-                        Upload file
-                        <VisuallyHiddenInput type="file" />
-                    </Button> */}
-                    {/* <CustomFormLabel htmlFor="fs-phone"> Focus Of Program</CustomFormLabel>
-                    <CustomTextField id="fs-phone" placeholder="Enter focus of program" fullWidth /> */}
+                    {Boolean(errors.fileList) && (
+                        <Typography variant="caption" color="error">
+                            {errors.fileList}
+                        </Typography>
+                    )}
 
                 </Grid>
-                {/* <Grid item xs={12} sm={6}>
-                    <FormControl>
-                        <FormLabel id="demo-row-radio-buttons-group-label">Program Status</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                        >
-                            <FormControlLabel value="Active" control={<Radio />} label="Active" />
-                            <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
-                        </RadioGroup>
-                    </FormControl>
-                </Grid> */}
-                {/* <Grid item xs={12} sm={6}>
-                <CustomFormLabel sx={{m:0}}  htmlFor="fs-date">Program Image</CustomFormLabel>
-                    <Button
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                    >
-                        Upload file
-                        <VisuallyHiddenInput type="file" />
-                    </Button>
-                </Grid> */}
+
                 <Grid item xs={12} >
                     <CustomFormLabel htmlFor="fs-editor">Brief of Vihar</CustomFormLabel>
                     <ReactQuill
                         id="fs-editor"
                         value={editorContent}
-                        onChange={(value) => setEditorContent(value)}
                         style={{ height: '10rem', marginBottom: '3rem' }}
+                        // onChange={(value) => setEditorContent(value)}
+                        onChange={(value) => {
+                            setEditorContent(value);
+                            setErrors({ ...errors, editorContent: "" });
+                        }}
                     />
+                    {Boolean(errors.editorContent) && (
+                        <Typography variant="caption" color="error">
+                            {errors.editorContent}
+                        </Typography>
+                    )}
                 </Grid>
-                {/* <Grid item xs={12}>
-                <CustomFormLabel htmlFor="fs-editor">Focus of Program</CustomFormLabel>
-                <ReactQuill
-                    id="fs-editor"
-                    value={editorFocus}
-                    onChange={(value) => setEditorFocus(value)}
-                    style={{ height: '300px' }}
-                />
-            </Grid> */}
 
                 <Grid item xs={12} className='pt-50'>
                     <Stack direction="row" spacing={2}>
-                        <Button variant="contained" color="primary" onClick={() => handleSubmitBtn()} >
-                            {/* onClick={() => handleSubmitBtn()} */}
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            // onClick={() => handleSubmitBtn()}
+                            onClick={(e) => scrollToError(errors, handleSubmitBtn)}
+
+                        >
                             Submit
                         </Button>
                         <Button variant="text" color="error">
