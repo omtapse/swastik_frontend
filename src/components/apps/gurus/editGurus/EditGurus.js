@@ -153,22 +153,22 @@ const FormSeparator = () => {
 
     const validateForm = (values) => {
         const errors = {};
-        if (!values.name.trim()) {
+        if (!values.name) {
             errors.name = 'Required';
         }
-        if (!values.expertise.trim()) {
+        if (!values.expertise) {
             errors.expertise = 'Required';
         }
         if (!values.image) {
             errors.image = 'Required';
         }
-        if (!values.about.trim()) {
+        if (!values.about) {
             errors.about = 'Required';
         }
         if (!values.programImages || values.programImages.length === 0) {
             errors.programImages = 'Required';
         }
-        if (!values.testimonials.trim()) {
+        if (!values.testimonials) {
             errors.testimonials = 'Required';
         }
 

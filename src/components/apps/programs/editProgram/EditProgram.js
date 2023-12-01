@@ -40,35 +40,7 @@ import { Upload, message, notification } from "antd";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 
-// import CustomTextField from "../../theme-elements/CustomTextField";
 
-
-
-// const countries = [
-//     {
-//         value: 'india',
-//         label: 'India',
-//     },
-//     {
-//         value: 'uk',
-//         label: 'United Kingdom',
-//     },
-//     {
-//         value: 'srilanka',
-//         label: 'Srilanka',
-//     },
-// ];
-
-const lang = [
-    {
-        value: 'en',
-        label: 'English',
-    },
-    {
-        value: 'fr',
-        label: 'French',
-    },
-];
 const BCrumb = [
     {
         to: '/',
@@ -92,14 +64,6 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 
-//   const useStyles = makeStyles((theme) => ({
-//     root: {
-//       padding: theme.spacing(2),
-//     },
-//     editor: {
-//       minHeight: '200px',
-//     },
-//   }));
 
 
 const EditProgramForm = () => {
@@ -237,8 +201,8 @@ const EditProgramForm = () => {
     };
 
     useEffect(() => {
-        if (selectedProgram.programName) {
-            setPName(selectedProgram?.programName)
+        if (selectedProgram && selectedProgram.programName) {
+            setPName(selectedProgram?.programName);
             setProgramPrice(selectedProgram.programPrice)
             setpillarValue(
                 selectedProgram?.pillars.map((val) => ({ label: val.pillarTitle, value: val._id }))
@@ -246,7 +210,7 @@ const EditProgramForm = () => {
             setviharValue(
                 selectedProgram?.vihars.map((val) => ({ label: val.viharName, value: val._id }))
             );
-            setguruValue(selectedProgram?.guru ? selectedProgram.guru._id: null);
+            setguruValue(selectedProgram?.guru ? selectedProgram.guru._id : null);
             setImageUrl(selectedProgram.programImage)
             setfocusValue(selectedProgram.focusOfProgram)
             setdurationValue(selectedProgram.programDuration)
@@ -258,12 +222,82 @@ const EditProgramForm = () => {
 
     }, [selectedProgram]);
     console.log("urllllll", imageUrl)
-    console.log("guruuuuuuuuuuuu",guruValue)
-    console.log("gurus//////",gurus)
+    console.log("guruuuuuuuuuuuu", guruValue)
+    console.log("gurus//////", gurus)
 
+
+    const [errors, setErrors] = useState({});
+    const validateForm = () => {
+        let errors = {};
+        if (!pname) {
+            errors.pname = "Program Name is required";
+        }
+        if (!programPrice) {
+            errors.programPrice = "Program Price is required";
+        }
+        if (!durationValue) {
+            errors.durationValue = "Program Duration is required";
+        }
+        if (!aboutValue) {
+            errors.aboutValue = "About Program is required";
+        }
+        if (!dateValue) {
+            errors.dateValue = "Date is required";
+        }
+        if (!focusValue) {
+            errors.focusValue = "Focus of Program is required";
+        }
+        if (!status) {
+            errors.status = "Status is required";
+        }
+        if (!guruValue) {
+            errors.guruValue = "Guru is required";
+        }
+        if (!pillarValue) {
+            errors.pillarValue = "Pillar is required";
+        }
+        if (!viharValue) {
+            errors.viharValue = "Vihar is required";
+        }
+        setErrors(errors);
+        return errors;
+    };
+
+    const scrollToError = (errors, handleSubmitBtn) => {
+        if (errors) {
+            const errorField = Object.keys(errors)[0];
+            const field = document.querySelector(`[name=${errorField}]`);
+            if (field) {
+                field.focus();
+                field.scrollIntoView({ behavior: "smooth", block: "start" });
+
+            }
+            handleSubmitBtn();
+        } else {
+            handleSubmitBtn();
+        }
+    };
 
 
     const handleSubmitBtn = async () => {
+        const errors = validateForm(
+            pname,
+            programPrice,
+            programDuration,
+            aboutValue,
+            dateValue,
+            focusValue,
+            status,
+            guruValue,
+            pillarValue,
+            viharValue
+        );
+
+        if (Object.keys(errors).length > 0) {
+            return;
+        }
+
+
         try {
 
             const data = {
@@ -295,20 +329,6 @@ const EditProgramForm = () => {
     );
 
 
-
-
-    // const countryToFlag = (isoCode) =>
-    //     typeof String.fromCodePoint !== 'undefined'
-    //         ? isoCode
-    //             .toUpperCase()
-    //             .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
-    //         : isoCode;
-
-    // const dispatch = useDispatch();
-    // const program = useSelector((state) => state.ProgramReducer);
-
-
-
     useEffect(() => {
         fetchPillar();
         fetchVihar();
@@ -318,18 +338,29 @@ const EditProgramForm = () => {
 
     return (
         <div>
-            {/* <Typography variant="h6" mb={3}>
-                Program Details
-            </Typography> */}
-            {/* ------------------------------------------------------------------------------------------------ */}
-            {/* Basic Layout */}
-            {/* ------------------------------------------------------------------------------------------------ */}
+
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         Program Name
                     </CustomFormLabel>
-                    <CustomTextField id="fs-uname" placeholder="Enter Program" name="programName" value={pname} onChange={(e) => setProgramName(e.target.value)} fullWidth />
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Program"
+                        name="pname"
+                        fullWidth
+                        value={pname}
+                        // onChange={(e) => setPName(e.target.value)}
+                        onChange={(e) => {
+                            setPName(e.target.value)
+                            setErrors({ ...errors, pname: "" })
+                        }}
+                    />
+                    {Boolean(errors.pname) && (
+                        <Typography variant="caption" color="error">
+                            {errors.pname}
+                        </Typography>
+                    )}
 
                     <CustomFormLabel htmlFor="fs-pwd">Program Duration</CustomFormLabel>
                     <CustomOutlinedInput
@@ -337,56 +368,47 @@ const EditProgramForm = () => {
                         placeholder="Enter Duration"
                         fullWidth
                         value={durationValue}
-                        onChange={(e) => setdurationValue(e.target.value)}
+                        // onChange={(e) => setdurationValue(e.target.value)}
+                        onChange={(e) => {
+                            setdurationValue(e.target.value)
+                            setErrors({ ...errors, durationValue: "" })
+                        }}
                     />
-                    {/* <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
-              Program Duration
-            </CustomFormLabel>
-            <CustomTextField id="fs-uname" placeholder="Enter Program" fullWidth /> */}
+                    {Boolean(errors.durationValue) && (
+                        <Typography variant="caption" color="error">
+                            {errors.durationValue}
+                        </Typography>
+                    )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         Program Price
                     </CustomFormLabel>
-                    <CustomTextField id="fs-uname" placeholder="Enter Program price" name="programPrice" value={programPrice} onChange={(e) => setProgramPrice(e.target.value)} fullWidth />
-                    {/* <CustomOutlinedInput
-              endAdornment={<InputAdornment position="end">@example.com</InputAdornment>}
-              id="fs-email"
-              placeholder="john.deo"
-              fullWidth
-            /> */}
-                    {/* <CustomFormLabel htmlFor="fs-pwd">Confirm Password</CustomFormLabel>
-            <CustomOutlinedInput
-              type={showPassword2 ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword2}
-                    onMouseDown={handleMouseDownPassword2}
-                    edge="end"
-                  >
-                    {showPassword2 ? <IconEyeOff size="20" /> : <IconEye size="20" />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              id="fs-pwd"
-              placeholder="john.deo"
-              fullWidth
-            /> */}
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Program price"
+                        name="programPrice"
+                        fullWidth
+                        value={programPrice}
+                        // onChange={(e) => setProgramPrice(e.target.value)}
+                        onChange={(e) => {
+                            setProgramPrice(e.target.value)
+                            setErrors({ ...errors, programPrice: "" })
+                        }}
+                    />
+                    {Boolean(errors.programPrice) && (
+                        <Typography variant="caption" color="error">
+                            {errors.programPrice}
+                        </Typography>
+                    )}
                 </Grid>
 
                 <Grid item xs={12}>
                     <Divider sx={{ mx: '-24px' }} />
-                    {/* <Typography variant="h6" mt={2}>
-                        Personal Info
-                    </Typography> */}
+
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    {/* <CustomFormLabel htmlFor="fs-fname" sx={{ mt: 0 }}>
-              First Name
-            </CustomFormLabel> */}
-                    {/* <CustomTextField id="fs-fname" placeholder="John" fullWidth /> */}
+
                     <CustomFormLabel htmlFor="fs-country">Pillars</CustomFormLabel>
                     <Autocomplete
                         multiple
@@ -394,7 +416,6 @@ const EditProgramForm = () => {
                         id="tags-outlined"
                         options={pillar}
                         // onChange={handleOnChangeOption}
-                        onChange={(event, value) => setpillarValue(value)}
                         getOptionLabel={(option) => option.label}
                         // value={selectedProgram.pillars}
                         // defaultValue={pillar.filter((p) => pillarValue.includes(p.label))}
@@ -403,30 +424,29 @@ const EditProgramForm = () => {
                         renderInput={(params) => (
                             <CustomTextField {...params} aria-label="Favorites" />
                         )}
+                        // onChange={(event, value) => setpillarValue(value)}
+                        onChange={(event, value) => {
+                            setpillarValue(value)
+                            setErrors({ ...errors, pillarValue: "" })
+                        }}
                     />
-                    {/* <Autocomplete
-                        multiple
-                        fullWidth
-                        id="tags-outlined"
-                        options={guruValue}
-                        // onChange={handleOnChangeOption}
-                        onChange={(event, value) => setguruValue(value)}
-                        getOptionLabel={(option) => option.label}
-                        // value={selectedProgram.pillars}
-                        // defaultValue={pillar.filter((p) => pillarValue.includes(p.label))}
-                        value={guruValue}
-                        filterSelectedOptions
-                        renderInput={(params) => (
-                            <CustomTextField {...params} aria-label="Favorites" />
-                        )}
-                    /> */}
-                     <CustomFormLabel htmlFor="fs-country">Gurus</CustomFormLabel>
+                    {Boolean(errors.pillarValue) && (
+                        <Typography variant="caption" color="error">
+                            {errors.pillarValue}
+                        </Typography>
+                    )}
+
+                    <CustomFormLabel htmlFor="fs-country">Gurus</CustomFormLabel>
                     <CustomSelect
                         id="standard-select-currency"
                         value={guruValue}
-                        onChange={(e) => {console.log("here gutu",e.target.value);setguruValue(e.target.value)}}
                         fullWidth
                         variant="outlined"
+                        // onChange={(e) => { console.log("here gutu", e.target.value); setguruValue(e.target.value) }}
+                        onChange={(e) => {
+                            setguruValue(e.target.value)
+                            setErrors({ ...errors, guruValue: "" })
+                        }}
                     >
                         {gurus.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
@@ -434,30 +454,42 @@ const EditProgramForm = () => {
                             </MenuItem>
                         ))}
                     </CustomSelect>
+                    {Boolean(errors.guruValue) && (
+                        <Typography variant="caption" color="error">
+                            {errors.guruValue}
+                        </Typography>
+                    )}
+
                     <CustomFormLabel htmlFor="fs-date">Program Date</CustomFormLabel>
-                    <CustomTextField type="date" id="fs-date" placeholder="John Deo" value={dateValue} onChange={(e) => setdateValue(e.target.value)} fullWidth />
+                    <CustomTextField
+                        type="date"
+                        id="fs-date"
+                        placeholder="John Deo"
+                        fullWidth
+                        value={dateValue}
+                        // onChange={(e) => setdateValue(e.target.value)}
+                        onChange={(e) => {
+                            setdateValue(e.target.value)
+                            setErrors({ ...errors, dateValue: "" })
+                        }}
+                    />
+                    {Boolean(errors.dateValue) && (
+                        <Typography variant="caption" color="error">
+                            {errors.dateValue}
+                        </Typography>
+                    )}
                 </Grid>
 
 
                 <Grid item xs={12} sm={6}>
-                    {/* <CustomFormLabel htmlFor="fs-lname" sx={{ mt: { sm: 0 } }}>
-              Last Name
-            </CustomFormLabel>
-            <CustomTextField id="fs-lname" placeholder="Deo" fullWidth /> */}
+
                     <CustomFormLabel htmlFor="fs-language">Vihars</CustomFormLabel>
-                    {/* <CustomSelect value={language} onChange={handleChange} fullWidth variant="outlined"> */}
-                    {/* {lang.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))} */}
                     <Autocomplete
                         multiple
                         fullWidth
                         id="tags-outlined"
                         options={vihar}
                         // onChange={handleOnChangeOption}
-                        onChange={(event, value) => setviharValue(value)}
                         getOptionLabel={(option) => option.label}
                         // defaultValue={vihar}
                         value={viharValue}
@@ -465,10 +497,36 @@ const EditProgramForm = () => {
                         renderInput={(params) => (
                             <CustomTextField {...params} placeholder={selectedOptions.length === 0 ? 'Select Vihars' : ''} value={viharValue} onChange={(e) => setviharValue(e.target.value)} aria-label="Favorites" />
                         )}
+                        // onChange={(event, value) => setviharValue(value)}
+                        onChange={(event, value) => {
+                            setviharValue(value)
+                            setErrors({ ...errors, viharValue: "" })
+                        }}
                     />
+                    {Boolean(errors.viharValue) && (
+                        <Typography variant="caption" color="error">
+                            {errors.viharValue}
+                        </Typography>
+                    )}
                     {/* </CustomSelect> */}
+
                     <CustomFormLabel htmlFor="fs-phone"> Focus Of Program</CustomFormLabel>
-                    <CustomTextField id="fs-phone" placeholder="Enter focus of program" value={focusValue} onChange={(e) => setfocusValue(e.target.value)} fullWidth />
+                    <CustomTextField
+                        id="fs-phone"
+                        placeholder="Enter focus of program"
+                        fullWidth
+                        value={focusValue}
+                        // onChange={(e) => setfocusValue(e.target.value)}
+                        onChange={(e) => {
+                            setfocusValue(e.target.value)
+                            setErrors({ ...errors, focusValue: "" })
+                        }}
+                    />
+                    {Boolean(errors.focusValue) && (
+                        <Typography variant="caption" color="error">
+                            {errors.focusValue}
+                        </Typography>
+                    )}
 
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -479,12 +537,21 @@ const EditProgramForm = () => {
                             aria-labelledby="demo-row-radio-buttons-group-label"
                             name="row-radio-buttons-group"
                             value={status}
-                            onChange={(e) => setStatus(e.target.value)}
+                            // onChange={(e) => setStatus(e.target.value)}
+                            onChange={(e) => {
+                                setStatus(e.target.value)
+                                setErrors({ ...errors, status: "" })
+                            }}
                         >
                             <FormControlLabel value="Active" control={<Radio />} label="Active" />
                             <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
                         </RadioGroup>
                     </FormControl>
+                    {Boolean(errors.status) && (
+                        <Typography variant="caption" color="error">
+                            {errors.status}
+                        </Typography>
+                    )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Program Image</CustomFormLabel>
@@ -510,6 +577,11 @@ const EditProgramForm = () => {
                             uploadButton
                         )}
                     </Upload>
+                    {Boolean(errors.image) && (
+                        <Typography variant="caption" color="error">
+                            {errors.image}
+                        </Typography>
+                    )}
                 </Grid>
                 <Grid item xs={12} >
                     <CustomFormLabel htmlFor="fs-editor">About Program</CustomFormLabel>
@@ -517,24 +589,27 @@ const EditProgramForm = () => {
                         id="fs-editor"
                         value={aboutValue}
                         // onChange={(e) => setaboutValue(e.target.value)}
-                        onChange={(value) => setaboutValue(value)}
                         style={{ height: '10rem', marginBottom: '3rem' }}
+                        // onChange={(value) => setaboutValue(value)}
+                        onChange={(value) => {
+                            setaboutValue(value)
+                            setErrors({ ...errors, aboutValue: "" })
+                        }}
                     />
+                    {Boolean(errors.aboutValue) && (
+                        <Typography variant="caption" color="error">
+                            {errors.aboutValue}
+                        </Typography>
+                    )}
                 </Grid>
-                {/* <Grid item xs={12}>
-                <CustomFormLabel htmlFor="fs-editor">Focus of Program</CustomFormLabel>
-                <ReactQuill
-                    id="fs-editor"
-                    value={editorFocus}
-                    onChange={(value) => setEditorFocus(value)}
-                    style={{ height: '300px' }}
-                />
-            </Grid> */}
+
 
                 <Grid item xs={12} className='pt-50'>
                     <Stack direction="row" spacing={2}>
                         <Button variant="contained" color="primary"
-                            onClick={() => handleSubmitBtn()}
+                            // onClick={handleSubmitBtn()}
+                            onClick={(e) => scrollToError(errors, handleSubmitBtn)}
+
                         >
                             Submit
                         </Button>

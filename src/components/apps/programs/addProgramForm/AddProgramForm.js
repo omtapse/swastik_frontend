@@ -36,7 +36,19 @@ import ProgramList from '../programList/ProgramList';
 import Autocomplete from '@mui/material/Autocomplete';
 import top100Films from '../addProgramForm/data';
 import routes from '../../../../utils/routes';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
+const lang = [
+  {
+    value: 'en',
+    label: 'English',
+  },
+  {
+    value: 'fr',
+    label: 'French',
+  },
+];
 const BCrumb = [
   {
     to: '/',
@@ -58,16 +70,6 @@ const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 });
-
-
-//   const useStyles = makeStyles((theme) => ({
-//     root: {
-//       padding: theme.spacing(2),
-//     },
-//     editor: {
-//       minHeight: '200px',
-//     },
-//   }));
 
 
 const AddProgramForm = () => {
@@ -170,25 +172,186 @@ const AddProgramForm = () => {
   };
 
   // language
-  const [language, setLanguage] = React.useState('');
+  // const [language, setLanguage] = React.useState('');
 
-  const handleChange2 = (event) => {
-    setLanguage(event.target.value);
+  // const handleChange2 = (event) => {
+  //   setLanguage(event.target.value);
+  // };
+
+  // //   password
+  // //
+  // const [showPassword, setShowPassword] = React.useState(false);
+
+  // const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  // const handleMouseDownPassword = (event) => {
+  //   event.preventDefault();
+  // };
+
+  // //  confirm  password
+  // //
+  // const [showPassword2, setShowPassword2] = React.useState(false);
+
+  // const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
+
+  // const handleMouseDownPassword2 = (event) => {
+  //   event.preventDefault();
+  // };
+
+  // const validationSchema = yup.object({
+  //   programName: yup.string('Enter program Name').required('programName is Required'),
+  //   programDuration: yup.string('Enter program Duration').required('programDuration is Required'),
+  //   programStatus: yup.string('Enter program status').required('status is required'),
+  //   programDetails: yup.string('Enter details').required('details is required'),
+  //   programPrice: yup.string('Enter programPrice').required('programPrice is required'),
+  //   // programImages: yup.string().required('Program Images is required'),
+  //   programImages: yup.array().min(1, 'Select at least one image'),
+  //   vihar: yup.array().min(1, 'Select at least one Vihar'),
+  //   pillar: yup.array().min(1, 'Select at least one Pillar'),
+  //   guru: yup.string().required('Select a Guru'),
+  //   programDate: yup.date().required('Program Date is required'),
+  //   focusOfProgram: yup.string().required('Focus of Program is required'),
+  // });
+
+
+
+  // const formik = useFormik({
+  //   initialValues: {
+  //     programName: "",
+  //     programDuration: "",
+  //     programStatus: "Active",
+  //     programDetails: "",
+  //     programPrice: "",
+  //     programImages: "",
+  //     vihar: [],
+  //     pillar: [],
+  //     guru: "",
+  //     programDate: "",
+  //     focusOfProgram: "",
+  //   },
+
+  //   validationSchema: validationSchema,
+  //   onSubmit: async (values) => {
+  //     try {
+  //       // Your form submission logic here
+  //       console.log('Form submitted with values:', values);
+  //       const data = {
+  //         programName: values.programName,
+  //         guru: values.guru,
+  //         programDate: new Date(values.programDate),
+  //         programDuration: values.programDuration,
+  //         programPrice: values.programPrice,
+  //         programImage: imageUrl,
+  //         programDetails: values.programDetails,
+  //         programStatus: values.programStatus,
+  //         vihars: values.vihar,
+  //         pillars: values.pillar,
+  //         focusOfProgram: values.focusOfProgram,
+  //         // Add other form fields as needed
+  //       };
+  //       console.log("<<<<<<<>>>>>>>", values)
+  //       dispatch(addProgram(data));
+  //       navigate('/apps/programs/programs-list');
+  //     } catch (error) {
+  //       console.log('Error', error);
+  //     }
+  //   },  //   
+  // });
+
+  const [errors, setErrors] = useState({});
+  const validateForm = () => {
+    let errors = {};
+
+    if (!programName) {
+      errors.programName = "Program Name is required";
+    }
+    if (!programPrice) {
+      errors.programPrice = "Program Price is required";
+    }
+    if (!programDuration) {
+      errors.programDuration = "Program Duration is required";
+    }
+    if (!aboutValue) {
+      errors.programDetails = "Program Details is required";
+    }
+    if (!dateValue) {
+      errors.programDate = "Program Date is required";
+    }
+    if (!focusValue) {
+      errors.focusOfProgram = "Focus of Program is required";
+    }
+    if (!status) {
+      errors.programStatus = "Program Status is required";
+    }
+    if (!guruValue) {
+      errors.guru = "Guru is required";
+    }
+    if (!pillarValue) {
+      errors.pillar = "Pillar is required";
+    }
+    if (!viharValue) {
+      errors.vihar = "Vihar is required";
+    }
+    setErrors(errors);
+    return errors;
   };
 
-  //   password
-  //
-  const [showPassword, setShowPassword] = React.useState(false);
+  const scrollToError = (errors, handleSubmitBtn) => {
+    if (errors) {
+      const errorField = Object.keys(errors)[0];
+      const field = document.querySelector(`[name=${errorField}]`);
+      if (field) {
+        field.focus();
+        field.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+      }
+      handleSubmitBtn();
+    } else {
+      handleSubmitBtn();
+    }
   };
 
-  //  confirm  password
-  //
-  const [showPassword2, setShowPassword2] = React.useState(false);
+
+  const handleSubmitBtn = async () => {
+    const errors = validateForm(
+      programName,
+      programPrice,
+      programDuration,
+      aboutValue,
+      dateValue,
+      focusValue,
+      status,
+      guruValue,
+      pillarValue,
+      viharValue
+    );
+
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    try {
+
+      const data = {
+        programName: programName,
+        guru: guruValue,
+        programDate: new Date(dateValue),
+        programDuration: programDuration,
+        programPrice: programPrice,
+        programImage: imageUrl,
+        programDetails: aboutValue,
+        programStatus: status,
+        vihars: viharValue,
+        pillars: pillarValue,
+        focusOfProgram: focusValue,
+        // Add other form fields as needed
+      };
+      dispatch(addProgram(data));
+      navigate('/apps/programs/programs-list');
+    } catch (error) {
+      console.log("Error", error)
+    }
+  }
 
   useEffect(() => {
     fetchPillar();
@@ -196,54 +359,11 @@ const AddProgramForm = () => {
     fetchGurus();
   }, []);
 
-  const [errors, setErrors] = useState({
-    programName: '',
-    programPrice: '',
-    programDuration: '',
-    pillarValue: '',
-    viharValue: '',
-    guruValue: '',
-    focusValue: '',
-    dateValue: '',
-    status: '',
-    aboutValue: '',
-    imageUrl: '',
-  });
-
-  const validateForm = () => {
-    const newErrors = {
-      programName: !programName ? 'Program name is required' : '',
-      programPrice: !programPrice ? 'Program price is required' : '',
-      programDuration: !programDuration ? 'Program duration is required' : '',
-      pillarValue: pillarValue.length === 0 ? 'Pillars are required' : '',
-      viharValue: viharValue.length === 0 ? 'Vihars are required' : '',
-      guruValue: !guruValue ? 'Guru is required' : '',
-      focusValue: !focusValue ? 'Focus of program is required' : '',
-      dateValue: !dateValue ? 'Program date is required' : '',
-      status: !status ? 'Program status is required' : '',
-      aboutValue: !aboutValue ? 'About program is required' : '',
-      imageUrl: !imageUrl ? 'Program image is required' : '',
-    };
-    setErrors(newErrors);
-    // Return true if the form is valid, false otherwise
-    return Object.values(newErrors).every((error) => error === '');
-  }
-
-
-  const handleSubmitBtn = async () => {
-    if (!validateForm()) {
-      console.error('Form validation failed. Please check the errors.');
-      return;
-    }
-  };
-
 
   return (
     <div>
-
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-
           <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
             Program Name
           </CustomFormLabel>
@@ -252,11 +372,19 @@ const AddProgramForm = () => {
             placeholder="Enter Program"
             fullWidth
             value={programName}
-            onChange={(e) => setProgramName(e.target.value)}
-            error={!!errors.programName}
-            helperText={errors.programName}
+            // onChange={(e) => setProgramName(e.target.value)}
+            //   onChange={(e) => {
+            //     setTitle(e.target.value);
+            //     setErrors({ ...errors, title: "" });
+            // }}
+            onChange={(e) => {
+              setProgramName(e.target.value);
+              setErrors({ ...errors, programName: "" });
+            }}
           />
-
+          {Boolean(errors.programName) && (
+            <div style={{ color: 'red' }}>{errors.programName}</div>
+          )}
 
           <CustomFormLabel htmlFor="fs-pwd">Program Duration</CustomFormLabel>
           <CustomOutlinedInput
@@ -264,10 +392,16 @@ const AddProgramForm = () => {
             placeholder="Enter Duration"
             fullWidth
             value={programDuration}
-            onChange={(e) => setprogramDuration(e.target.value)}
-            error={!!errors.programDuration}
-            helperText={errors.programDuration}
+            // onChange={(e) => setprogramDuration(e.target.value)}
+            onChange={(e) => {
+              setprogramDuration(e.target.value);
+              setErrors({ ...errors, programDuration: "" });
+            }}
           />
+          {Boolean(errors.programDuration) && (
+            <div style={{ color: 'red' }}>{errors.programDuration}</div>
+          )}
+
 
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -279,14 +413,21 @@ const AddProgramForm = () => {
             placeholder="Enter Program price"
             fullWidth
             value={programPrice}
-            onChange={(e) => setProgramPrice(e.target.value)}
-            error={!!errors.programPrice}
-            helperText={errors.programPrice}
+            // onChange={(e) => setProgramPrice(e.target.value)}
+            onChange={(e) => {
+              setProgramPrice(e.target.value);
+              setErrors({ ...errors, programPrice: "" });
+            }}
           />
+          {Boolean(errors.programPrice) && (
+            <div style={{ color: 'red' }}>{errors.programPrice}</div>
+          )}
+
         </Grid>
 
         <Grid item xs={12}>
           <Divider sx={{ mx: '-24px' }} />
+
         </Grid>
         <Grid item xs={12} sm={6}>
 
@@ -297,28 +438,36 @@ const AddProgramForm = () => {
             id="tags-outlined"
             options={pillar}
             // onChange={handleOnChangeOption}
-            onChange={(event, value) => setpillarValue(value)}
             getOptionLabel={(option) => option.label}
-            value={pillarValue}
             // defaultValue={pillar}
             filterSelectedOptions
             renderInput={(params) => (
               <CustomTextField {...params} placeholder={'Select Pillars'} aria-label="Favorites" />
             )}
-            error={!!errors.pillarValue}
-            helperText={errors.pillarValue}
+            value={pillarValue}
+            // onChange={(event, value) => setpillarValue(value)}
+            onChange={(event, value) => {
+              setpillarValue(value);
+              setErrors({ ...errors, pillar: "" });
+            }}
+
           />
+          {Boolean(errors.pillar) && (
+            <div style={{ color: 'red' }}>{errors.pillar}</div>
+          )}
 
 
           <CustomFormLabel htmlFor="fs-country">Gurus</CustomFormLabel>
           <CustomSelect
             id="standard-select-currency"
-            value={guruValue}
-            onChange={(e) => { console.log("here gutu", e.target.value); setguruValue(e.target.value) }}
             fullWidth
             variant="outlined"
-            error={!!errors.guruValue}
-            helperText={errors.guruValue}
+            value={guruValue}
+            // onChange={(e) => { console.log("here gutu", e.target.value); setguruValue(e.target.value) }}
+            onChange={(e) => {
+              setguruValue(e.target.value);
+              setErrors({ ...errors, guru: "" });
+            }}
           >
             {gurus.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -326,7 +475,9 @@ const AddProgramForm = () => {
               </MenuItem>
             ))}
           </CustomSelect>
-
+          {Boolean(errors.guru) && (
+            <div style={{ color: 'red' }}>{errors.guru}</div>
+          )}
 
           <CustomFormLabel htmlFor="fs-date">Program Date</CustomFormLabel>
           <CustomTextField
@@ -335,33 +486,44 @@ const AddProgramForm = () => {
             placeholder="John Deo"
             fullWidth
             value={dateValue}
-            onChange={(e) => setdateValue(e.target.value)}
-            error={!!errors.dateValue}
-            helperText={errors.dateValue}
+            // onChange={(e) => setdateValue(e.target.value)}
+            onChange={(e) => {
+              setdateValue(e.target.value);
+              setErrors({ ...errors, programDate: "" });
+            }}
           />
+          {Boolean(errors.programDate) && (
+            <div style={{ color: 'red' }}>{errors.programDate}</div>
+          )}
         </Grid>
 
 
         <Grid item xs={12} sm={6}>
 
           <CustomFormLabel htmlFor="fs-language">Vihars</CustomFormLabel>
+
           <Autocomplete
             multiple
             fullWidth
             id="tags-outlined"
             options={vihar}
             // onChange={handleOnChangeOption}
-            onChange={(event, value) => setviharValue(value)}
             getOptionLabel={(option) => option.label}
             defaultValue={vihar}
             filterSelectedOptions
             renderInput={(params) => (
               <CustomTextField {...params} placeholder={selectedOptions.length === 0 ? 'Select Vihars' : ''} value={viharValue} onChange={(e) => setviharValue(e.target.value)} aria-label="Favorites" />
             )}
-            error={!!errors.viharValue}
-            helperText={errors.viharValue}
-          />
+            // onChange={(event, value) => setviharValue(value)}
+            onChange={(event, value) => {
+              setviharValue(value);
+              setErrors({ ...errors, vihar: "" });
+            }}
 
+          />
+          {Boolean(errors.vihar) && (
+            <div style={{ color: 'red' }}>{errors.vihar}</div>
+          )}
           {/* </CustomSelect> */}
           <CustomFormLabel htmlFor="fs-phone"> Focus Of Program</CustomFormLabel>
           <CustomTextField
@@ -369,10 +531,15 @@ const AddProgramForm = () => {
             placeholder="Enter focus of program"
             fullWidth
             value={focusValue}
-            onChange={(e) => setfocusValue(e.target.value)}
-            error={!!errors.focusValue}
-            helperText={errors.focusValue}
+            // onChange={(e) => setfocusValue(e.target.value)}
+            onChange={(e) => {
+              setfocusValue(e.target.value);
+              setErrors({ ...errors, focusOfProgram: "" });
+            }}
           />
+          {Boolean(errors.focusOfProgram) && (
+            <div style={{ color: 'red' }}>{errors.focusOfProgram}</div>
+          )}
 
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -383,31 +550,35 @@ const AddProgramForm = () => {
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
               value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              error={!!errors.status}
-              helperText={errors.status}
+              // onChange={(e) => setStatus(e.target.value)}
+              onChange={(e) => {
+                setStatus(e.target.value);
+                setErrors({ ...errors, programStatus: "" });
+              }}
             >
               <FormControlLabel value="Active" control={<Radio />} label="Active" />
               <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
             </RadioGroup>
           </FormControl>
+          {Boolean(errors.programStatus) && (
+            <div style={{ color: 'red' }}>{errors.programStatus}</div>
+          )}
         </Grid>
         <Grid item xs={12} sm={6}>
           <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Program Image</CustomFormLabel>
-
           <Button
             component="label"
             variant="contained"
             startIcon={<CloudUploadIcon />}
             beforeUpload={beforeUpload}
             onChange={handleChangeImg}
-            loading={loading}
-            error={!!errors.imageUrl}
-            helperText={errors.imageUrl}
           >
             Upload file
             <VisuallyHiddenInput type="file" />
           </Button>
+          {Boolean(errors.programImages) && (
+            <div style={{ color: 'red' }}>{errors.programImages}</div>
+          )}
         </Grid>
         <Grid item xs={12} >
           <CustomFormLabel htmlFor="fs-editor">About Program</CustomFormLabel>
@@ -415,18 +586,25 @@ const AddProgramForm = () => {
             id="fs-editor"
             value={aboutValue}
             // onChange={(e) => setaboutValue(e.target.value)}
-            onChange={(value) => setaboutValue(value)}
             style={{ height: '10rem', marginBottom: '3rem' }}
-            error={!!errors.aboutValue}
-            helperText={errors.aboutValue}
+            // onChange={(value) => setaboutValue(value)}
+            onChange={(value) => {
+              setaboutValue(value);
+              setErrors({ ...errors, programDetails: "" });
+            }}
           />
+          {Boolean(errors.programDetails) && (
+            <div style={{ color: 'red' }}>{errors.programDetails}</div>
+          )}
         </Grid>
 
 
         <Grid item xs={12} className='pt-50'>
           <Stack direction="row" spacing={2}>
             <Button variant="contained" color="primary"
-              onClick={handleSubmitBtn}
+              // onClick={handleSubmitBtn}
+              onClick={(e) => scrollToError(errors, handleSubmitBtn)}
+
             >
               Submit
             </Button>
