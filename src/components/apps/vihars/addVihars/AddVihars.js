@@ -121,6 +121,7 @@ const AddProgramForm = () => {
             formData.append("image", file);
             const res = await routes.APIS.UPLOAD_IMAGE(formData);
             setImageUrl(res.url);
+            setErrors({ ...errors, imageUrl: "" });
             setLoading(false);
             return false; // Prevent default upload
         } catch (error) {
@@ -135,6 +136,7 @@ const AddProgramForm = () => {
             formData.append("image", file);
             const res = await routes.APIS.UPLOAD_IMAGE(formData);
             setFileList([...fileList, { url: res.url }]);
+            setErrors({ ...errors, fileList: "" });
             setLoading(false);
             return false; // Prevent default upload
         } catch (error) {

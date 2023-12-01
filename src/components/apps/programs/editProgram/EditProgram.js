@@ -139,6 +139,8 @@ const EditProgramForm = () => {
             formData.append("image", file);
             const res = await routes.APIS.UPLOAD_IMAGE(formData);
             setImageUrl(res.url);
+            setErrors({ ...errors, imageUrl: "" });
+
             console.log(res.url)
             setLoading(false);
             return false;

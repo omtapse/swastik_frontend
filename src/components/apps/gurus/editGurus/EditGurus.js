@@ -95,6 +95,7 @@ const FormSeparator = () => {
             formData.append("image", file);
             const res = await routes.APIS.UPLOAD_IMAGE(formData);
             setImageUrl(res.url);
+            setErrors({ ...errors, image: "" });
             setLoading(false);
             return false; // Prevent default upload
         } catch (error) {
@@ -109,6 +110,7 @@ const FormSeparator = () => {
             formData.append("image", file);
             const res = await routes.APIS.UPLOAD_IMAGE(formData);
             setFileList([...fileList, { url: res.url }]);
+            setErrors({ ...errors, programImages: "" });
             setLoading(false);
             return false; // Prevent default upload
         } catch (error) {
