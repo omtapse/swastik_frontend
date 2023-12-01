@@ -37,7 +37,8 @@ import img4 from 'src/assets/images/profile/user-4.jpg';
 import img5 from 'src/assets/images/profile/user-5.jpg';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { fetchGurus,deleteGuruByID, fetchGuruById } from '../../../../store/apps/guru/GuruSlice';
+import { fetchGurus, deleteGuruByID, fetchGuruById } from '../../../../store/apps/guru/GuruSlice';
+import { format, isValid } from 'date-fns';
 
 
 const GurusList = () => {
@@ -59,15 +60,6 @@ const GurusList = () => {
   }, [])
 
 
-  // const handleEdit = (programId) => {
-  //   console.log("editttt", programId)
-  //   dispatch(fetchProgramById(programId));
-  //   // setOpen(true)
-  //   if (programId) {
-  //     navigate('/apps/programs/updatePrograms-list')
-  //   }
-  // }
-
   const handleEdit = (guruId) => {
     console.log("editttt", guruId)
     dispatch(fetchGuruById(guruId));
@@ -84,18 +76,8 @@ const GurusList = () => {
 
   return (
     <PageContainer title="Program list" description="this is program list ">
-      {/* <Breadcrumb
-        title="Program list"
-        subtitle="List of all programs"
-      /> */}
+
       <Grid container xs={12}>
-        {/* <Grid item xs={12} lg={12}>
-          <Box mb={3} justifyContent={'flex-end'} display={'flex'}>
-            <Button variant="contained" color="primary">
-              Add new Program
-            </Button>
-          </Box>
-        </Grid> */}
         <Grid item xs={12} lg={12}>
           <TableContainer>
             <Table
@@ -115,15 +97,6 @@ const GurusList = () => {
                   <TableCell>
                     <Typography variant="h6">Registered On</Typography>
                   </TableCell>
-                  {/* <TableCell> */}
-                  {/* <Typography variant="h6">Program Status</Typography>
-                  </TableCell> */}
-                  {/* <TableCell>
-                    <Typography variant="h6">Subactivity</Typography>
-                  </TableCell> */}
-                  {/* <TableCell>
-                    <Typography variant="h6">Description</Typography>
-                  </TableCell> */}
                   <TableCell>
                     <Typography variant="h6">Action</Typography>
                   </TableCell>
@@ -151,14 +124,14 @@ const GurusList = () => {
                     </TableCell>
                     <TableCell>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.createdAt}
+                        {/* {item.createdAt} */}
+                        {/* {format(new Date(item?.createdAt), 'dd-MM-yyyy')} */}
+                        {isValid(new Date(item.createdAt))
+                          ? format(new Date(item.createdAt), 'dd-MM-yyyy')
+                          : 'Invalid Date'
+                        }
                       </Typography>
                     </TableCell>
-                    {/* <TableCell>
-                      <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.programStatus}
-                      </Typography>
-                    </TableCell> */}
 
                     <TableCell>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

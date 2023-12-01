@@ -42,6 +42,9 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { fetchProgram,CreateProgram,updateProgram} from '../../../../store/apps/programs/ProgramListSlice';
 import { deletePillarByID, fetchPillar, fetchPillarById } from '../../../../store/apps/pillars/PillarSlice';
 import { useNavigate } from 'react-router';
+import { format, isValid } from 'date-fns';
+
+
 
 
 const ProgramList = () => {
@@ -55,17 +58,17 @@ const ProgramList = () => {
   //   dispatch(resetSelectedStudent());
   // };
 
-  const  dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   // const allProgram = useSelector((state) => state.ProgramReducer)
   const getAllPillar = useSelector((state) => state.PillarReducer?.pillars || []);
 
 
-  console.log("allllll",getAllPillar);
+  console.log("allllll", getAllPillar);
 
   useEffect(() => {
     dispatch(fetchPillar())
-  },[dispatch])
+  }, [dispatch])
 
 
   const handleEdit = (pillarId) => {
@@ -77,9 +80,9 @@ const ProgramList = () => {
     }
   }
 
-  
+
   const handleDelete = (pillarId) => {
-    console.log("pillarriddddd",pillarId)
+    console.log("pillarriddddd", pillarId)
     dispatch(deletePillarByID(pillarId));
   };
 
@@ -141,7 +144,7 @@ const ProgramList = () => {
               </TableHead>
               <TableBody>
                 {getAllPillar.map((item) => (
-                 
+
                   <TableRow key={item.id}>
                     <TableCell>
                       <Stack direction="row" spacing={2}>
@@ -155,12 +158,23 @@ const ProgramList = () => {
                     </TableCell>
                     <TableCell>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.createdAt}
+                        {/* {item.createdAt} */}
+                        {/* {format(new Date(item?.createdAt), 'dd-MM-yyyy')} */}
+                        {isValid(new Date(item.createdAt))
+                          ? format(new Date(item.createdAt), 'dd-MM-yyyy')
+                          : 'Invalid Date'
+                        }
+
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.updatedAt}
+                        {/* {item.updatedAt} */}
+                        {/* {format(new Date(item?.updatedAt), 'dd-MM-yyyy')} */}
+                        {isValid(new Date(item.updatedAt))
+                          ? format(new Date(item.updatedAt), 'dd-MM-yyyy')
+                          : 'Invalid Date'
+                        }
                       </Typography>
                     </TableCell>
                     {/* <TableCell>
@@ -168,7 +182,7 @@ const ProgramList = () => {
                         {item.programStatus}
                       </Typography>
                     </TableCell> */}
-                   
+
                     <TableCell>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Tooltip title="View">

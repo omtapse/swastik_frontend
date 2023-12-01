@@ -43,6 +43,9 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { fetchPillar } from '../../../../store/apps/pillars/PillarSlice';
 import { deleteViharByID, fetchVihar, fetchViharById } from '../../../../store/apps/vihar/ViharSlice';
 import { useNavigate } from 'react-router';
+import { format, isValid } from 'date-fns';
+
+
 
 
 const ViharList = () => {
@@ -56,18 +59,18 @@ const ViharList = () => {
   //   dispatch(resetSelectedStudent());
   // };
 
-  const  dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   // const allProgram = useSelector((state) => state.ProgramReducer)
   const getAllVihar = useSelector((state) => state.ViharReducer?.vihars || []);
 
 
-  console.log("allllll",getAllVihar);
+  console.log("allllll", getAllVihar);
 
   useEffect(() => {
     // console.log("useEfffffff")
     dispatch(fetchVihar())
-  },[dispatch])
+  }, [dispatch])
 
   const handleEdit = (viharId) => {
     console.log("editttt", viharId)
@@ -84,7 +87,7 @@ const ViharList = () => {
   // };
 
   const handleDelete = (viharId) => {
-    console.log("vihdeleeeeeee",viharId)
+    console.log("vihdeleeeeeee", viharId)
     dispatch(deleteViharByID(viharId));
   };
 
@@ -137,7 +140,7 @@ const ViharList = () => {
               </TableHead>
               <TableBody>
                 {getAllVihar.map((item) => (
-                 
+
                   <TableRow key={item.id}>
                     <TableCell>
                       <Stack direction="row" spacing={2}>
@@ -151,12 +154,24 @@ const ViharList = () => {
                     </TableCell>
                     <TableCell>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.createdAt}
+                        {/* {item.createdAt} */}
+                        {/* {format(new Date(item?.createdAt), 'dd-MM-yyyy')} */}
+                        {isValid(new Date(item.createdAt))
+                          ? format(new Date(item.createdAt), 'dd-MM-yyyy')
+                          : 'Invalid Date'
+                        }
+
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.updatedAt}
+                        {/* {item.updatedAt} */}
+                        {/* {format(new Date(item?.updatedAt), 'dd-MM-yyyy')} */}
+                        {isValid(new Date(item.updatedAt))
+                          ? format(new Date(item.updatedAt), 'dd-MM-yyyy')
+                          : 'Invalid Date'
+                        }
+
                       </Typography>
                     </TableCell>
                     {/* <TableCell>
@@ -164,7 +179,7 @@ const ViharList = () => {
                         {item.programStatus}
                       </Typography>
                     </TableCell> */}
-                   
+
                     <TableCell>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Tooltip title="View">
