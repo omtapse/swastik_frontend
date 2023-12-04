@@ -20,33 +20,33 @@ import { useDispatch } from 'react-redux';
 import { saveAdminInfo } from '../../../store/apps/admin/adminSlice';
 import { notification } from 'antd';
 
-const AuthLogin = ({ title, subtitle, subtext }) =>{ 
-  const [username, setUsername] = useState('');
+const AuthLogin = ({ title, subtitle, subtext }) => {
+  const [ username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = async() => {
+  const handleLogin = async () => {
     try {
-      if(!username || !password){
+      if (!username || !password) {
         notification.error({
-          message : "Please fill all the fields" ,
-          placement : "top"
+          message: "Please fill all the fields",
+          placement: "top"
         })
         return;
       }
-      const res = await routes.APIS.login({email:username, password});
-      if(res.status === 200){
-        dispatch(saveAdminInfo({email:username,id:res.adminId,loginTime:Date.now()}))
+      const res = await routes.APIS.login({ email: username, password });
+      if (res.status === 200) {
+        dispatch(saveAdminInfo({ email: username, id: res.adminId, loginTime: Date.now(), adminName: res.data.userName }))
         notification.success({
-          message : "Login Successful",
-          placement : "top"
+          message: "Login Successful",
+          placement: "top"
         })
         navigate('/dashboards/modern', { replace: true });
-      }else{
+      } else {
         notification.error({
-          message : "Invalid Credentials" ,
-          placement : "top"
+          message: "Invalid Credentials",
+          placement: "top"
         })
       }
     } catch (error) {
@@ -56,15 +56,15 @@ const AuthLogin = ({ title, subtitle, subtext }) =>{
 
 
 
-  return(
-  <>
-    {title ? (
-      <Typography fontWeight="700" variant="h3" mb={1}>
-        {title}
-      </Typography>
-    ) : null}
-    {subtext}
-    {/* <AuthSocialButtons title="Sign in with" />
+  return (
+    <>
+      {title ? (
+        <Typography fontWeight="700" variant="h3" mb={1}>
+          {title}
+        </Typography>
+      ) : null}
+      {subtext}
+      {/* <AuthSocialButtons title="Sign in with" />
     <Box mt={3}>
       <Divider>
         <Typography
@@ -80,49 +80,50 @@ const AuthLogin = ({ title, subtitle, subtext }) =>{
       </Divider>
     </Box> */}
 
-    <Stack>
-      <Box>
-        <CustomFormLabel htmlFor="username">Username</CustomFormLabel>
-        <CustomTextField onChange={(e) => setUsername(e.target.value)}  value={username} id="username" variant="outlined" fullWidth />
-      </Box>
-      <Box>
-        <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-        <CustomTextField onChange={e=>setPassword(e.target.value)} value={password} id="password" type="password" variant="outlined" fullWidth />
-      </Box>
-      <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
-        <FormGroup>
-          <FormControlLabel
-            control={<CustomCheckbox defaultChecked />}
-            label="Remeber this Device"
-          />
-        </FormGroup>
-        <Typography
-          component={Link}
-          to="/auth/forgot-password"
-          fontWeight="500"
-          sx={{
-            textDecoration: 'none',
-            color: 'primary.main',
-          }}
-        >
-          Forgot Password ?
-        </Typography>
+      <Stack>
+        <Box>
+          <CustomFormLabel htmlFor="username">Username</CustomFormLabel>
+          <CustomTextField onChange={(e) => setUsername(e.target.value)} value={username} id="username" variant="outlined" fullWidth />
+        </Box>
+        <Box>
+          <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
+          <CustomTextField onChange={e => setPassword(e.target.value)} value={password} id="password" type="password" variant="outlined" fullWidth />
+        </Box>
+        <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
+          <FormGroup>
+            <FormControlLabel
+              control={<CustomCheckbox defaultChecked />}
+              label="Remeber this Device"
+            />
+          </FormGroup>
+          <Typography
+            component={Link}
+            to="/auth/forgot-password"
+            fontWeight="500"
+            sx={{
+              textDecoration: 'none',
+              color: 'primary.main',
+            }}
+          >
+            Forgot Password ?
+          </Typography>
+        </Stack>
       </Stack>
-    </Stack>
-    <Box>
-      <Button
-        color="primary"
-        variant="contained"
-        size="large"
-        fullWidth
-        onClick={handleLogin}
-        type="submit"
-      >
-        Sign In
-      </Button>
-    </Box>
-    {subtitle}
-  </>
-)};
+      <Box>
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          fullWidth
+          onClick={handleLogin}
+          type="submit"
+        >
+          Sign In
+        </Button>
+      </Box>
+      {subtitle}
+    </>
+  )
+};
 
 export default AuthLogin;

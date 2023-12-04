@@ -37,8 +37,8 @@ const routes = {
         POST_PROGRAM: async (data) => {
             return await apiPost('/createprogram', routes.BASE_PATH, data)
         },
-        PUT_PROGRAM: async (id,data) => {
-            return await apiPut(`/updateprogram/${id}`, routes.BASE_PATH,data)
+        PUT_PROGRAM: async (id, data) => {
+            return await apiPut(`/updateprogram/${id}`, routes.BASE_PATH, data)
         },
         ADD_GURU: async (data) => {
             return await apiPost("/gurus", routes.BASE_PATH, data)
@@ -87,6 +87,15 @@ const routes = {
         },
         UPDATE_PROGRAM: async (id, data) => {
             return await apiPut(`/updateprogram/${id}`, routes.BASE_PATH, data)
+        },
+        getAdminInfo: async (id) => {
+            return await apiGet(`/admin/admin/${id}`, routes.BASE_PATH)
+        },
+        updateAdminInfo: async (id, data) => {
+            return await apiPut(`/admin/admin/${id}`, routes.BASE_PATH, data)
+        },
+        logoutAdmin: async () => {
+            return await apiGet(`/admin/logout`, routes.BASE_PATH)
         },
     }
 

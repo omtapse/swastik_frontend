@@ -25,7 +25,7 @@ const Welcome = () => {
 
   return (
     <React.Fragment>
-      <Snackbar
+      {/* <Snackbar
         open={open}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         autoHideDuration={6000}
@@ -40,7 +40,7 @@ const Welcome = () => {
           <AlertTitle>Welcome To Modernize</AlertTitle>
           Easy to customize the Template!!!
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </React.Fragment>
   );
 };
