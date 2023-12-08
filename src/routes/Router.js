@@ -2,6 +2,7 @@ import React, { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import Loadable from '../layouts/full/shared/loadable/Loadable';
+import ResetPassword from '../views/authentication/auth1/ResetPassword';
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -116,10 +117,10 @@ const Maintenance = Loadable(lazy(() => import('../views/authentication/Maintena
 const Landingpage = Loadable(lazy(() => import('../views/pages/landingpage/Landingpage')));
 
 const ProgrampageList = Loadable(lazy(() => import('../views/apps/programs/ProgramList')));
-const ProgrampageForm = Loadable(lazy(() => import ('../views/apps/programs/ProgramsForm')));
+const ProgrampageForm = Loadable(lazy(() => import('../views/apps/programs/ProgramsForm')));
 const GuruspageForm = Loadable(lazy(() => import('../views/apps/gurus/GurusForm')))
-const GuruspageList = Loadable(lazy(()=> import('../views/apps/gurus/GurusList')))
-const ViharspageForm = Loadable(lazy(()=> import('../views/apps/vihars/ViharsForm')))
+const GuruspageList = Loadable(lazy(() => import('../views/apps/gurus/GurusList')))
+const ViharspageForm = Loadable(lazy(() => import('../views/apps/vihars/ViharsForm')))
 const ViharspageList = Loadable(lazy(() => import('../views/apps/vihars/ViharsList')))
 const PillarsPageForm = Loadable(lazy(() => import('../views/apps/pillars/PillarForm')))
 const PillarsPageList = Loadable(lazy(() => import('../views/apps/pillars/PillarList')))
@@ -142,20 +143,20 @@ const Router = [
       { path: '/apps/calendar', element: <Calendar /> },
       { path: '/apps/email', element: <Email /> },
       { path: '/programs/addPrograms', element: <ProgrampageForm /> },
-      { path: '/programs/programsList', element: <ProgrampageList />},
-      { path: '/programs/editPrograms/:id', element: <EditProgramForm />},
-      { path: '/gurus/addGurus', element: <GuruspageForm />},
-      { path: '/gurus/gurusList', element: <GuruspageList />},
-      { path: '/vihars/addVihar', element: <ViharspageForm />},
+      { path: '/programs/programsList', element: <ProgrampageList /> },
+      { path: '/programs/editPrograms/:id', element: <EditProgramForm /> },
+      { path: '/gurus/addGurus', element: <GuruspageForm /> },
+      { path: '/gurus/gurusList', element: <GuruspageList /> },
+      { path: '/vihars/addVihar', element: <ViharspageForm /> },
       { path: '/vihars/viharList', element: <ViharspageList /> },
-      { path: '/pillars/addPillars', element: <PillarsPageForm />},
-      { path: '/pillars/pillarList', element: <PillarsPageList />},
-      { path: '/pillars/editPillars/:id', element: <EditPillarForm />},
-      { path: '/vihars/editVihars/:id', element: <EditViharForm />},
-      
-      { path: '/gurus/editGurus/:id', element: <EditGurusForm />},
+      { path: '/pillars/addPillars', element: <PillarsPageForm /> },
+      { path: '/pillars/pillarList', element: <PillarsPageList /> },
+      { path: '/pillars/editPillars/:id', element: <EditPillarForm /> },
+      { path: '/vihars/editVihars/:id', element: <EditViharForm /> },
 
-      
+      { path: '/gurus/editGurus/:id', element: <EditGurusForm /> },
+
+
 
 
       { path: '/apps/tickets', element: <Tickets /> },
@@ -218,9 +219,9 @@ const Router = [
       { path: '/widgets/cards', element: <WidgetCards /> },
       { path: '/widgets/banners', element: <WidgetBanners /> },
       { path: '/widgets/charts', element: <WidgetCharts /> },
-     
 
-      
+
+
 
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
@@ -235,6 +236,9 @@ const Router = [
       { path: '/auth/register', element: <Register2 /> },
       { path: '/auth/register2', element: <Register2 /> },
       { path: '/auth/forgot-password', element: <ForgotPassword /> },
+      
+      { path: '/auth/reset-password/:id/:token', element: <ResetPassword /> },
+
       { path: '/auth/forgot-password2', element: <ForgotPassword2 /> },
       { path: '/auth/two-steps', element: <TwoSteps /> },
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },
