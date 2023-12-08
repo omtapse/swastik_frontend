@@ -275,7 +275,7 @@ const AddProgramForm = () => {
             // Dispatch the action and wait for it to complete
             await dispatch(addVihar(data));
 
-            navigate('/apps/vihars/vihar-list');
+            navigate('/vihars/viharList');
         } catch (error) {
             console.error("Error:", error);
         }
@@ -285,9 +285,9 @@ const AddProgramForm = () => {
 
     return (
         <div>
-            <Typography variant="h6" mb={3}>
+            {/* <Typography variant="h6" mb={3}>
                 Pillar Details
-            </Typography>
+            </Typography> */}
 
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
@@ -373,18 +373,16 @@ const AddProgramForm = () => {
                             setErrors({ ...errors, activities: "" });
                         }}
                         getOptionLabel={(option) => option.label}
-                        defaultValue={activities}
+                        defaultValue={activities.map((activity) => ({ label: activity, value: activity }))}
                         filterSelectedOptions
-                        onInputChange={(event, newInputValue) => {
-                            // Add the new value to the options list
-
-                            // setOptions((prevOptions) =>{
-                            //     console.log("prevOptions",prevOptions);
-                            //     return[
-                            //     ...prevOptions,
-                            //     { label: newInputValue, value: newInputValue },
-                            // ]});
-                        }}
+                        // onInputChange={(event, newInputValue) => {
+                        //     setOptions((prevOptions) =>{
+                        //         console.log("prevOptions",prevOptions);
+                        //         return[
+                        //         ...prevOptions,
+                        //         { label: newInputValue, value: newInputValue },
+                        //     ]});
+                        // }}
 
                         renderInput={(params) => (
                             <CustomTextField {...params} value={activityValue} aria-label="Favorites" />

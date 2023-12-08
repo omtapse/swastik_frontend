@@ -39,6 +39,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { fetchGurus, deleteGuruByID, fetchGuruById } from '../../../../store/apps/guru/GuruSlice';
 import { format, isValid } from 'date-fns';
+import { Card } from 'antd';
 
 
 const GurusList = () => {
@@ -65,7 +66,7 @@ const GurusList = () => {
     dispatch(fetchGuruById(guruId));
     // setOpen(true)
     if (guruId) {
-      navigate('/apps/gurus/updateGuru-form')
+      navigate(`/gurus/editGurus/${guruId}`)
     }
   }
 
@@ -79,6 +80,8 @@ const GurusList = () => {
 
       <Grid container xs={12}>
         <Grid item xs={12} lg={12}>
+          <Card>
+
           <TableContainer>
             <Table
               aria-label="simple table"
@@ -88,16 +91,16 @@ const GurusList = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Name</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Experties</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Registered On</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Action</Typography>
                   </TableCell>
                 </TableRow>
@@ -107,7 +110,7 @@ const GurusList = () => {
                 {getAllGurus.map((item) => (
 
                   <TableRow key={item.id}>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Stack direction="row" spacing={2}>
                         <Avatar src={item.image} alt={item.image} width="35" />
                         <Box alignItems={'center'} display={'flex'}>
@@ -117,12 +120,12 @@ const GurusList = () => {
                         </Box>
                       </Stack>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {item.experties}
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {/* {item.createdAt} */}
                         {/* {format(new Date(item?.createdAt), 'dd-MM-yyyy')} */}
@@ -133,7 +136,7 @@ const GurusList = () => {
                       </Typography>
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Tooltip title="View">
                           <IconButton>
@@ -160,6 +163,7 @@ const GurusList = () => {
 
             </Table>
           </TableContainer>
+          </Card>
         </Grid>
       </Grid>
 

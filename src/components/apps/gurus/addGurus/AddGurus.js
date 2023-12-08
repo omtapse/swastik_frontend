@@ -175,7 +175,7 @@ const FormSeparator = () => {
             await dispatch(addGurus(data));
             console.log(",,,,,,,", data)
             if (data) {
-                navigate('/apps/gurus/gurus-list');
+                navigate('/gurus/gurusList');
             }
 
 

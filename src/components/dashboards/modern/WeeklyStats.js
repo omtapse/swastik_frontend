@@ -91,14 +91,14 @@ const WeeklyStats = () => {
   ];
 
   return (
-    <DashboardCard title="Weekly Stats" subtitle="Average sales">
+    <DashboardCard title="Upcoming Program">
       <>
         <Stack mt={4}>
           <Chart
             options={optionscolumnchart}
             series={seriescolumnchart}
             type="area"
-            height="130px"
+            height="200px"
           />
         </Stack>
         <Stack spacing={3} mt={3}>

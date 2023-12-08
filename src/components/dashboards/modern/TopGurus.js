@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardCard from '../../shared/DashboardCard';
 import CustomSelect from '../../forms/theme-elements/CustomSelect';
 import {
@@ -14,8 +14,16 @@ import {
   Chip,
   TableContainer,
   Stack,
+  Tooltip,
+  Button,
+  IconButton,
 } from '@mui/material';
 import TopPerformerData from './TopPerformerData';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGurus } from '../../../store/apps/guru/GuruSlice';
+import { Grid } from '@mui/material';
+
 
 const performers = TopPerformerData;
 
@@ -23,13 +31,41 @@ const TopPerformers = () => {
   // for select
   const [month, setMonth] = React.useState('1');
 
+  const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
+  const [isRightSidebarOpen, setRightSidebarOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+
+  const dispatch = useDispatch();
+//   const navigate = useNavigate();
+  const getAllGurus = useSelector((state) => state.GuruReducer?.gurus || []);
+  console.log("allllll", getAllGurus);
+
+
+  const filterTopFiveGurus = () => {
+    const sortedGurus = [...getAllGurus].sort((a, b) => {
+        // Assuming dimmerNo is a numeric value, adjust the sorting logic accordingly
+        return a.name - b.name;
+    });
+
+    // Slice the top five patch lights from the sorted list
+    return sortedGurus.slice(0, 5);
+};
+
+// Get the top five patch lights based on dimmer numbers
+const topFiveGurus = filterTopFiveGurus();
+
+  useEffect(() => {
+    dispatch(fetchGurus())
+  }, [])
+
   const handleChange = (event) => {
     setMonth(event.target.value);
   };
 
   return (
     <DashboardCard
-      title="Gurus"
+    //   title="Gurus"
       // subtitle="Best Products"
       // action={
       //   <CustomSelect
@@ -45,6 +81,26 @@ const TopPerformers = () => {
       //   </CustomSelect>
       // }
     >
+        <Grid container spacing={3} alignItems="center">
+                <Grid item xs={6}>
+                    {/* Title */}
+                    <Typography variant="h5" fontWeight={600}>
+                        Gurus
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    {/* View More Button */}
+                    <Box mb={3} justifyContent={'flex-end'} display={'flex'}>
+                        <Button
+                            // onClick={handleView}
+                            variant="contained"
+                            color="primary"
+                        >
+                            view more
+                        </Button>
+                    </Box>
+                </Grid>
+            </Grid>
       <TableContainer>
         <Table
           aria-label="simple table"
@@ -55,42 +111,44 @@ const TopPerformers = () => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Assigned</Typography>
+                <Typography variant="subtitle2" fontWeight={600}>Name</Typography>
               </TableCell>
+              {/* <TableCell>
+                <Typography variant="subtitle2" fontWeight={600}>Experties</Typography>
+              </TableCell> */}
               <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Project</Typography>
+                <Typography variant="subtitle2" fontWeight={600}>Action</Typography>
               </TableCell>
-              <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Priority</Typography>
-              </TableCell>
-              <TableCell>
+              {/* <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>Budget</Typography>
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {performers.map((basic) => (
+            {topFiveGurus.map((basic) => (
               <TableRow key={basic.id}>
                 <TableCell>
                   <Stack direction="row" spacing={2}>
-                    <Avatar src={basic.imgsrc} alt={basic.imgsrc} sx={{ width: 40, height: 40 }} />
+                    <Avatar src={basic.image} alt={basic.image} sx={{ width: 40, height: 40 }} />
                     <Box>
                       <Typography variant="subtitle2" fontWeight={600}>
                         {basic.name}
                       </Typography>
                       <Typography color="textSecondary" fontSize="12px" variant="subtitle2">
-                        {basic.post}
+                        {basic.experties}
                       </Typography>
+                     
                     </Box>
                   </Stack>
                 </TableCell>
                 <TableCell>
-                  <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
-                    {basic.pname}
-                  </Typography>
+                <Tooltip title="View">
+                          <IconButton>
+                            <VisibilityIcon />
+                          </IconButton>
+                        </Tooltip>
                 </TableCell>
-                <TableCell>
-                  {/* <Chip chipcolor={basic.status == 'Active' ? 'success' : basic.status == 'Pending' ? 'warning' : basic.status == 'Completed' ? 'primary' : basic.status == 'Cancel' ? 'error' : 'secondary'} */}
+                {/* <TableCell>
                   <Chip
                     sx={{
                       bgcolor:
@@ -114,10 +172,10 @@ const TopPerformers = () => {
                     size="small"
                     label={basic.status}
                   />
-                </TableCell>
-                <TableCell>
+                </TableCell> */}
+                {/* <TableCell>
                   <Typography variant="subtitle2">${basic.budget}k</Typography>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

@@ -16,6 +16,7 @@ import {
   Button,
   Tooltip,
   IconButton,
+  Card,
 } from '@mui/material';
 import PageContainer from '../../../../components/container/PageContainer';
 import Breadcrumb from '../../../../layouts/full/shared/breadcrumb/Breadcrumb';
@@ -76,7 +77,7 @@ const ProgramList = () => {
     dispatch(fetchPillarById(pillarId));
     // setOpen(true)
     if (pillarId) {
-      navigate('/apps/pillars/updatePillars-form')
+      navigate(`/pillars/editPillars/${pillarId}`)
     }
   }
 
@@ -110,6 +111,8 @@ const ProgramList = () => {
           </Box>
         </Grid> */}
         <Grid item xs={12} lg={12}>
+          <Card>
+
           <TableContainer>
             <Table
               aria-label="simple table"
@@ -119,13 +122,13 @@ const ProgramList = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Pillar Name</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Registered On</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Updated On</Typography>
                   </TableCell>
                   {/* <TableCell>
@@ -137,7 +140,7 @@ const ProgramList = () => {
                   {/* <TableCell>
                     <Typography variant="h6">Description</Typography>
                   </TableCell> */}
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Action</Typography>
                   </TableCell>
                 </TableRow>
@@ -146,7 +149,7 @@ const ProgramList = () => {
                 {getAllPillar.map((item) => (
 
                   <TableRow key={item.id}>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Stack direction="row" spacing={2}>
                         <Avatar src={item.pillarImage} alt={item.pillarImage} width="35" />
                         <Box alignItems={'center'} display={'flex'}>
@@ -156,7 +159,7 @@ const ProgramList = () => {
                         </Box>
                       </Stack>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {/* {item.createdAt} */}
                         {/* {format(new Date(item?.createdAt), 'dd-MM-yyyy')} */}
@@ -167,7 +170,7 @@ const ProgramList = () => {
 
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {/* {item.updatedAt} */}
                         {/* {format(new Date(item?.updatedAt), 'dd-MM-yyyy')} */}
@@ -183,7 +186,7 @@ const ProgramList = () => {
                       </Typography>
                     </TableCell> */}
 
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Tooltip title="View">
                           <IconButton>
@@ -207,6 +210,7 @@ const ProgramList = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          </Card>
         </Grid>
       </Grid>
 

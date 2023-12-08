@@ -177,7 +177,10 @@ const AddProgramForm = () => {
     const fetchActivityNames = async (activityIds) => {
         try {
             const response = await fetchActivityNamesApi(activityIds); // Replace with your actual API call
+            console.log("response>>>>>>",response)
+
             const activityNames = response.map(activity => ({ label: activity.activityName, value: activity._id }));
+            console.log("activityNames",activityNames)
             return activityNames;
         } catch (error) {
             console.error('Error fetching activity names:', error);
@@ -185,6 +188,7 @@ const AddProgramForm = () => {
         }
     };
 
+    console.log("activityValue",activityValue)
 
     const handleSetActivity = (activity) => {
         let newArray = activity?.map((act) => {
@@ -220,27 +224,15 @@ const AddProgramForm = () => {
 
 
     useEffect(() => {
-        // selectedVihar
-        // onst [editorContent, setEditorContent] = useState('');
-        // const [editorFocus, setEditorFocus] = useState('')
-        // const [loading, setLoading] = useState(false);
-        // const [fileList, setFileList] = useState([]);
-        // const [options, setOptions] = useState([]);
-        // const [activities, setActivities] = useState([]);
-        // const [selectedOptions, setSelectedOptions] = useState([]);
-        // const [activityValue, setActivityValue] = useState()
-        // const [imageUrl, setImageUrl] = useState();
-        // const [title, setTitle] = useState();
-        // const [tagline,setTagline] = useState();
-
-        // if (selectedVihar && selectedVihar.activities) {
-        //     const activityNames = fetchActivityNames(selectedVihar.activities);
-        //     setActivities(activityNames);
-        //   }
 
         setTitle(selectedVihar?.viharName || '');
         setTagline(selectedVihar?.tagLine || '');
-        setActivities(selectedVihar?.activities.map(activity => activity.activityName))
+        // setActivities(selectedVihar?.activities.map(activity => activity.activityName))
+        if (selectedVihar && selectedVihar.activities) {
+            const activityNames = fetchActivityNames(selectedVihar?.activities);
+            console.log("activityNames",activityNames)
+            setActivities(activityNames);
+        }
         setImageUrl(selectedVihar?.masterImage || '');
         setFileList(selectedVihar?.facilityImages.map((item) => ({ url: item })))
         setEditorContent(selectedVihar?.vihardescription || '');
@@ -327,7 +319,7 @@ const AddProgramForm = () => {
             // Dispatch the action and wait for it to complete
             await dispatch(updateViharById(selectedVihar._id, data));
 
-            navigate('/apps/vihars/vihar-list');
+            navigate('/vihars/viharList');
         } catch (error) {
             console.error("Error:", error);
         }
@@ -337,9 +329,9 @@ const AddProgramForm = () => {
 
     return (
         <div>
-            <Typography variant="h6" mb={3}>
+            {/* <Typography variant="h6" mb={3}>
                 Pillar Details
-            </Typography>
+            </Typography> */}
 
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
@@ -414,6 +406,38 @@ const AddProgramForm = () => {
                         </Typography>
                     )}
 
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                        activities
+                    </CustomFormLabel>
+                    <Autocomplete
+                        freeSolo
+                        multiple
+                        fullWidth
+                        id="tags-outlined"
+                        options={options || []}
+                        // onChange={handleOnChangeOption}
+                        // onChange={(event, value) => { handleSetActivity(value) }}
+                        onChange={(event, value) => {
+                            handleSetActivity(value);
+                            setErrors({ ...errors, activities: "" });
+                        }}
+                        getOptionLabel={(option) => option.label}
+                    //    value={activities}
+                        defaultValue={activityValue}
+                        filterSelectedOptions
+                        onInputChange={(event, newInputValue) => {
+                       
+                        }}
+
+                        renderInput={(params) => (
+                            <CustomTextField {...params} value={activityValue} aria-label="Favorites" />
+                        )}
+                    />
+                    {Boolean(errors.activities) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.activities}</p>
+                    )}
                 </Grid>
 
                 <Grid item xs={12}>

@@ -280,6 +280,16 @@ const EditProgramForm = () => {
         }
     };
 
+    useEffect(() => {
+        if (selectedProgram && selectedProgram.programDate) {
+            // Assuming selectedProgram.programDate is a valid Date object or string
+            const formattedDate = new Date(selectedProgram.programDate).toISOString().split('T')[0];
+            setdateValue(formattedDate);
+            setStatus(selectedProgram.programStatus);
+            // ... other state updates
+        }
+    }, [selectedProgram]);
+
 
     const handleSubmitBtn = async () => {
         const errors = validateForm(
@@ -317,7 +327,7 @@ const EditProgramForm = () => {
                 // Add other form fields as needed
             };
             dispatch(updateProgramById(selectedProgram._id, data));
-            navigate('/apps/programs/programs-list');
+            navigate('/programs/programsList');
         } catch (error) {
             console.log("Error", error)
         }

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import breadcrumbImg from 'src/assets/images/breadcrumb/ChatBc.png';
 import { IconCircle } from '@tabler/icons';
+// import icon1 from 'src/assets/images/logo/spirituality-image.svg'
 
 const Breadcrumb = ({ subtitle, items, title, children }) => (
   <Grid

@@ -16,6 +16,7 @@ import {
   Button,
   Tooltip,
   IconButton,
+  Card,
 } from '@mui/material';
 import PageContainer from '../../../../components/container/PageContainer';
 import Breadcrumb from '../../../../layouts/full/shared/breadcrumb/Breadcrumb';
@@ -84,7 +85,7 @@ const ProgramList = () => {
     // }
     // setOpen(true)
     if (programId) {
-      navigate('/apps/programs/updatePrograms-list')
+      navigate(`/programs/editPrograms/${programId}`)
     }
   }
 
@@ -108,6 +109,8 @@ const ProgramList = () => {
           </Box>
         </Grid> */}
         <Grid item xs={12} lg={12}>
+          <Card>
+
           <TableContainer>
             <Table
               aria-label="simple table"
@@ -117,16 +120,16 @@ const ProgramList = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Program Name</Typography>
-                  </TableCell>
-                  <TableCell>
+                  </TableCell >
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Program Price</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Program Duration</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Program Status</Typography>
                   </TableCell>
                   {/* <TableCell>
@@ -135,7 +138,7 @@ const ProgramList = () => {
                   {/* <TableCell>
                     <Typography variant="h6">Description</Typography>
                   </TableCell> */}
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Action</Typography>
                   </TableCell>
                 </TableRow>
@@ -144,7 +147,7 @@ const ProgramList = () => {
                 {getAllProgram.map((item) => (
 
                   <TableRow key={item.id}>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Stack direction="row" spacing={2}>
                         <Avatar src={item.programImage} alt={item.programImage} width="35" />
                         <Box alignItems={'center'} display={'flex'}>
@@ -154,23 +157,23 @@ const ProgramList = () => {
                         </Box>
                       </Stack>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {item.programPrice}
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {item.programDuration}
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {item.programStatus}
                       </Typography>
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Tooltip title="View">
                           <IconButton>
@@ -194,6 +197,7 @@ const ProgramList = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          </Card>
         </Grid>
       </Grid>
 

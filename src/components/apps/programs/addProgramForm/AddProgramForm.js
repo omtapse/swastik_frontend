@@ -348,7 +348,7 @@ const AddProgramForm = () => {
         // Add other form fields as needed
       };
       dispatch(addProgram(data));
-      navigate('/apps/programs/programs-list');
+      navigate('/programs/programsList');
     } catch (error) {
       console.log("Error", error)
     }

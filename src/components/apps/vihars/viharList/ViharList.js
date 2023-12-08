@@ -16,6 +16,7 @@ import {
   Button,
   Tooltip,
   IconButton,
+  Card,
 } from '@mui/material';
 import PageContainer from '../../../../components/container/PageContainer';
 import Breadcrumb from '../../../../layouts/full/shared/breadcrumb/Breadcrumb';
@@ -77,7 +78,7 @@ const ViharList = () => {
     dispatch(fetchViharById(viharId));
     // setOpen(true)
     if (viharId) {
-      navigate('/apps/vihars/updateVihar-form')
+      navigate(`/vihars/editVihars/${viharId}`)
     }
   }
 
@@ -106,6 +107,7 @@ const ViharList = () => {
           </Box>
         </Grid> */}
         <Grid item xs={12} lg={12}>
+          <Card>
           <TableContainer>
             <Table
               aria-label="simple table"
@@ -115,13 +117,13 @@ const ViharList = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Vihar Name</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Registered On</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Updated On</Typography>
                   </TableCell>
                   {/* <TableCell>
@@ -133,7 +135,7 @@ const ViharList = () => {
                   {/* <TableCell>
                     <Typography variant="h6">Description</Typography>
                   </TableCell> */}
-                  <TableCell>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Action</Typography>
                   </TableCell>
                 </TableRow>
@@ -142,7 +144,7 @@ const ViharList = () => {
                 {getAllVihar.map((item) => (
 
                   <TableRow key={item.id}>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Stack direction="row" spacing={2}>
                         <Avatar src={item.masterImage} alt={item.masterImage} width="35" />
                         <Box alignItems={'center'} display={'flex'}>
@@ -152,7 +154,7 @@ const ViharList = () => {
                         </Box>
                       </Stack>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {/* {item.createdAt} */}
                         {/* {format(new Date(item?.createdAt), 'dd-MM-yyyy')} */}
@@ -163,7 +165,7 @@ const ViharList = () => {
 
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Typography color="textSecondary" variant="h6" fontWeight="400">
                         {/* {item.updatedAt} */}
                         {/* {format(new Date(item?.updatedAt), 'dd-MM-yyyy')} */}
@@ -180,7 +182,7 @@ const ViharList = () => {
                       </Typography>
                     </TableCell> */}
 
-                    <TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Tooltip title="View">
                           <IconButton>
@@ -204,6 +206,7 @@ const ViharList = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          </Card>
         </Grid>
       </Grid>
 

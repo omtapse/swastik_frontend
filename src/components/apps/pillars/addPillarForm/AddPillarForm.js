@@ -114,6 +114,8 @@ const AddProgramForm = () => {
             formData.append("image", file);
             const res = await routes.APIS.UPLOAD_IMAGE(formData);
             setImageUrl(res.url);
+            console.log("*****")
+
             setErrors({ ...errors, imageUrl: "" });
             setLoading(false);
             return false; // Prevent default upload
@@ -144,6 +146,7 @@ const AddProgramForm = () => {
             formData.append("image", info.file);
             let res = await routes.APIS.UPLOAD_IMAGE(formData);
             setImageUrl(res.url);
+            console.log("&&&&")
             console.log("hhhhhhh", res.url)
             setLoading(false);
         }
@@ -206,7 +209,7 @@ const AddProgramForm = () => {
         }
 
         dispatch(addPillar(data));
-        navigate('/apps/pillars/pillar-list')
+        navigate('/pillars/pillarList')
 
     }
 
@@ -214,9 +217,9 @@ const AddProgramForm = () => {
 
     return (
         <div>
-            <Typography variant="h6" mb={3}>
+            {/* <Typography variant="h6" mb={3}>
                 Pillar Details
-            </Typography>
+            </Typography> */}
 
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>

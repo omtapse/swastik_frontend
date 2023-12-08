@@ -111,7 +111,7 @@ export const updateGuruById = (id, data) => async (dispatch) => {
     try {
         const res = await routes.APIS.UPDATE_GURU(id,data);
         console.log('updateGuruById*****:', res);
-        dispatch(updateSelectedGuru(res));
+        dispatch(updateSelectedGuru(res.guru));
     } catch (error) {
         console.log(error)
     }

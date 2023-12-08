@@ -42,7 +42,7 @@ const FormSeparator = () => {
     // country
     const [country, setCountry] = React.useState('');
     const [editorContent, setEditorContent] = useState('');
-    const [editorTestimonial, setEditorTestimonial] = useState('');
+    const [editorTestimonial, setEditorTestimonial] = useState([]);
 
     const [fileList, setFileList] = useState([]);
     const [imageUrl, setImageUrl] = useState();
@@ -140,20 +140,21 @@ const FormSeparator = () => {
 
     useEffect(() => {
         // Set initial values when the component mounts
-        setName(selectedGuru.name || '');
-        setExperties(selectedGuru.experties || '');
+        setName(selectedGuru?.name || '');
+        setExperties(selectedGuru?.experties || '');
         // setFileList(selectedGuru.programImages || []);
-        setFileList(selectedGuru.programImages.map((item) => ({ url: item })))
+        setFileList(selectedGuru?.programImages.map((item) => ({ url: item })))
         // setImageUrl(selectedGuru.image || '');
-        setImageUrl(selectedGuru.image || '')
-        setEditorContent(selectedGuru.about || '');
-        setEditorTestimonial(selectedGuru.testimonials[0] || '');
+        setImageUrl(selectedGuru?.image || '')
+        setEditorContent(selectedGuru?.about || '');
+        setEditorTestimonial(selectedGuru?.testimonials[0] || '');
     }, [selectedGuru]);
     console.log("urllllll", imageUrl)
 
     const [errors, setErrors] = useState({});
 
     const validateForm = (values) => {
+        console.log("validateForm",values)
         const errors = {};
         if (!values.name) {
             errors.name = 'Required';
@@ -170,7 +171,7 @@ const FormSeparator = () => {
         if (!values.programImages || values.programImages.length === 0) {
             errors.programImages = 'Required';
         }
-        if (!values.testimonials) {
+        if (values.testimonials="") {
             errors.testimonials = 'Required';
         }
 
@@ -179,6 +180,7 @@ const FormSeparator = () => {
             return errors;
         }
         // return errors;
+        return null;
     };
 
 
@@ -197,16 +199,18 @@ const FormSeparator = () => {
     };
 
     const handleSubmitBtn = async () => {
+
+        console.log("AAAALLLALAL",editorTestimonial)
         const errors = validateForm({
-            name,
-            expertise,
+            name:name,
+            expertise:expertise,
             image: imageUrl,
             about: editorContent,
-            programImages: fileList,
+            programImages: fileList.map((file) => file.url),
             testimonials: editorTestimonial,
         });
 
-        if (Object.values(errors).some(error => error)) {
+        if (errors && Object.values(errors).some(error => error)) {
             console.error("Validation errors:", errors);
             return;
         }
@@ -217,18 +221,16 @@ const FormSeparator = () => {
                 guruImage: imageUrl,
                 about: editorContent,
                 experties: expertise,
-                // programImages: fileList.map((file) => file.url),
-                programImages: fileList.map((file) => file.url),
+                programImages: fileList,
                 testimonials: editorTestimonial,
             };
-
+            console.log("KKKKK",data)
             // Dispatch the action and wait for it to complete
             await dispatch(updateGuruById(selectedGuru._id, data));
             console.log("data>>>>>>>>", data)
             if (data) {
-                navigate('/apps/gurus/gurus-list');
+                navigate('/gurus/gurusList');
             }
-
 
         } catch (error) {
             console.error("Error:", error);
@@ -317,6 +319,7 @@ const FormSeparator = () => {
                         // onChange={handleChangeImage}
                         accept="image/*"
                         beforeUpload={beforeUploadProgramImages}
+                        // onChange={({ fileList: newFileList }) => setFileList(newFileList)}
                     >
                         {fileList.length >= 8 ? null : uploadButton}
                     </Upload>
@@ -367,7 +370,6 @@ const FormSeparator = () => {
                             color="primary"
                             // onClick={() => handleSubmitBtn()}
                             onClick={(e) => scrollToError(errors, handleSubmitBtn)}
-
                         >
                             Submit
                         </Button>

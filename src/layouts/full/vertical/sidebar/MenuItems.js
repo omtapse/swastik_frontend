@@ -84,21 +84,21 @@ const Menuitems = [
     title: 'Programs',
     // icon: IconBasket,
     icon: IconBoxMultiple,
-    href: '/apps/programs/',
+    href: '/programs/',
     children: [
       {
         id: uniqueId(),
         title: 'Add Programs',
         // icon: IconPoint,
         icon: IconEdit,
-        href: '/apps/programs/programs-form',
+        href: '/programs/addPrograms',
       },
       {
         id: uniqueId(),
         title: 'Programs List',
         // icon: IconPoint,
         icon: IconList,
-        href: '/apps/programs/programs-list',
+        href: '/programs/programsList',
       },
 
     ],
@@ -109,21 +109,21 @@ const Menuitems = [
     title: 'Gurus',
     // icon: IconBasket,
     icon: IconUserCircle,
-    href: '/apps/gurus/',
+    href: '/gurus/',
     children: [
       {
         id: uniqueId(),
         title: 'Add Gurus',
         // icon: IconPoint,
         icon: IconEdit,
-        href: '/apps/gurus/gurus-form',
+        href: '/gurus/addGurus',
       },
       {
         id: uniqueId(),
         title: 'Gurus List',
         // icon: IconPoint,
         icon: IconList,
-        href: '/apps/gurus/gurus-list',
+        href: '/gurus/gurusList',
       },
 
     ],
@@ -134,21 +134,21 @@ const Menuitems = [
     title: 'Vihars',
     // icon: IconBasket,
     icon: IconChartArea,
-    href: '/apps/vihars/',
+    href: '/vihars/',
     children: [
       {
         id: uniqueId(),
         title: 'Add Vihars',
         // icon: IconPoint,
         icon: IconEdit,
-        href: '/apps/vihars/vihar-form',
+        href: '/vihars/addVihar',
       },
       {
         id: uniqueId(),
         title: 'Vihar List',
         // icon: IconPoint,
         icon: IconList,
-        href: '/apps/vihars/vihar-list',
+        href: '/vihars/viharList',
       },
 
     ],
@@ -160,21 +160,21 @@ const Menuitems = [
     title: 'Pillars',
     // icon: IconBasket,
     icon: IconChartCandle,
-    href: '/apps/pillars/',
+    href: '/pillars/',
     children: [
       {
         id: uniqueId(),
         title: 'Add Pillars',
         // icon: IconPoint,
         icon: IconEdit,
-        href: '/apps/pillars/pillar-form',
+        href: '/pillars/addPillars',
       },
       {
         id: uniqueId(),
         title: 'Pillar List',
         // icon: IconPoint,
         icon: IconList,
-        href: '/apps/pillars/pillar-list',
+        href: '/pillars/pillarList',
       },
 
     ],

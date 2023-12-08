@@ -21,18 +21,57 @@ import { saveAdminInfo } from '../../../store/apps/admin/adminSlice';
 import { notification } from 'antd';
 
 const AuthLogin = ({ title, subtitle, subtext }) => {
-  const [ username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [ username, setUsername] = useState('amolg.glassberry@gmail.com');
+  const [password, setPassword] = useState('123456789');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
+
+    if (!username.trim()) {
+      newErrors.username = "Please enter username";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(username)) {
+      newErrors.username = "Please enter valid email";
+      valid = false;
+    } else {
+      newErrors.username = "";
+    }
+    if (!password.trim()) {
+      newErrors.password = "Please enter password";
+      valid = false;
+    } else if (password.length < 8) {
+      newErrors.password = "Password must be atleast 8 characters long";
+      valid = false;
+    } else {
+      newErrors.password = "";
+    }
+
+    Object.values(newErrors).forEach((error) => {
+      if (error) {
+        notification.error({
+          message: error,
+          placement: "top"
+        });
+      }
+    }
+    );
+    return valid;
+  };
+
   const handleLogin = async () => {
     try {
-      if (!username || !password) {
-        notification.error({
-          message: "Please fill all the fields",
-          placement: "top"
-        })
+      // if (!username || !password) {
+      //   notification.error({
+      //     message: "Please fill all the fields",
+      //     placement: "top"
+      //   })
+      //   return;
+      // }
+
+      if (!validateForm()) {
         return;
       }
       const res = await routes.APIS.login({ email: username, password });

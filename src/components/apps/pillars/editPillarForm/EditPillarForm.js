@@ -288,9 +288,9 @@ const AddProgramForm = () => {
 
     return (
         <div>
-            <Typography variant="h6" mb={3}>
+            {/* <Typography variant="h6" mb={3}>
                 Pillar Details
-            </Typography>
+            </Typography> */}
 
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
