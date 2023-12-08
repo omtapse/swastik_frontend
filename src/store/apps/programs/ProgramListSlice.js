@@ -103,7 +103,7 @@ export const deleteProgramByID = (id) => async (dispatch) => {
   try {
     const response = await routes.APIS.DELETE_PROGRAM(id);
     // console.log("idddd",response)
-    dispatch(fetchProgram());
+    await dispatch(fetchProgram());
   } catch (error) {
     console.log(error)
   }

@@ -299,6 +299,7 @@ const AddProgramForm = () => {
                         placeholder="Enter Program"
                         fullWidth
                         value={title}
+                        inputProps={{ maxLength: 50 }}
                         // onChange={(e) => setTitle(e.target.value)}
                         onChange={(e) => {
                             setTitle(e.target.value);

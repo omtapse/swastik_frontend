@@ -159,8 +159,8 @@ const FormSeparator = () => {
         if (!values.name) {
             errors.name = 'Required';
         }
-        if (!values.expertise) {
-            errors.expertise = 'Required';
+        if (!values.experties) {
+            errors.experties = 'Required';
         }
         if (!values.image) {
             errors.image = 'Required';
@@ -203,7 +203,7 @@ const FormSeparator = () => {
         console.log("AAAALLLALAL",editorTestimonial)
         const errors = validateForm({
             name:name,
-            expertise:expertise,
+            experties:expertise,
             image: imageUrl,
             about: editorContent,
             programImages: fileList.map((file) => file.url),
@@ -251,6 +251,7 @@ const FormSeparator = () => {
                         placeholder="Enter Guru name"
                         fullWidth
                         value={name}
+                        inputProps={{ maxLength: 50 }}
                         // onChange={(e) => setName(e.target.value)}
                         onChange={(e) => {
                             setName(e.target.value);

@@ -235,13 +235,13 @@ const AddProgramForm = () => {
     const validateForm = () => {
         let errors = {};
         if (!title) {
-            errors.title = "Cannot be blank";
+            errors.title = "Pillar Title is required";
         }
         if (!imageUrl) {
-            errors.imageUrl = "Cannot be blank";
+            errors.imageUrl = "Pillar image is required";
         }
         if (!editorContent) {
-            errors.editorContent = "Cannot be blank";
+            errors.editorContent = "Brief of Pillar is required";
         }
         setErrors(errors);
         return errors;
@@ -280,7 +280,7 @@ const AddProgramForm = () => {
         }
 
         dispatch(updatePillarById(selectedPillar._id, data));
-        navigate('/apps/pillars/pillar-list')
+        navigate('/pillars/pillarList')
 
     }
 
@@ -302,6 +302,7 @@ const AddProgramForm = () => {
                         placeholder="Enter Program"
                         fullWidth
                         value={title}
+                        inputProps={{ maxLength: 50 }}
                         // onChange={(e) => setTitle(e.target.value)}
                         onChange={(e) => {
                             setTitle(e.target.value);

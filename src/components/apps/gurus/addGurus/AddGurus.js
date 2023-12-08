@@ -121,22 +121,22 @@ const FormSeparator = () => {
     const validateForm = (values) => {
         const errors = {};
         if (!values.name) {
-            errors.name = 'Required';
+            errors.name = 'Guru name is required';
         }
         if (!values.expertise) {
-            errors.expertise = 'Required';
+            errors.expertise = 'Experties is required';
         }
         if (!values.image) {
-            errors.image = 'Required';
+            errors.image = 'Master image is required';
         }
         if (!values.about) {
-            errors.about = 'Required';
+            errors.about = 'About guru is required';
         }
         if (!values.programImages || values.programImages.length === 0) {
-            errors.programImages = 'Required';
+            errors.programImages = 'Select atleast one image';
         }
         if (!values.testimonials) {
-            errors.testimonials = 'Required';
+            errors.testimonials = 'Testimonials is required';
         }
 
         setErrors(errors);
@@ -197,6 +197,7 @@ const FormSeparator = () => {
                         placeholder="Enter Guru name"
                         fullWidth
                         value={name}
+                        inputProps={{ maxLength: 50 }}
                         onChange={(e) => {
                             setName(e.target.value);
                             setErrors({ ...errors, name: "" });

@@ -164,13 +164,13 @@ const AddProgramForm = () => {
     const validateForm = () => {
         let errors = {};
         if (!title) {
-            errors.title = "Cannot be blank";
+            errors.title = "Pillar Title is required";
         }
         if (!imageUrl) {
-            errors.imageUrl = "Cannot be blank";
+            errors.imageUrl = "Pillar image is required";
         }
         if (!editorContent) {
-            errors.editorContent = "Cannot be blank";
+            errors.editorContent = "Brief of Pillar is required";
         }
         setErrors(errors);
         return errors;
@@ -231,13 +231,14 @@ const AddProgramForm = () => {
                         placeholder="Enter Program"
                         fullWidth
                         value={title}
+                        inputProps={{ maxLength: 50 }}
                         onChange={(e) => {
                             setTitle(e.target.value);
                             setErrors({ ...errors, title: "" });
                         }}
                     />
                     {Boolean(errors.title) && (
-                        <Typography variant="caption" color="error">
+                        <Typography variant="caption" color="red">
                             {errors.title}
                         </Typography>
                     )}
@@ -275,7 +276,7 @@ const AddProgramForm = () => {
                         )}
                     </Upload>
                     {Boolean(errors.imageUrl) && (
-                        <Typography variant="caption" color="error">
+                        <Typography variant="caption" color="red">
                             {errors.imageUrl}
                         </Typography>
                     )}
@@ -296,7 +297,7 @@ const AddProgramForm = () => {
                         }}
                     />
                     {Boolean(errors.editorContent) && (
-                        <Typography variant="caption" color="error">
+                        <Typography variant="caption" color="red">
                             {errors.editorContent}
                         </Typography>
                     )}
