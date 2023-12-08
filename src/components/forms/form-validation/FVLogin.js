@@ -51,6 +51,7 @@ const FVRegister = () => {
             id="email"
             name="email"
             value={formik.values.email}
+            inputProps={{ maxLength: 10 }}
             onChange={formik.handleChange}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}

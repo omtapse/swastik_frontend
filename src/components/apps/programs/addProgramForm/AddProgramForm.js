@@ -172,92 +172,6 @@ const AddProgramForm = () => {
     setCountry(event.target.value);
   };
 
-  // language
-  // const [language, setLanguage] = React.useState('');
-
-  // const handleChange2 = (event) => {
-  //   setLanguage(event.target.value);
-  // };
-
-  // //   password
-  // //
-  // const [showPassword, setShowPassword] = React.useState(false);
-
-  // const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  // const handleMouseDownPassword = (event) => {
-  //   event.preventDefault();
-  // };
-
-  // //  confirm  password
-  // //
-  // const [showPassword2, setShowPassword2] = React.useState(false);
-
-  // const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
-
-  // const handleMouseDownPassword2 = (event) => {
-  //   event.preventDefault();
-  // };
-
-  // const validationSchema = yup.object({
-  //   programName: yup.string('Enter program Name').required('programName is Required'),
-  //   programDuration: yup.string('Enter program Duration').required('programDuration is Required'),
-  //   programStatus: yup.string('Enter program status').required('status is required'),
-  //   programDetails: yup.string('Enter details').required('details is required'),
-  //   programPrice: yup.string('Enter programPrice').required('programPrice is required'),
-  //   // programImages: yup.string().required('Program Images is required'),
-  //   programImages: yup.array().min(1, 'Select at least one image'),
-  //   vihar: yup.array().min(1, 'Select at least one Vihar'),
-  //   pillar: yup.array().min(1, 'Select at least one Pillar'),
-  //   guru: yup.string().required('Select a Guru'),
-  //   programDate: yup.date().required('Program Date is required'),
-  //   focusOfProgram: yup.string().required('Focus of Program is required'),
-  // });
-
-
-
-  // const formik = useFormik({
-  //   initialValues: {
-  //     programName: "",
-  //     programDuration: "",
-  //     programStatus: "Active",
-  //     programDetails: "",
-  //     programPrice: "",
-  //     programImages: "",
-  //     vihar: [],
-  //     pillar: [],
-  //     guru: "",
-  //     programDate: "",
-  //     focusOfProgram: "",
-  //   },
-
-  //   validationSchema: validationSchema,
-  //   onSubmit: async (values) => {
-  //     try {
-  //       // Your form submission logic here
-  //       console.log('Form submitted with values:', values);
-  //       const data = {
-  //         programName: values.programName,
-  //         guru: values.guru,
-  //         programDate: new Date(values.programDate),
-  //         programDuration: values.programDuration,
-  //         programPrice: values.programPrice,
-  //         programImage: imageUrl,
-  //         programDetails: values.programDetails,
-  //         programStatus: values.programStatus,
-  //         vihars: values.vihar,
-  //         pillars: values.pillar,
-  //         focusOfProgram: values.focusOfProgram,
-  //         // Add other form fields as needed
-  //       };
-  //       console.log("<<<<<<<>>>>>>>", values)
-  //       dispatch(addProgram(data));
-  //       navigate('/apps/programs/programs-list');
-  //     } catch (error) {
-  //       console.log('Error', error);
-  //     }
-  //   },  //   
-  // });
 
   const [errors, setErrors] = useState({});
   const validateForm = () => {
@@ -265,11 +179,13 @@ const AddProgramForm = () => {
 
     if (!programName) {
       errors.programName = "Program Name is required";
+    }else if (programName.length > 50) {
+      errors.programName = "Program Name cannot exceed 50 characters";
     }
-    if (!programPrice) {
+    if (!programPrice || isNaN(programPrice)) {
       errors.programPrice = "Program Price is required";
     }
-    if (!programDuration) {
+    if (!programDuration || isNaN(programDuration)) {
       errors.programDuration = "Program Duration is required";
     }
     if (!aboutValue) {
@@ -284,14 +200,14 @@ const AddProgramForm = () => {
     if (!status) {
       errors.programStatus = "Program Status is required";
     }
-    if (!guruValue) {
-      errors.guru = "Guru is required";
+    if (!guruValue.length) {
+      errors.guru = "Select atleast one Guru";
     }
-    if (!pillarValue) {
-      errors.pillar = "Pillar is required";
+    if (!pillarValue.length) {
+      errors.pillar = "Select atleast one Pillar";
     }
-    if (!viharValue) {
-      errors.vihar = "Vihar is required";
+    if (!viharValue.length) {
+      errors.vihar = "Select atleast one Vihar";
     }
     setErrors(errors);
     return errors;
@@ -330,6 +246,7 @@ const AddProgramForm = () => {
     if (Object.keys(errors).length > 0) {
       return;
     }
+    
 
     try {
 
@@ -373,6 +290,7 @@ const AddProgramForm = () => {
             placeholder="Enter Program"
             fullWidth
             value={programName}
+            inputProps={{ maxLength: 50 }}
             // onChange={(e) => setProgramName(e.target.value)}
             //   onChange={(e) => {
             //     setTitle(e.target.value);
@@ -387,10 +305,10 @@ const AddProgramForm = () => {
             <div style={{ color: 'red' }}>{errors.programName}</div>
           )}
 
-          <CustomFormLabel htmlFor="fs-pwd">Program Duration</CustomFormLabel>
+          <CustomFormLabel htmlFor="fs-pwd">Program Duration (In days)</CustomFormLabel>
           <CustomOutlinedInput
             id="fs-pwd"
-            placeholder="Enter Duration"
+            placeholder="(e.g.  5)"
             fullWidth
             value={programDuration}
             // onChange={(e) => setprogramDuration(e.target.value)}
@@ -407,11 +325,11 @@ const AddProgramForm = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
-            Program Price
+            Program Price (In Rs.)
           </CustomFormLabel>
           <CustomTextField
             id="fs-uname"
-            placeholder="Enter Program price"
+            placeholder="(e.g.  3000)"
             fullWidth
             value={programPrice}
             // onChange={(e) => setProgramPrice(e.target.value)}
@@ -487,6 +405,9 @@ const AddProgramForm = () => {
             placeholder="John Deo"
             fullWidth
             value={dateValue}
+            inputProps={{
+              min: new Date().toISOString().split("T")[0],
+          }}
             // onChange={(e) => setdateValue(e.target.value)}
             onChange={(e) => {
               setdateValue(e.target.value);

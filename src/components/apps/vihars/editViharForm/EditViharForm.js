@@ -177,10 +177,7 @@ const AddProgramForm = () => {
     const fetchActivityNames = async (activityIds) => {
         try {
             const response = await fetchActivityNamesApi(activityIds); // Replace with your actual API call
-            console.log("response>>>>>>",response)
-
             const activityNames = response.map(activity => ({ label: activity.activityName, value: activity._id }));
-            console.log("activityNames",activityNames)
             return activityNames;
         } catch (error) {
             console.error('Error fetching activity names:', error);
@@ -188,7 +185,6 @@ const AddProgramForm = () => {
         }
     };
 
-    console.log("activityValue",activityValue)
 
     const handleSetActivity = (activity) => {
         let newArray = activity?.map((act) => {
@@ -225,10 +221,11 @@ const AddProgramForm = () => {
 
     useEffect(() => {
 
+
         setTitle(selectedVihar?.viharName || '');
         setTagline(selectedVihar?.tagLine || '');
         // setActivities(selectedVihar?.activities.map(activity => activity.activityName))
-        if (selectedVihar && selectedVihar.activities) {
+        if (selectedVihar && selectedVihar?.activities) {
             const activityNames = fetchActivityNames(selectedVihar?.activities);
             console.log("activityNames",activityNames)
             setActivities(activityNames);
@@ -343,6 +340,7 @@ const AddProgramForm = () => {
                         placeholder="Enter Program"
                         fullWidth
                         value={title}
+                        inputProps={{ maxLength: 50 }}
                         // onChange={(e) => setTitle(e.target.value)}
 
                         onChange={(e) => {
@@ -351,7 +349,7 @@ const AddProgramForm = () => {
                         }}
                     />
                     {Boolean(errors.title) && (
-                        <Typography variant="caption" color="error">
+                        <Typography variant="caption" color="red">
                             {errors.title}
                         </Typography>
                     )}
@@ -371,7 +369,7 @@ const AddProgramForm = () => {
                         }}
                     />
                     {Boolean(errors.tagline) && (
-                        <Typography variant="caption" color="error">
+                        <Typography variant="caption" color="red">
                             {errors.tagline}
                         </Typography>
                     )}
@@ -401,7 +399,7 @@ const AddProgramForm = () => {
                         )}
                     </Upload>
                     {Boolean(errors.imageUrl) && (
-                        <Typography variant="caption" color="error">
+                        <Typography variant="caption" color="red">
                             {errors.imageUrl}
                         </Typography>
                     )}
@@ -412,27 +410,21 @@ const AddProgramForm = () => {
                         activities
                     </CustomFormLabel>
                     <Autocomplete
-                        freeSolo
+                        // freeSolo
                         multiple
                         fullWidth
                         id="tags-outlined"
                         options={options || []}
-                        // onChange={handleOnChangeOption}
-                        // onChange={(event, value) => { handleSetActivity(value) }}
                         onChange={(event, value) => {
                             handleSetActivity(value);
                             setErrors({ ...errors, activities: "" });
                         }}
                         getOptionLabel={(option) => option.label}
-                    //    value={activities}
-                        defaultValue={activityValue}
-                        filterSelectedOptions
-                        onInputChange={(event, newInputValue) => {
                        
-                        }}
-
+                        defaultValue={ activities?.map((activity) => ({ label: activity, value: activity }))}
+                        filterSelectedOptions
                         renderInput={(params) => (
-                            <CustomTextField {...params} value={activityValue} aria-label="Favorites" />
+                            <CustomTextField {...params} aria-label="Favorites" />
                         )}
                     />
                     {Boolean(errors.activities) && (
@@ -459,7 +451,7 @@ const AddProgramForm = () => {
                         {fileList.length >= 8 ? null : uploadButton}
                     </Upload>
                     {Boolean(errors.fileList) && (
-                        <Typography variant="caption" color="error">
+                        <Typography variant="caption" color="red">
                             {errors.fileList}
                         </Typography>
                     )}
@@ -479,7 +471,7 @@ const AddProgramForm = () => {
                         }}
                     />
                     {Boolean(errors.editorContent) && (
-                        <Typography variant="caption" color="error">
+                        <Typography variant="caption" color="red">
                             {errors.editorContent}
                         </Typography>
                     )}

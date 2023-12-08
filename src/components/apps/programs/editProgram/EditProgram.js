@@ -149,15 +149,16 @@ const EditProgramForm = () => {
         }
     };
     const handleChangeImg = async (info) => {
-        console.log("kkkkkkkk", info.target.files[0])
-        //   setLoading(true);
-        let formData = new FormData();
-        formData.append("image", info.target.files[0]);
-        let res = await routes.APIS.UPLOAD_IMAGE(formData);
-        setImageUrl(res.url);
-        console.log(res.url)
-        setLoading(false);
-
+        try {
+            setLoading(true);
+            let formData = new FormData();
+            formData.append("image", info.target.files[0]);
+            let res = await routes.APIS.UPLOAD_IMAGE(formData);
+            setImageUrl(res.url);
+            setLoading(false);
+        } catch (error) {
+            console.log("error", error);
+        }
     };
 
 
@@ -362,6 +363,7 @@ const EditProgramForm = () => {
                         name="pname"
                         fullWidth
                         value={pname}
+                        inputProps={{ maxLength: 50 }}
                         // onChange={(e) => setPName(e.target.value)}
                         onChange={(e) => {
                             setPName(e.target.value)

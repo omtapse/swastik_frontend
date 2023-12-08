@@ -15,13 +15,25 @@ const Login2 = () => {
           position: 'relative',
           '&:before': {
             content: '""',
-            background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-            backgroundSize: '400% 400%',
-            animation: 'gradient 15s ease infinite',
             position: 'absolute',
-            height: '100%',
+            top: 0,
+            left: 0,
             width: '100%',
-            opacity: '0.3',
+            height: '100%',
+            background: 'url(/src/assets/images/backgrounds/anandVihar.jpg)',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            zIndex: -1,
+          },
+          '&:after': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))',
+            zIndex: -1,
           },
         }}
       >
@@ -44,9 +56,9 @@ const Login2 = () => {
                 subtitle={
                   <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
                     <Typography color="textSecondary" variant="h6" fontWeight="500">
-                      New to Modernize?
+                      New to Swastik?
                     </Typography>
-                    <Typography
+                    <Typography 
                       component={Link}
                       to="/auth/register"
                       fontWeight="500"
