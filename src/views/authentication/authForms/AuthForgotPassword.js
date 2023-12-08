@@ -10,25 +10,32 @@ import routes from '../../../utils/routes';
 const AuthForgotPassword = () => {
   const [email, setEmail] = useState('');
 
-  const handleforgetpassword = async () =>{
+  const handleforgetpassword = async () => {
     try {
-      if(!email){
+      if (!email) {
         notification.error({
-          message : "Please enter registered email" ,
-          placement : "top"
+          message: "Please enter registered email",
+          placement: "top"
+        })
+        return;
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        notification.error({
+          message: "Please enter valid email",
+          placement: "top"
         })
         return;
       }
-      const res = await routes.APIS.resetPassword({email});
-      if(res.status === 200){
+
+      const res = await routes.APIS.GENERATE_RESET_PASSWORD_LINK({ email });
+      if (res.status === 200) {
         notification.success({
-          message : "Reset Password Link Sent to your email address" ,
-          placement : "top"
+          message: "Reset Password Link Sent to your email address",
+          placement: "top"
         })
-      }else{
+      } else {
         notification.error({
-          message : "Something went wrong" ,
-          placement : "top"
+          message: "Something went wrong",
+          placement: "top"
         })
       }
     } catch (error) {
@@ -40,7 +47,7 @@ const AuthForgotPassword = () => {
     <>
       <Stack mt={4} spacing={2}>
         <CustomFormLabel htmlFor="reset-email">Email Adddress</CustomFormLabel>
-        <CustomTextField onChange={e=>setEmail(e.target.value)} value={email} id="reset-email" variant="outlined" fullWidth />
+        <CustomTextField onChange={e => setEmail(e.target.value)} value={email} id="reset-email" variant="outlined" fullWidth />
 
         <Button color="primary" variant="contained" size="large" fullWidth onClick={handleforgetpassword}>
           Forgot Password

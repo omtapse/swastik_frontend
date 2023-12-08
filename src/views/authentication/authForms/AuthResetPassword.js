@@ -16,13 +16,13 @@ const AuthResetPassword = () => {
     try {
       if(!password){
         notification.error({
-          message : "Please enter registered password" ,
+          message : "Please enter password" ,
           placement : "top"
         })
         return;
       }
       console.log(params);
-      const res = await routes.APIS.resetPasswordUsingLink({password,userId:params.id,token:params.token});
+      const res = await routes.APIS.RESET_PASSWORD({password,userId:params.id,token:params.token});
       if(res.status === 200){
         console.log(res)
         notification.success({
