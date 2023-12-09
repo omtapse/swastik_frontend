@@ -10,34 +10,19 @@ import {
     Stack
 } from '@mui/material';
 
-// import { IconEye, IconEyeOff } from '@tabler/icons';
 import CustomFormLabel from '../../../forms/theme-elements/CustomFormLabel';
 import CustomTextField from '../../../forms/theme-elements/CustomTextField';
-// import CustomOutlinedInput from '../../../forms/theme-elements/CustomOutlinedInput';
-// import CustomSelect from '../../../forms/theme-elements/CustomSelect';
-// import { Paper } from '@mui/material';
 import ReactQuill from 'react-quill';
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import 'react-quill/dist/quill.snow.css';
-// import Button from '@mui/material/Button';
-// import PageContainer from '../../../container/PageContainer';
-// import Breadcrumb from '../../../../layouts/full/shared/breadcrumb/Breadcrumb';
-// import ParentCard from '../../../shared/ParentCard';
 import { Upload, message, notification } from "antd";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import routes from '../../../../utils/routes';
-// import { GetPillars,CreatePillar,UpdatePillar, addPillar } from '../../../../store/apps/pillars/PillarSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
-// import { fetchVihar, CreateVihar, UpdateVihar, GetVihars, addVihar } from '../../../../store/apps/vihar/ViharSlice';
+import { useNavigate, useParams } from 'react-router';
 import Autocomplete from '@mui/material/Autocomplete';
-import { updateViharById } from '../../../../store/apps/vihar/ViharSlice';
+import { fetchViharById, updateViharById } from '../../../../store/apps/vihar/ViharSlice';
 
 const BCrumb = [
     {
@@ -81,6 +66,7 @@ const AddProgramForm = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const params = useParams();
 
     const selectedVihar = useSelector((state) => state.ViharReducer?.selectedVihar)
     console.log("selectedVihar", selectedVihar)
@@ -322,6 +308,10 @@ const AddProgramForm = () => {
         }
     }
 
+    useEffect(() => {
+        dispatch(fetchViharById(params.id))
+    },[])
+
 
 
     return (
@@ -448,7 +438,7 @@ const AddProgramForm = () => {
                         accept="image/*"
                         beforeUpload={beforeUploadProgramImages}
                     >
-                        {fileList.length >= 8 ? null : uploadButton}
+                        {fileList?.length >= 8 ? null : uploadButton}
                     </Upload>
                     {Boolean(errors.fileList) && (
                         <Typography variant="caption" color="red">

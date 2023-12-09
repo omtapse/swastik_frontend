@@ -97,6 +97,9 @@ const routes = {
         logoutAdmin: async () => {
             return await apiGet(`/admin/logout`, routes.BASE_PATH)
         },
+        getCounts: async () => {
+            return await apiGet("/admin/dashboard/counts", routes.BASE_PATH)
+        },
     }
 
 

@@ -179,7 +179,7 @@ const AddProgramForm = () => {
 
     if (!programName) {
       errors.programName = "Program Name is required";
-    }else if (programName.length > 50) {
+    } else if (programName.length > 50) {
       errors.programName = "Program Name cannot exceed 50 characters";
     }
     if (!programPrice || isNaN(programPrice)) {
@@ -246,7 +246,7 @@ const AddProgramForm = () => {
     if (Object.keys(errors).length > 0) {
       return;
     }
-    
+
 
     try {
 
@@ -291,11 +291,6 @@ const AddProgramForm = () => {
             fullWidth
             value={programName}
             inputProps={{ maxLength: 50 }}
-            // onChange={(e) => setProgramName(e.target.value)}
-            //   onChange={(e) => {
-            //     setTitle(e.target.value);
-            //     setErrors({ ...errors, title: "" });
-            // }}
             onChange={(e) => {
               setProgramName(e.target.value);
               setErrors({ ...errors, programName: "" });
@@ -308,13 +303,20 @@ const AddProgramForm = () => {
           <CustomFormLabel htmlFor="fs-pwd">Program Duration (In days)</CustomFormLabel>
           <CustomOutlinedInput
             id="fs-pwd"
-            placeholder="(e.g.  5)"
+            placeholder="(e.g. 5)"
             fullWidth
             value={programDuration}
-            // onChange={(e) => setprogramDuration(e.target.value)}
+            type="text" 
+            inputProps={{ pattern: '[0-9]*', maxLength: 10 }}
             onChange={(e) => {
-              setprogramDuration(e.target.value);
-              setErrors({ ...errors, programDuration: "" });
+              const inputValue = e.target.value;
+              if (/^[0-9]*$/.test(inputValue)) {
+                setprogramDuration(inputValue);
+                setErrors({ ...errors, programDuration: "" });
+              }
+              else {
+                setErrors({ ...errors, programDuration: "Please enter only numeric characters." });
+              }
             }}
           />
           {Boolean(errors.programDuration) && (
@@ -329,15 +331,25 @@ const AddProgramForm = () => {
           </CustomFormLabel>
           <CustomTextField
             id="fs-uname"
-            placeholder="(e.g.  3000)"
+            placeholder="(e.g. 3000)"
             fullWidth
+            type="text"
             value={programPrice}
-            // onChange={(e) => setProgramPrice(e.target.value)}
+            inputProps={{ pattern: '[0-9]*', maxLength: 10 }}
             onChange={(e) => {
-              setProgramPrice(e.target.value);
-              setErrors({ ...errors, programPrice: "" });
+              const inputValue = e.target.value;
+
+              // Check if the input value contains only numeric characters
+              if (/^[0-9]*$/.test(inputValue)) {
+                setProgramPrice(inputValue);
+                setErrors({ ...errors, programPrice: "" });
+              }
+              else {
+                setErrors({ ...errors, programPrice: "Please enter only numeric characters." });
+              }
             }}
           />
+
           {Boolean(errors.programPrice) && (
             <div style={{ color: 'red' }}>{errors.programPrice}</div>
           )}
@@ -407,7 +419,7 @@ const AddProgramForm = () => {
             value={dateValue}
             inputProps={{
               min: new Date().toISOString().split("T")[0],
-          }}
+            }}
             // onChange={(e) => setdateValue(e.target.value)}
             onChange={(e) => {
               setdateValue(e.target.value);
