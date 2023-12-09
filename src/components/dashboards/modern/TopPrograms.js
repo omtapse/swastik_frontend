@@ -89,14 +89,13 @@ const TopPerformers = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    {/* View More Button */}
                     <Box mb={3} justifyContent={'flex-end'} display={'flex'}>
                         <Button
                             onClick={handleView}
                             variant="contained"
                             color="primary"
                         >
-                            view more
+                            View More
                         </Button>
                     </Box>
                 </Grid>

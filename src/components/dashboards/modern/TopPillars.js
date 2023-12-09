@@ -75,13 +75,11 @@ useEffect(() => {
     >
         <Grid container spacing={3} alignItems="center">
                 <Grid item xs={6}>
-                    {/* Title */}
                     <Typography variant="h5" fontWeight={600}>
                         Pillars
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    {/* View More Button */}
                     <Box mb={3} justifyContent={'flex-end'} display={'flex'}>
                         <Button
                             onClick={handleView}
@@ -105,15 +103,11 @@ useEffect(() => {
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>Name</Typography>
               </TableCell>
-              {/* <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Experties</Typography>
-              </TableCell> */}
+          
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>Action</Typography>
               </TableCell>
-              {/* <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Budget</Typography>
-              </TableCell> */}
+          
             </TableRow>
           </TableHead>
           <TableBody>

@@ -90,7 +90,7 @@ useEffect(() => {
                             variant="contained"
                             color="primary"
                         >
-                            view more
+                            View More
                         </Button>
                     </Box>
                 </Grid>
