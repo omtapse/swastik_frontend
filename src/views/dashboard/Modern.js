@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
 import TopCards from '../../components/dashboards/modern/TopCards';
 import RevenueUpdates from '../../components/dashboards/modern/RevenueUpdates';
@@ -16,14 +16,25 @@ import TopGurus from '../../components/dashboards/modern/TopGurus'
 import TopPrograms from '../../components/dashboards/modern/TopPrograms';
 import TopVihars from '../../components/dashboards/modern/TopVihars'
 import TopPillars from '../../components/dashboards/modern/TopPillars'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCounts } from '../../store/apps/dashboardCount/CountSlice';
 
 const Modern = () => {
+
+  const dispatch = useDispatch();
+  const counts = useSelector((state) => state.countReducer);
+  // console.log("viharcount",counts)
+
+  useEffect(() => {
+    dispatch(fetchCounts());
+    // dispatch(fetchNewRegistration());
+  }, []);
   return (
     <Box>
       <Grid container spacing={3}>
         {/* column */}
         <Grid item sm={12} lg={12}>
-          <TopCards />
+          <TopCards counts={counts} />
         </Grid>
         {/* column */}
 

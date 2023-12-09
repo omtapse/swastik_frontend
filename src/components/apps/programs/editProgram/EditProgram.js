@@ -30,7 +30,7 @@ import PageContainer from '../../../container/PageContainer';
 import Breadcrumb from '../../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import ParentCard from '../../../shared/ParentCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProgramById } from '../../../../store/apps/programs/ProgramListSlice';
+import { updateProgramById, fetchProgramById } from '../../../../store/apps/programs/ProgramListSlice';
 import { useNavigate, useParams } from 'react-router';
 // import ProgramList from '../programList/ProgramList';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -92,7 +92,7 @@ const EditProgramForm = () => {
     const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
-    const { id } = useParams();
+    const params = useParams();
 
     const selectedProgram = useSelector((state) => state.ProgramReducer.selectedProgram);
     console.log("selectedProgram", selectedProgram)
@@ -347,6 +347,14 @@ const EditProgramForm = () => {
         fetchVihar();
         fetchGurus();
     }, []);
+
+    useEffect(() => {
+        console.log("%%%%%%", params.id);
+        // if(!selectedProgram){
+        dispatch(fetchProgramById(params.id));
+        console.log("vvvvvvvvvvvvvvvvvvvvvvvv")
+        // }
+    }, [])
 
 
     return (

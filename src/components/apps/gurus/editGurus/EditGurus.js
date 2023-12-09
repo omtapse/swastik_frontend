@@ -33,7 +33,7 @@ import ParentCard from '../../../shared/ParentCard';
 import { Upload, message, notification } from "antd";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import routes from '../../../../utils/routes';
-import { addGurus, updateGuruById } from '../../../../store/apps/guru/GuruSlice';
+import { addGurus, updateGuruById,fetchGuruById } from '../../../../store/apps/guru/GuruSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 
@@ -49,7 +49,7 @@ const FormSeparator = () => {
     const [loading, setLoading] = useState(false);
     const [expertise, setExperties] = useState();
     const [name, setName] = useState();
-    const { id } = useParams();
+    const params = useParams();
 
     const selectedGuru = useSelector((state) => state.GuruReducer.selectedGuru);
     console.log("selectedGuru", selectedGuru)
@@ -237,6 +237,10 @@ const FormSeparator = () => {
         }
     }
 
+    useEffect(() => {
+        dispatch(fetchGuruById(params.id));
+    },[])
+
 
     return (
         <div>
@@ -322,7 +326,7 @@ const FormSeparator = () => {
                         beforeUpload={beforeUploadProgramImages}
                         // onChange={({ fileList: newFileList }) => setFileList(newFileList)}
                     >
-                        {fileList.length >= 8 ? null : uploadButton}
+                        {fileList?.length >= 8 ? null : uploadButton}
                     </Upload>
                     {Boolean(errors.programImages) && (
                         <p style={{ color: 'red', margin: '5px 0' }}>{errors.programImages}</p>

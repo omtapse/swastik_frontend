@@ -13,6 +13,7 @@ import ProgramReducer from './apps/programs/ProgramListSlice'
 import PillarReducer from './apps/pillars/PillarSlice'
 import ViharReducer from './apps/vihar/ViharSlice'
 import GuruReducer from './apps/guru/GuruSlice'
+import CountReducer from './apps/dashboardCount/CountSlice'
 
 export const store = configureStore({
   reducer: {
@@ -29,7 +30,8 @@ export const store = configureStore({
     ProgramReducer: ProgramReducer,
     PillarReducer : PillarReducer,
     ViharReducer : ViharReducer,
-    GuruReducer : GuruReducer
+    GuruReducer : GuruReducer,
+    countReducer: CountReducer
   },
 });
 

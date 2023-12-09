@@ -34,8 +34,8 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import routes from '../../../../utils/routes';
 // import { GetPillars,CreatePillar,UpdatePillar, addPillar } from '../../../../store/apps/pillars/PillarSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { updatePillarById } from '../../../../store/apps/pillars/PillarSlice';
+import { useNavigate, useParams } from 'react-router';
+import { fetchPillarById, updatePillarById } from '../../../../store/apps/pillars/PillarSlice';
 
 
 
@@ -112,6 +112,7 @@ const AddProgramForm = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const params = useParams();
 
     const selectedPillar = useSelector((state) => state.PillarReducer?.selectedPillar || []);
     console.log("selectedPillar", selectedPillar);
@@ -283,6 +284,10 @@ const AddProgramForm = () => {
         navigate('/pillars/pillarList')
 
     }
+
+    useEffect(() => {params
+      dispatch(fetchPillarById(params.id))
+    },[])
 
 
 

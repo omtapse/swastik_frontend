@@ -66,8 +66,8 @@ export const fetchProgramById = (id) => async (dispatch) => {
     console.log(id);
   
     const res = await routes.APIS.GET_PROGRAM_BY_ID(id);
-    console.log('fetchProgramById*****:', res.program);
-    dispatch(setSelectedProgram(res.program));
+    console.log('fetchProgramById*****:', res.data);
+    dispatch(setSelectedProgram(res.data));
   } catch (error) {
     console.log(error)
   }
