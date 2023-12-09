@@ -177,6 +177,10 @@ const FormSeparator = () => {
             if (data) {
                 navigate('/gurus/gurusList');
             }
+            notification.success({
+                message: 'Guru added successfully',
+                // description: 'Program updated successfully',
+            });
 
 
         } catch (error) {

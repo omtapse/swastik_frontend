@@ -329,8 +329,16 @@ const EditProgramForm = () => {
             };
             dispatch(updateProgramById(selectedProgram._id, data));
             navigate('/programs/programsList');
+            notification.success({
+                message: 'Program updated successfully',
+                // description: 'Program updated successfully',
+            });
         } catch (error) {
             console.log("Error", error)
+            notification.error({
+                message: 'Submission Failed',
+                // description: 'program update failed',
+            });
         }
     }
 

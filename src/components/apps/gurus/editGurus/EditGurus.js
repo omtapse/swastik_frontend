@@ -231,9 +231,17 @@ const FormSeparator = () => {
             if (data) {
                 navigate('/gurus/gurusList');
             }
+            notification.success({
+                message: 'Guru updated successfully',
+                // description: 'Program updated successfully',
+            });
 
         } catch (error) {
             console.error("Error:", error);
+            notification.error({
+                message: 'failed to update guru',
+                // description: 'program update failed',
+            });
         }
     }
 
