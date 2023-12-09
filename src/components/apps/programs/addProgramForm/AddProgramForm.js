@@ -38,6 +38,9 @@ import top100Films from '../addProgramForm/data';
 import routes from '../../../../utils/routes';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import Upload from 'antd/es/upload/Upload';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 
 const lang = [
   {
@@ -285,6 +288,13 @@ const AddProgramForm = () => {
     fetchGurus();
   }, []);
 
+  const uploadButton = (
+    <div>
+        {loading ? <LoadingOutlined /> : <PlusOutlined />}
+        <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+);
+
 
   return (
     <div>
@@ -314,7 +324,7 @@ const AddProgramForm = () => {
             placeholder="(e.g. 5)"
             fullWidth
             value={programDuration}
-            type="text" 
+            type="text"
             inputProps={{ pattern: '[0-9]*', maxLength: 10 }}
             onChange={(e) => {
               const inputValue = e.target.value;
@@ -508,7 +518,7 @@ const AddProgramForm = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Program Image</CustomFormLabel>
-          <Button
+          {/* <Button
             component="label"
             variant="contained"
             startIcon={<CloudUploadIcon />}
@@ -517,7 +527,32 @@ const AddProgramForm = () => {
           >
             Upload file
             <VisuallyHiddenInput type="file" />
-          </Button>
+          </Button> */}
+
+          <Upload
+            name="image"
+            listType="picture-card"
+            className="avatar-uploader"
+            accept='image/*'
+            showUploadList={false}
+            beforeUpload={beforeUpload}
+            onChange={handleChangeImg}
+          >
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="avatar"
+                style={{
+                  width: "100%",
+                }}
+              />
+            ) : (
+              uploadButton
+            )}
+
+          </Upload>
+
+
           {Boolean(errors.programImages) && (
             <div style={{ color: 'red' }}>{errors.programImages}</div>
           )}
