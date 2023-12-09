@@ -34,6 +34,7 @@ const TopPerformers = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     // const allProgram = useSelector((state) => state.ProgramReducer)
     const getAllProgram = useSelector((state) => state.ProgramReducer?.programs.programs || []);
     // const selectedProgram = useSelector((state) => state.ProgramReducer?.)
@@ -57,6 +58,10 @@ const TopPerformers = () => {
 
     // Get the top five patch lights based on dimmer numbers
     const topFivePrograms = filterTopFivePrograms();
+
+    const handleView = () => {
+        navigate('/programs/programsList')
+    }
 
     return (
         <DashboardCard
@@ -87,7 +92,7 @@ const TopPerformers = () => {
                     {/* View More Button */}
                     <Box mb={3} justifyContent={'flex-end'} display={'flex'}>
                         <Button
-                            // onClick={handleView}
+                            onClick={handleView}
                             variant="contained"
                             color="primary"
                         >

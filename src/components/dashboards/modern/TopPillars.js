@@ -25,6 +25,7 @@ import { fetchGurus } from '../../../store/apps/guru/GuruSlice';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { fetchPillar } from '../../../store/apps/pillars/PillarSlice';
+import { format, isValid } from 'date-fns';
 
 
 const performers = TopPerformerData;
@@ -131,7 +132,7 @@ useEffect(() => {
                 </TableCell>
                 <TableCell>
                 <Typography color="textSecondary" fontSize="12px" variant="subtitle2">
-                        {basic.createdAt}
+                        {isValid(new Date(basic.createdAt)) ? format(new Date(basic.createdAt),'dd-MM-yyyy'):'Invalid Date'}
                       </Typography>
                 </TableCell>
                 {/* <TableCell>
