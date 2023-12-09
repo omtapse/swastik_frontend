@@ -305,6 +305,10 @@ const AddProgramForm = () => {
             navigate('/vihars/viharList');
         } catch (error) {
             console.error("Error:", error);
+            notification.error({
+                message: 'failed to update vihar',
+                // description: 'program update failed',
+            });
         }
     }
 

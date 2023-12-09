@@ -276,6 +276,10 @@ const AddProgramForm = () => {
             await dispatch(addVihar(data));
 
             navigate('/vihars/viharList');
+            notification.success({
+                message: 'Vihar added successfully',
+                // description: 'Program updated successfully',
+            });
         } catch (error) {
             console.error("Error:", error);
         }

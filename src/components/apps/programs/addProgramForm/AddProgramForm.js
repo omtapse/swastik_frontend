@@ -266,8 +266,16 @@ const AddProgramForm = () => {
       };
       dispatch(addProgram(data));
       navigate('/programs/programsList');
+      notification.success({
+        message: 'Program added successfully',
+        // description: 'Program updated successfully',
+    });
     } catch (error) {
       console.log("Error", error)
+      notification.error({
+        message: 'failed to add program',
+        // description: 'program update failed',
+    });
     }
   }
 

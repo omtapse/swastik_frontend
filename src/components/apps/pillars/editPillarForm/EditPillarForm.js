@@ -282,6 +282,10 @@ const AddProgramForm = () => {
 
         dispatch(updatePillarById(selectedPillar._id, data));
         navigate('/pillars/pillarList')
+        notification.success({
+            message: 'Pillar updated successfully',
+            // description: 'Program updated successfully',
+        });
 
     }
 

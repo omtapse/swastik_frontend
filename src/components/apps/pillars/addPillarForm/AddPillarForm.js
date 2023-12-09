@@ -210,6 +210,10 @@ const AddProgramForm = () => {
 
         dispatch(addPillar(data));
         navigate('/pillars/pillarList')
+        notification.success({
+            message: 'Pillar added successfully',
+            // description: 'Program updated successfully',
+        });
 
     }
 
