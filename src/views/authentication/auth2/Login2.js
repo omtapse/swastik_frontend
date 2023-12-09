@@ -55,7 +55,7 @@ const Login2 = () => {
               <AuthLogin
                 subtitle={
                   <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-                    <Typography color="textSecondary" variant="h6" fontWeight="500">
+                    {/* <Typography color="textSecondary" variant="h6" fontWeight="500">
                       New to Swastik?
                     </Typography>
                     <Typography 
@@ -68,7 +68,7 @@ const Login2 = () => {
                       }}
                     >
                       Create an account
-                    </Typography>
+                    </Typography> */}
                   </Stack>
                 }
               />

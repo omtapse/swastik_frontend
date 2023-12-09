@@ -235,7 +235,7 @@ const Router = [
       { path: '/auth/login2', element: <Login2 /> },
       { path: '/auth/register', element: <Register2 /> },
       { path: '/auth/register2', element: <Register2 /> },
-      { path: '/auth/forgot-password', element: <ForgotPassword /> },
+      { path: '/auth/forgot-password', element: <ForgotPassword2 /> },
       
       { path: '/auth/reset-password/:id/:token', element: <ResetPassword /> },
 

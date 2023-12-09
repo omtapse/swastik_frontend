@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid, Box, Typography,Card } from '@mui/material';
+
 
 import Logo from 'src/layouts/full/shared/logo/Logo';
 import PageContainer from 'src/components/container/PageContainer';
@@ -11,7 +12,63 @@ import AuthResetPassword from '../authForms/AuthResetPassword';
 
 const ResetPassword = () => (
     <PageContainer title="Reset Password" description="this is Reset Password page">
-        <Grid container justifyContent="center" spacing={0} sx={{ overflowX: 'hidden' }}>
+        <Box
+    sx={{
+      position: 'relative',
+      '&:before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: 'url(/src/assets/images/backgrounds/anandVihar.jpg)',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        zIndex: -1,
+      },
+      '&:after': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))',
+        zIndex: -1,
+      },
+    }}
+  >
+
+<Grid container spacing={0} justifyContent="center" sx={{ height: '100vh' }}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        lg={4}
+        xl={3}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <Logo />
+          </Box>
+          <Typography
+            color="textSecondary"
+            textAlign="center"
+            variant="subtitle2"
+            fontWeight="400"
+          >
+            Please enter the email address associated with your account and We will email you a
+            link to reset your password.
+          </Typography>
+          <AuthResetPassword />
+        </Card>
+      </Grid>
+    </Grid>
+        {/* <Grid container justifyContent="center" spacing={0} sx={{ overflowX: 'hidden' }}>
             <Grid
                 item
                 xs={12}
@@ -73,14 +130,12 @@ const ResetPassword = () => (
                         Reset Password
                     </Typography>
 
-                    {/* <Typography color="textSecondary" variant="subtitle2" fontWeight="400" mt={2}>
-                        Please enter the email address associated with your account and We will email you a link
-                        to reset your password.
-                    </Typography> */}
+                 
                     <AuthResetPassword />
                 </Box>
             </Grid>
-        </Grid>
+        </Grid> */}
+  </Box>
     </PageContainer>
 );
 
