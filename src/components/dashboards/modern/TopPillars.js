@@ -25,6 +25,7 @@ import { fetchGurus } from '../../../store/apps/guru/GuruSlice';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { fetchPillar } from '../../../store/apps/pillars/PillarSlice';
+import { format, isValid } from 'date-fns';
 
 
 const performers = TopPerformerData;
@@ -74,13 +75,11 @@ useEffect(() => {
     >
         <Grid container spacing={3} alignItems="center">
                 <Grid item xs={6}>
-                    {/* Title */}
                     <Typography variant="h5" fontWeight={600}>
                         Pillars
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    {/* View More Button */}
                     <Box mb={3} justifyContent={'flex-end'} display={'flex'}>
                         <Button
                             onClick={handleView}
@@ -104,15 +103,11 @@ useEffect(() => {
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>Name</Typography>
               </TableCell>
-              {/* <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Experties</Typography>
-              </TableCell> */}
+          
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>Action</Typography>
               </TableCell>
-              {/* <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Budget</Typography>
-              </TableCell> */}
+          
             </TableRow>
           </TableHead>
           <TableBody>
@@ -131,7 +126,7 @@ useEffect(() => {
                 </TableCell>
                 <TableCell>
                 <Typography color="textSecondary" fontSize="12px" variant="subtitle2">
-                        {basic.createdAt}
+                        {isValid(new Date(basic.createdAt)) ? format(new Date(basic.createdAt),'dd-MM-yyyy'):'Invalid Date'}
                       </Typography>
                 </TableCell>
                 {/* <TableCell>

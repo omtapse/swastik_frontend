@@ -23,6 +23,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGurus } from '../../../store/apps/guru/GuruSlice';
 import { Grid } from '@mui/material';
+import { useNavigate } from 'react-router';
+import { format, isValid } from 'date-fns';
 
 
 const performers = TopPerformerData;
@@ -34,6 +36,8 @@ const TopPerformers = () => {
   const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setRightSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
 
 
   const dispatch = useDispatch();
@@ -63,6 +67,10 @@ const topFiveGurus = filterTopFiveGurus();
     setMonth(event.target.value);
   };
 
+  const handleView = () => {
+    navigate('/gurus/gurusList')
+  }
+
   return (
     <DashboardCard
     //   title="Gurus"
@@ -83,20 +91,18 @@ const topFiveGurus = filterTopFiveGurus();
     >
         <Grid container spacing={3} alignItems="center">
                 <Grid item xs={6}>
-                    {/* Title */}
                     <Typography variant="h5" fontWeight={600}>
                         Gurus
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    {/* View More Button */}
                     <Box mb={3} justifyContent={'flex-end'} display={'flex'}>
                         <Button
-                            // onClick={handleView}
+                            onClick={handleView}
                             variant="contained"
                             color="primary"
                         >
-                            view more
+                            View More
                         </Button>
                     </Box>
                 </Grid>
@@ -113,15 +119,10 @@ const topFiveGurus = filterTopFiveGurus();
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>Name</Typography>
               </TableCell>
-              {/* <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Experties</Typography>
-              </TableCell> */}
+             
               <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Action</Typography>
+                <Typography variant="subtitle2" fontWeight={600}>Created At</Typography>
               </TableCell>
-              {/* <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Budget</Typography>
-              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -142,11 +143,10 @@ const topFiveGurus = filterTopFiveGurus();
                   </Stack>
                 </TableCell>
                 <TableCell>
-                <Tooltip title="View">
-                          <IconButton>
-                            <VisibilityIcon />
-                          </IconButton>
-                        </Tooltip>
+                <Typography color="textSecondary" fontSize="12px" variant="subtitle2">
+                        {/* {basic.createdAt} */}
+                        {isValid(new Date(basic.createdAt)) ? format(new Date(basic.createdAt),'dd-MM-yyyy'):'Invalid Date'}
+                      </Typography>
                 </TableCell>
                 {/* <TableCell>
                   <Chip
