@@ -161,6 +161,7 @@ const AddProgramForm = () => {
     formData.append("image", info.target.files[0]);
     let res = await routes.APIS.UPLOAD_IMAGE(formData);
     setImageUrl(res.url);
+    setErrors({ ...errors, imageUrl: "" });
     console.log(res.url)
     setLoading(false);
 
@@ -212,6 +213,10 @@ const AddProgramForm = () => {
     if (!viharValue.length) {
       errors.vihar = "Select atleast one Vihar";
     }
+    if (!imageUrl) {
+      errors.imageUrl = "Program Image is required";
+    }
+
     setErrors(errors);
     return errors;
   };
@@ -530,13 +535,15 @@ const AddProgramForm = () => {
           </Button> */}
 
           <Upload
-            name="image"
+            name="imageUrl"
             listType="picture-card"
             className="avatar-uploader"
             accept='image/*'
             showUploadList={false}
             beforeUpload={beforeUpload}
             onChange={handleChangeImg}
+            action={null}
+
           >
             {imageUrl ? (
               <img
@@ -551,10 +558,8 @@ const AddProgramForm = () => {
             )}
 
           </Upload>
-
-
-          {Boolean(errors.programImages) && (
-            <div style={{ color: 'red' }}>{errors.programImages}</div>
+          {Boolean(errors.imageUrl) && (
+            <div style={{ color: 'red' }}>{errors.imageUrl}</div>
           )}
         </Grid>
         <Grid item xs={12} >
