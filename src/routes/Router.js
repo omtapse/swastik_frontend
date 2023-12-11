@@ -153,11 +153,7 @@ const Router = [
       { path: '/pillars/pillarList', element: <PillarsPageList /> },
       { path: '/pillars/editPillars/:id', element: <EditPillarForm /> },
       { path: '/vihars/editVihars/:id', element: <EditViharForm /> },
-
       { path: '/gurus/editGurus/:id', element: <EditGurusForm /> },
-
-
-
 
       { path: '/apps/tickets', element: <Tickets /> },
       { path: '/apps/contacts', element: <Contacts /> },
@@ -220,9 +216,6 @@ const Router = [
       { path: '/widgets/banners', element: <WidgetBanners /> },
       { path: '/widgets/charts', element: <WidgetCharts /> },
 
-
-
-
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
@@ -236,9 +229,7 @@ const Router = [
       { path: '/auth/register', element: <Register2 /> },
       { path: '/auth/register2', element: <Register2 /> },
       { path: '/auth/forgot-password', element: <ForgotPassword2 /> },
-      
       { path: '/auth/reset-password/:id/:token', element: <ResetPassword /> },
-
       { path: '/auth/forgot-password2', element: <ForgotPassword2 /> },
       { path: '/auth/two-steps', element: <TwoSteps /> },
       { path: '/auth/two-steps2', element: <TwoSteps2 /> },

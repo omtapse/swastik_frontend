@@ -157,22 +157,22 @@ const FormSeparator = () => {
         console.log("validateForm",values)
         const errors = {};
         if (!values.name) {
-            errors.name = 'Required';
+            errors.name = 'Name is Required';
         }
         if (!values.experties) {
-            errors.experties = 'Required';
+            errors.experties = 'Experties is Required';
         }
         if (!values.image) {
-            errors.image = 'Required';
+            errors.image = 'image is Required';
         }
-        if (!values.about) {
-            errors.about = 'Required';
+        if (!values.about || values.about == "<p><br></p>" || values.about == null || values.about == undefined) {
+            errors.about = 'About guru is Required';
         }
         if (!values.programImages || values.programImages.length === 0) {
-            errors.programImages = 'Required';
+            errors.programImages = 'Atleast one image is required';
         }
-        if (values.testimonials="") {
-            errors.testimonials = 'Required';
+        if (!values.testimonials || values.testimonials == "<p><br></p>" || values.testimonials == null || values.testimonials== undefined) {
+            errors.testimonials = 'Testimonials is Required';
         }
 
         setErrors(errors);
@@ -182,6 +182,10 @@ const FormSeparator = () => {
         // return errors;
         return null;
     };
+    const handleRemoveImage = (file) => {
+        const updatedFileList = fileList.filter((item) => item !== file);
+        setFileList(updatedFileList);
+      };
 
 
     const scrollToError = (errors, handleSubmitBtn) => {
@@ -206,7 +210,7 @@ const FormSeparator = () => {
             experties:expertise,
             image: imageUrl,
             about: editorContent,
-            programImages: fileList.map((file) => file.url),
+            programImages: fileList?.map((file) => file.url),
             testimonials: editorTestimonial,
         });
 
@@ -261,6 +265,7 @@ const FormSeparator = () => {
                     <CustomTextField
                         id="fs-uname"
                         placeholder="Enter Guru name"
+                        sx={{mb:3}}
                         fullWidth
                         value={name}
                         inputProps={{ maxLength: 50 }}
@@ -332,6 +337,7 @@ const FormSeparator = () => {
                         // onChange={handleChangeImage}
                         accept="image/*"
                         beforeUpload={beforeUploadProgramImages}
+                        onRemove={(file) => handleRemoveImage(file)}
                         // onChange={({ fileList: newFileList }) => setFileList(newFileList)}
                     >
                         {fileList?.length >= 8 ? null : uploadButton}
@@ -363,7 +369,7 @@ const FormSeparator = () => {
                     <CustomFormLabel htmlFor="fs-editor">Testimonials</CustomFormLabel>
                     <ReactQuill
                         id="fs-editor"
-                        value={editorTestimonial}
+                        value={editorTestimonial || ''}
                         style={{ height: '10rem', marginBottom: '3rem' }}
                         // onChange={(value) => setEditorTestimonial(value)}
                         onChange={(value) => {

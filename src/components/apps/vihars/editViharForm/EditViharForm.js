@@ -135,17 +135,29 @@ const AddProgramForm = () => {
             console.log("error", error);
         }
     };
+    // const handleChangeImage = async (info) => {
+    //     try {
+    //         setLoading(true);
+    //         let formData = new FormData();
+    //         formData.append("image", info.target.files[0]);
+    //         let res = await routes.APIS.UPLOAD_IMAGE(formData);
+    //         setImageUrl(res.url);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         console.log("error", error);
+    //     }
+    // };
     const handleChangeImage = async (info) => {
-        if (info.file.status === "uploading") {
-            console.log("info", info.file);
-            setLoading(true);
-            let formData = new FormData();
-            formData.append("image", info.file);
-            let res = await routes.APIS.UPLOAD_IMAGE(formData);
-            setImageUrl(res.url);
-            console.log("hhhhhhh", res.url)
-            setLoading(false);
-        }
+            if (info.file.status === "uploading") {
+                console.log("info", info.file);
+                setLoading(true);
+                let formData = new FormData();
+                formData.append("image", info.file);
+                let res = await routes.APIS.UPLOAD_IMAGE(formData);
+                setImageUrl(res.url);
+                console.log("hhhhhhh", res.url)
+                setLoading(false);
+            }
     };
 
 
@@ -191,7 +203,6 @@ const AddProgramForm = () => {
     }
 
     useEffect(() => {
-
         getAllActivities();
     }, []);
 
@@ -199,10 +210,6 @@ const AddProgramForm = () => {
         console.log("activity", options, activities);
 
     }, [activities, options])
-
-
-
-
 
 
     useEffect(() => {
@@ -249,7 +256,7 @@ const AddProgramForm = () => {
         if (!activities) {
             errors.activities = "Activities is required";
         }
-        if (!editorContent) {
+        if (!editorContent || editorContent == "<p><br></P>" || editorContent == null || editorContent == undefined) {
             errors.editorContent = "Description is required";
         }
         if (!fileList) {
@@ -274,6 +281,10 @@ const AddProgramForm = () => {
         }
     };
 
+    const handleRemoveImage = (file) => {
+        const updatedFileList = fileList.filter((item) => item !== file);
+        setFileList(updatedFileList);
+      };
 
     const handleSubmitBtn = async () => {
         const errors = validateForm(
@@ -318,6 +329,8 @@ const AddProgramForm = () => {
 
 
 
+
+
     return (
         <div>
             {/* <Typography variant="h6" mb={3}>
@@ -332,6 +345,7 @@ const AddProgramForm = () => {
                     <CustomTextField
                         id="fs-uname"
                         placeholder="Enter Program"
+                        sx={{mb:3}}
                         fullWidth
                         value={title}
                         inputProps={{ maxLength: 50 }}
@@ -354,6 +368,7 @@ const AddProgramForm = () => {
                     <CustomTextField
                         id="fs-uname"
                         placeholder="Enter Tagline"
+                        sx={{mb:3}}
                         fullWidth
                         value={tagline}
                         // onChange={(e) => setTagline(e.target.value)}
@@ -367,7 +382,6 @@ const AddProgramForm = () => {
                             {errors.tagline}
                         </Typography>
                     )}
-
 
                     <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Master Image</CustomFormLabel>
                     <Upload
@@ -399,7 +413,7 @@ const AddProgramForm = () => {
                     )}
 
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                {/* <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         activities
                     </CustomFormLabel>
@@ -416,6 +430,8 @@ const AddProgramForm = () => {
                         getOptionLabel={(option) => option.label}
                        
                         defaultValue={ activities?.map((activity) => ({ label: activity, value: activity }))}
+                        // defaultValue={(activities ?? [])?.map((activity) => ({ label: activity, value: activity }))}
+
                         filterSelectedOptions
                         renderInput={(params) => (
                             <CustomTextField {...params} aria-label="Favorites" />
@@ -424,7 +440,7 @@ const AddProgramForm = () => {
                     {Boolean(errors.activities) && (
                         <p style={{ color: 'red', margin: '5px 0' }}>{errors.activities}</p>
                     )}
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12}>
                     <Divider sx={{ mx: '-24px' }} />
@@ -441,6 +457,7 @@ const AddProgramForm = () => {
                         // onChange={handleChangeImage}
                         accept="image/*"
                         beforeUpload={beforeUploadProgramImages}
+                        onRemove={(file) => handleRemoveImage(file)}
                     >
                         {fileList?.length >= 8 ? null : uploadButton}
                     </Upload>
@@ -456,7 +473,7 @@ const AddProgramForm = () => {
                     <CustomFormLabel htmlFor="fs-editor">Brief of Vihar</CustomFormLabel>
                     <ReactQuill
                         id="fs-editor"
-                        value={editorContent}
+                        value={editorContent || ''}
                         style={{ height: '10rem', marginBottom: '3rem' }}
                         // onChange={(value) => setEditorContent(value)}
                         onChange={(value) => {
@@ -478,7 +495,6 @@ const AddProgramForm = () => {
                             color="primary"
                             // onClick={() => handleSubmitBtn()}
                             onClick={(e) => scrollToError(errors, handleSubmitBtn)}
-
                         >
                             Submit
                         </Button>

@@ -222,7 +222,6 @@ const EditProgramForm = () => {
             setStatus(selectedProgram.programStatus)
 
         }
-
     }, [selectedProgram]);
     console.log("urllllll", imageUrl)
     console.log("guruuuuuuuuuuuu", guruValue)
@@ -235,37 +234,37 @@ const EditProgramForm = () => {
         if (!pname) {
             errors.pname = "Program Name is required";
         }
-        if (!programPrice) {
+        if (!programPrice || isNaN(programPrice)) {
             errors.programPrice = "Program Price is required";
         }
-        if (!durationValue) {
+        if (!durationValue || isNaN(programDuration)) {
             errors.durationValue = "Program Duration is required";
         }
-        if (!aboutValue) {
+        if (!aboutValue || aboutValue =="<p><br></p>" || aboutValue == null || aboutValue == undefined ) {
             errors.aboutValue = "About Program is required";
         }
         if (!dateValue) {
             errors.dateValue = "Date is required";
         }
         if (!focusValue) {
-            errors.focusValue = "Focus of Program is required";
+            errors.focusOfProgram = "Focus of Program is required";
         }
         if (!status) {
             errors.status = "Status is required";
         }
-        if (!guruValue) {
+        if (!guruValue.length) {
             errors.guruValue = "Guru is required";
         }
-        if (!pillarValue) {
+        if (!pillarValue.length) {
             errors.pillarValue = "Pillar is required";
         }
-        if (!viharValue) {
+        if (!viharValue.length) {
             errors.viharValue = "Vihar is required";
         }
         setErrors(errors);
         return errors;
     };
-
+   
     const scrollToError = (errors, handleSubmitBtn) => {
         if (errors) {
             const errorField = Object.keys(errors)[0];
@@ -273,7 +272,6 @@ const EditProgramForm = () => {
             if (field) {
                 field.focus();
                 field.scrollIntoView({ behavior: "smooth", block: "start" });
-
             }
             handleSubmitBtn();
         } else {
@@ -378,7 +376,7 @@ const EditProgramForm = () => {
                         placeholder="Enter Program"
                         name="pname"
                         fullWidth
-                        value={pname}
+                        value={pname || ''}
                         inputProps={{ maxLength: 50 }}
                         // onChange={(e) => setPName(e.target.value)}
                         onChange={(e) => {
@@ -478,15 +476,15 @@ const EditProgramForm = () => {
                             setErrors({ ...errors, guruValue: "" })
                         }}
                     >
-                        {gurus.map((option) => (
+                        {gurus?.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
-                                {option.label}
+                                {option?.label}
                             </MenuItem>
                         ))}
                     </CustomSelect>
-                    {Boolean(errors.guruValue) && (
+                    {Boolean(errors?.guruValue) && (
                         <Typography variant="caption" color="error">
-                            {errors.guruValue}
+                            {errors?.guruValue}
                         </Typography>
                     )}
 
@@ -617,6 +615,7 @@ const EditProgramForm = () => {
                     <CustomFormLabel htmlFor="fs-editor">About Program</CustomFormLabel>
                     <ReactQuill
                         id="fs-editor"
+                        name= "aboutValue"
                         value={aboutValue}
                         // onChange={(e) => setaboutValue(e.target.value)}
                         style={{ height: '10rem', marginBottom: '3rem' }}
@@ -626,9 +625,9 @@ const EditProgramForm = () => {
                             setErrors({ ...errors, aboutValue: "" })
                         }}
                     />
-                    {Boolean(errors.aboutValue) && (
+                    {Boolean(errors?.aboutValue) && (
                         <Typography variant="caption" color="error">
-                            {errors.aboutValue}
+                            {errors?.aboutValue}
                         </Typography>
                     )}
                 </Grid>
@@ -639,7 +638,6 @@ const EditProgramForm = () => {
                         <Button variant="contained" color="primary"
                             // onClick={handleSubmitBtn()}
                             onClick={(e) => scrollToError(errors, handleSubmitBtn)}
-
                         >
                             Submit
                         </Button>

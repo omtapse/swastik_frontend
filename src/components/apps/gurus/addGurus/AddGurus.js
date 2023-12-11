@@ -108,6 +108,10 @@ const FormSeparator = () => {
             setLoading(false);
         }
     };
+    const handleRemoveImage = (file) => {
+        const updatedFileList = fileList.filter((item) => item !== file);
+        setFileList(updatedFileList);
+      };
 
     const uploadButton = (
         <div>
@@ -152,7 +156,7 @@ const FormSeparator = () => {
             expertise,
             image: imageUrl,
             about: editorContent,
-            programImages: fileList,
+            programImage: fileList,
             testimonials: editorTestimonial,
         });
 
@@ -167,7 +171,7 @@ const FormSeparator = () => {
                 image: imageUrl,
                 about: editorContent,
                 experties: expertise,
-                programImages: fileList.map((file) => file.url),
+                programImage: fileList?.map((file) => file.url),
                 testimonials: editorTestimonial,
             };
 
@@ -199,6 +203,7 @@ const FormSeparator = () => {
                     <CustomTextField
                         id="fs-uname"
                         placeholder="Enter Guru name"
+                        sx={{mb:3}}
                         fullWidth
                         value={name}
                         inputProps={{ maxLength: 50 }}
@@ -265,11 +270,12 @@ const FormSeparator = () => {
                         fileList={fileList}
                         accept="image/*"
                         beforeUpload={beforeUploadProgramImages}
+                        onRemove={(file) => handleRemoveImage(file)}
                     >
                         {fileList.length >= 8 ? null : uploadButton}
                     </Upload>
-                    {Boolean(errors.programImages) && (
-                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.programImages}</p>
+                    {Boolean(errors.programImage) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.programImage}</p>
                     )}
                 </Grid>
 
