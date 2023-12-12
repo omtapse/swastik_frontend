@@ -148,6 +148,7 @@ page * rowsPerPage + rowsPerPage
                 size="small"
                 value={searchTerm}
                 onChange={handleSearch}
+                style={{ width: '25rem' }}
               />
             </Box>
 

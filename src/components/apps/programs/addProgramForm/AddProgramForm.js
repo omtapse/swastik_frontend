@@ -396,7 +396,7 @@ const AddProgramForm = () => {
             // defaultValue={pillar}
             filterSelectedOptions
             renderInput={(params) => (
-              <CustomTextField {...params} placeholder={'Select Pillars'} aria-label="Favorites" />
+              <CustomTextField {...params}  aria-label="Favorites" />
             )}
             value={pillarValue}
             // onChange={(event, value) => setpillarValue(value)}

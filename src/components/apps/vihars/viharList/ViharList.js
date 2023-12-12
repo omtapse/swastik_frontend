@@ -144,6 +144,7 @@ const slicedVihars = filteredVihars.slice(
                 size="small"
                 value={searchTerm}
                 onChange={handleSearch}
+                style={{ width: '25rem' }}
               />
             </Box>
           <TableContainer>
