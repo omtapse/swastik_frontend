@@ -6,6 +6,7 @@ import { hoverSidebar, toggleMobileSidebar } from 'src/store/customizer/Customiz
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { Profile } from './SidebarProfile/Profile';
 
+
 const Sidebar = () => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const customizer = useSelector((state) => state.customizer);

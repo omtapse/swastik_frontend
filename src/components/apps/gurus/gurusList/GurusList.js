@@ -12,10 +12,12 @@ import {
   Chip,
   Paper,
   TableContainer,
+  TablePagination,
   Stack,
   Button,
   Tooltip,
   IconButton,
+  TextField,
 } from '@mui/material';
 import PageContainer from '../../../../components/container/PageContainer';
 import Breadcrumb from '../../../../layouts/full/shared/breadcrumb/Breadcrumb';
@@ -46,6 +48,10 @@ const GurusList = () => {
   const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setRightSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5); 
+
 
 
   const dispatch = useDispatch();
@@ -75,12 +81,44 @@ const GurusList = () => {
     dispatch(deleteGuruByID(guruId))
   };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 5));
+    setPage(0); // Reset page when rows per page changes
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value); // Update search term when the user types
+    setPage(0);
+  };
+
+  const filteredVihars = getAllGurus.filter((item) =>
+  item.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+const slicedVihars = filteredVihars.slice(
+  page * rowsPerPage,
+  page * rowsPerPage + rowsPerPage
+);
+
+
   return (
     <PageContainer title="Program list" description="this is program list ">
 
       <Grid container xs={12}>
         <Grid item xs={12} lg={12}>
           <Card>
+          <Box p={2} display="flex" alignItems="center" justifyContent="flex-start">
+              <TextField
+                label="Search by Name"
+                variant="outlined"
+                size="small"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </Box>
 
           <TableContainer>
             <Table
@@ -107,7 +145,7 @@ const GurusList = () => {
               </TableHead>
 
               <TableBody>
-                {getAllGurus.map((item) => (
+                {slicedVihars.map((item) => (
 
                   <TableRow key={item.id}>
                     <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
@@ -163,6 +201,14 @@ const GurusList = () => {
 
             </Table>
           </TableContainer>
+          <TablePagination
+              component="div"
+              count={filteredVihars.length}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </Card>
         </Grid>
       </Grid>

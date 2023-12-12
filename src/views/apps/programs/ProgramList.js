@@ -6,7 +6,7 @@ import ProgramList from '../../../components/apps/programs/programList/ProgramLi
 const ProgramListOne = () => {
   return (
     <PageContainer title="Programs " description="this is Programs page">
-      <Breadcrumb title="Programs page" subtitle="Get the latest Programs list" />
+      <Breadcrumb title="Programs page" subtitle="Programs List" />
       {/* ------------------------------------------- */}
       {/* Blog Listing */}
       {/* ------------------------------------------- */}

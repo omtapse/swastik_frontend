@@ -252,13 +252,13 @@ const EditProgramForm = () => {
         if (!status) {
             errors.status = "Status is required";
         }
-        if (!guruValue.length) {
+        if (!guruValue || guruValue.length === 0) {
             errors.guruValue = "Guru is required";
         }
-        if (!pillarValue.length) {
+        if (!pillarValue || pillarValue.length === 0) {
             errors.pillarValue = "Pillar is required";
         }
-        if (!viharValue.length) {
+        if (!viharValue || viharValue.length === 0) {
             errors.viharValue = "Vihar is required";
         }
         setErrors(errors);

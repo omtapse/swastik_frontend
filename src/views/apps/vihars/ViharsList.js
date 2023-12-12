@@ -7,7 +7,7 @@ import ViharsList from '../../../components/apps/vihars/viharList/ViharList'
 const ProgramListOne = () => {
   return (
     <PageContainer title="Vihars " description="this is Vihars page">
-      <Breadcrumb title="Vihars page" subtitle="Get the Vihars list" />
+      <Breadcrumb title="Vihars page" subtitle="Vihars List" />
       {/* ------------------------------------------- */}
       {/* Blog Listing */}
       {/* ------------------------------------------- */}
