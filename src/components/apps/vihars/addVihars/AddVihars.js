@@ -248,6 +248,11 @@ const AddProgramForm = () => {
         }
     };
 
+    const handleRemoveImage = (file) => {
+        const updatedFileList = fileList.filter((item) => item !== file);
+        setFileList(updatedFileList);
+      };
+
     const handleSubmitBtn = async () => {
         const errors = validateForm(
             title,
@@ -301,6 +306,7 @@ const AddProgramForm = () => {
                     <CustomTextField
                         id="fs-uname"
                         placeholder="Enter Program"
+                        sx={{mb:3}}
                         fullWidth
                         value={title}
                         inputProps={{ maxLength: 50 }}
@@ -321,6 +327,7 @@ const AddProgramForm = () => {
                     <CustomTextField
                         id="fs-uname"
                         placeholder="Enter Tagline"
+                        sx={{mb:3}}
                         fullWidth
                         value={tagline}
                         // onChange={(e) => setTagline(e.target.value)}
@@ -411,6 +418,7 @@ const AddProgramForm = () => {
                         // onChange={handleChangeImage}
                         accept="image/*"
                         beforeUpload={beforeUploadProgramImages}
+                        onRemove={(file) => handleRemoveImage(file)}
                     >
                         {fileList.length >= 8 ? null : uploadButton}
                     </Upload>

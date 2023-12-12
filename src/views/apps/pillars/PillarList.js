@@ -6,7 +6,7 @@ import PillarListOne from '../../../components/apps/pillars/pillarList/PillarLis
 const PillarList = () => {
   return (
     <PageContainer title="pillars " description="this is Pillars page">
-      <Breadcrumb title="pillars page" subtitle="Get the Pillars list" />
+      <Breadcrumb title="pillars page" subtitle="Pillar List" />
       {/* ------------------------------------------- */}
       {/* Blog Listing */}
       {/* ------------------------------------------- */}

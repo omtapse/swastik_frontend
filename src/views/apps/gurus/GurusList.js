@@ -7,7 +7,7 @@ import GurusList from '../../../components/apps/gurus/gurusList/GurusList'
 const ProgramListOne = () => {
   return (
     <PageContainer title="Gurus " description="this is gurus page">
-      <Breadcrumb title="Gurus page" subtitle="Get gurus list" breadcrumbImg={''} />
+      <Breadcrumb title="Gurus page" subtitle="Gurus List" breadcrumbImg={''} />
       {/* ------------------------------------------- */}
       {/* Blog Listing */}
       {/* ------------------------------------------- */}

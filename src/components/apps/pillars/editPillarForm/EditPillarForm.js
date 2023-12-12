@@ -241,7 +241,7 @@ const AddProgramForm = () => {
         if (!imageUrl) {
             errors.imageUrl = "Pillar image is required";
         }
-        if (!editorContent) {
+        if (!editorContent || editorContent == "<p><br></p>" || editorContent == null || editorContent == undefined ) {
             errors.editorContent = "Brief of Pillar is required";
         }
         setErrors(errors);
@@ -368,12 +368,16 @@ const AddProgramForm = () => {
                     <CustomFormLabel htmlFor="fs-editor">Brief of Pillar</CustomFormLabel>
                     <ReactQuill
                         id="fs-editor"
-                        value={editorContent}
+                        name="editorContent"
+                        value={editorContent || ''}
                         style={{ height: '10rem', marginBottom: '3rem' }}
                         // onChange={(value) => setEditorContent(value)}
                         onChange={(value) => {
                             setEditorContent(value);
                             setErrors({ ...errors, editorContent: "" });
+                        }}
+                        onBlur={() => {
+                            validateForm();
                         }}
                     />
                     {Boolean(errors?.editorContent) && (

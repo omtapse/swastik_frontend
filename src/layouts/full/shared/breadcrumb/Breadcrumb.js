@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import breadcrumbImg from 'src/assets/images/breadcrumb/ChatBc.png';
 import { IconCircle } from '@tabler/icons';
 // import icon1 from 'src/assets/images/logo/spirituality-image.svg'
+import vector from '../../../../assets/images/icons/spirutuality-image.svg'
 
 const Breadcrumb = ({ subtitle, items, title, children }) => (
   <Grid
@@ -64,7 +65,7 @@ const Breadcrumb = ({ subtitle, items, title, children }) => (
         ) : (
           <>
             <Box sx={{ top: '0px', position: 'absolute' }}>
-              <img src={breadcrumbImg} alt={breadcrumbImg} width={'165px'} />
+              <img src={vector} alt={vector} width={'140px'} />
             </Box>
           </>
         )}

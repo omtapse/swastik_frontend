@@ -12,10 +12,12 @@ import {
   Chip,
   Paper,
   TableContainer,
+  TablePagination,
   Stack,
   Button,
   Tooltip,
   IconButton,
+  TextField,
   Card,
 } from '@mui/material';
 import PageContainer from '../../../../components/container/PageContainer';
@@ -43,11 +45,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProgram, deleteProgramByID, fetchProgramById } from '../../../../store/apps/programs/ProgramListSlice';
 import { useNavigate } from 'react-router';
 
-
 const ProgramList = () => {
   const [isLeftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setRightSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState(null);
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5); 
+
+
 
   // const handleOpen = () => setOpen(true);
   // const handleClose = () => {
@@ -73,6 +82,9 @@ const ProgramList = () => {
     dispatch(fetchProgram())
   }, [dispatch])
 
+//   const filteredPrograms = getAllProgram.filter((program) =>
+//   program.programName.toLowerCase().includes(searchQuery.toLowerCase())
+// );
 
   const handleEdit = (programId) => {
     console.log("editttt", programId)
@@ -93,6 +105,65 @@ const ProgramList = () => {
     console.log("iddddd", programId)
     dispatch(deleteProgramByID(programId))
   };
+  // const columns = [
+  //   {
+  //     name: 'programName',
+  //     label: 'Program Name',
+  //   },
+  //   {
+  //     name: 'programPrice',
+  //     label: 'Program Price',
+  //   },
+  //   {
+  //     name: 'programDuration',
+  //     label: 'Program Duration',
+  //   },
+  //   {
+  //     name: 'programStatus',
+  //     label: 'Program Status',
+  //   },
+  //   // ... (add more columns as needed)
+  // ];
+  
+  // const options = {
+  //   filter: true,
+  //   sort: true,
+  //   download: false,
+  //   print: false,
+  //   selectableRows: 'none',
+  // };
+  
+  // const data = filteredPrograms?.map((item) => [
+  //   // Map your data to the columns
+  //   item.programName,
+  //   item.programPrice,
+  //   item.programDuration,
+  //   item.programStatus,
+  // ]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setPage(0);
+  };
+
+  const filteredPrograms = getAllProgram.filter((item) =>
+  item.programName.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 5));
+    setPage(0); 
+  };
+  const slicedVihars = filteredPrograms.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+  
+
 
   return (
     <PageContainer title="Program list" description="this is program list ">
@@ -110,6 +181,14 @@ const ProgramList = () => {
         </Grid> */}
         <Grid item xs={12} lg={12}>
           <Card>
+          <Box mb={3} justifyContent={'flex-start'} display={'flex'}>
+              <TextField
+                label="Search Program"
+                variant="outlined"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </Box>
 
           <TableContainer>
             <Table
@@ -120,8 +199,8 @@ const ProgramList = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                    <Typography variant="h6">Program Name</Typography>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }} onClick={() => handleSort('programName')}>
+                  <Typography variant="h6">Program Name</Typography>
                   </TableCell >
                   <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Program Price</Typography>
@@ -144,7 +223,7 @@ const ProgramList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {getAllProgram.map((item) => (
+                {slicedVihars.map((item) => (
 
                   <TableRow key={item.id}>
                     <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
@@ -197,6 +276,20 @@ const ProgramList = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          <TablePagination
+              component="div"
+              count={filteredPrograms.length}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          {/* <MUIDataTable
+              title=""
+              data={data}
+              columns={columns}
+              options={options}
+            /> */}
           </Card>
         </Grid>
       </Grid>

@@ -7,30 +7,35 @@ import icon3 from '../../../assets/images/svgs/icon-briefcase.svg';
 import icon4 from '../../../assets/images/svgs/icon-mailbox.svg';
 import icon5 from '../../../assets/images/svgs/icon-favorites.svg';
 import icon6 from '../../../assets/images/svgs/icon-speech-bubble.svg';
+import vihar from '../../../assets/images/icons/viharIcon.png'
+import pillar from '../../../assets/images/icons/pillarIcon.png'
+import guru from '../../../assets/images/icons/guruIcon.png'
+import program from '../../../assets/images/icons/programIcon.png'
+
 
 
 const TopCards = ({ counts }) => {
   const topcards = [
     {
-      icon: icon2,
+      icon: vihar,
       title: 'Vihars',
       digits: counts.viharCount,
       bgcolor: 'primary',
     },
     {
-      icon: icon3,
+      icon: pillar,
       title: 'Pillars',
       digits: counts.pillarCount,
       bgcolor: 'warning',
     },
     {
-      icon: icon4,
+      icon: guru,
       title: 'Gurus',
       digits: counts.guruCount,
       bgcolor: 'secondary',
     },
     {
-      icon: icon5,
+      icon: program,
       title: 'Programs',
       digits: counts.programCount,
       bgcolor: 'error',

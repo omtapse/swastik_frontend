@@ -11,7 +11,7 @@ const PillarFormOne = () => {
   return (
     <PageContainer title="UpdatePillars" description="this is UpdatePillars page">
       <Grid item xs={12}>
-          <ParentCard title="Program Details">
+          <ParentCard title="Update Pillar Details">
             <EditPillarForm />
           </ParentCard>
         </Grid>
