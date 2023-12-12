@@ -181,12 +181,13 @@ const ProgramList = () => {
         </Grid> */}
         <Grid item xs={12} lg={12}>
           <Card>
-          <Box mb={3} justifyContent={'flex-start'} display={'flex'}>
+          <Box p={2} display="flex" alignItems="center" justifyContent="flex-start">
               <TextField
-                label="Search Program"
+                label="Search by Name"
                 variant="outlined"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                size="small"
+                value={searchTerm}
+                onChange={handleSearch}
               />
             </Box>
 

@@ -244,10 +244,7 @@ const slicedVihars = filteredVihars.slice(
               </TableBody>
             </Table>
           </TableContainer>
-          </Card>
-        </Grid>
-      </Grid>
-      <TablePagination
+          <TablePagination
               component="div"
               count={filteredVihars.length}
               page={page}
@@ -255,6 +252,10 @@ const slicedVihars = filteredVihars.slice(
               rowsPerPage={rowsPerPage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
+          </Card>
+        </Grid>
+      </Grid>
+     
       {/* <AddStudentform
         open={open}
         setOpen={setOpen}
