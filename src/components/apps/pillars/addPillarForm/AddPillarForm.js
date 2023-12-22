@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Grid,
     InputAdornment,
@@ -7,7 +7,8 @@ import {
     Divider,
     MenuItem,
     IconButton,
-    Stack
+    Stack,
+    Autocomplete
 } from '@mui/material';
 
 // import { IconEye, IconEyeOff } from '@tabler/icons';
@@ -69,6 +70,12 @@ const AddProgramForm = () => {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
     const [title, setTitle] = useState();
+    const [tagline, setTagline] = useState();
+    const [options, setOptions] = useState([]);
+    const [activities, setActivities] = useState([]);
+    const [activityValue, setActivityValue] = useState()
+
+
     // const [tagline,seTagline] = useState();
 
 
@@ -152,6 +159,39 @@ const AddProgramForm = () => {
         }
     };
 
+    const getAllActivities = async () => {
+        try {
+            const res = await routes.APIS.getAllPillarActivity();
+            console.log("resssss", res);
+            let data = res.activities.map((item) => { return { label: item.activityName, value: item.activityName } });
+            setOptions(data);
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
+    const handleSetActivity = (activity) => {
+        let newArray = activity?.map((act) => {
+
+            if (act.label) {
+                return act
+            } else {
+                let newObj = {
+                    label: act,
+                    value: act
+                }
+                setOptions((prev) => [...prev, newObj])
+                return newObj
+            }
+        })
+
+        setActivities(newArray);
+    }
+    useEffect(() => {
+
+        getAllActivities();
+    }, []);
+
 
     const uploadButton = (
         <div>
@@ -168,6 +208,12 @@ const AddProgramForm = () => {
         }
         if (!imageUrl) {
             errors.imageUrl = "Pillar image is required";
+        }
+        if (!tagline) {
+            errors.tagline = "Tagline is required";
+        }
+        if (!activities.length) {
+            errors.activities = "Activities is required";
         }
         if (!editorContent) {
             errors.editorContent = "Brief of Pillar is required";
@@ -191,12 +237,16 @@ const AddProgramForm = () => {
         }
     };
 
+    // const options =["x","y","z"]
+
 
     const handleSubmitBtn = () => {
         const errors = validateForm(
             title,
             imageUrl,
-            editorContent
+            tagline,
+            editorContent,
+            activities
         );
         if (Object.keys(errors).length > 0) {
             return;
@@ -205,7 +255,9 @@ const AddProgramForm = () => {
         const data = {
             pillarTitle: title,
             pillarImage: imageUrl,
-            pillarDescription: editorContent
+            tagLine: tagline,
+            pillarDescription: editorContent,
+            activities: activities
         }
 
         dispatch(addPillar(data));
@@ -216,6 +268,7 @@ const AddProgramForm = () => {
         });
 
     }
+
 
 
 
@@ -234,6 +287,7 @@ const AddProgramForm = () => {
                         id="fs-uname"
                         placeholder="Enter Program"
                         fullWidth
+                        sx={{mb:3}}
                         value={title}
                         inputProps={{ maxLength: 50 }}
                         onChange={(e) => {
@@ -247,7 +301,60 @@ const AddProgramForm = () => {
                         </Typography>
                     )}
 
+
+<CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                        Tagline
+                    </CustomFormLabel>
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Tagline"
+                        sx={{mb:0}}
+                        fullWidth
+                        value={tagline}
+                        // onChange={(e) => setTagline(e.target.value)}
+                        onChange={(e) => {
+                            setTagline(e.target.value);
+                            setErrors({ ...errors, tagline: "" });
+                        }}
+                    />
+                    {Boolean(errors.tagline) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.tagline}</p>
+                    )}
+
+
                 </Grid>
+
+                
+                <Grid item xs={12} sm={6}>
+                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                        activities
+                    </CustomFormLabel>
+                    <Autocomplete
+                            freeSolo
+                            multiple
+                            fullWidth
+                            id="tags-outlined"
+                            options={options || []}
+                            onChange={(event, value) => {
+                                handleSetActivity(value);
+                                setErrors({ ...errors, activities: "" });
+                            }}
+                            getOptionLabel={(option) => option.label}
+                            // defaultValue={activities?.map((activity) => ({ label: activity, value: activity }))}
+                            
+                            defaultValue={activities}
+                            value={activities}
+                            filterSelectedOptions
+                            renderInput={(params) => (
+                                <CustomTextField {...params} aria-label="Favorites" />
+                            )}
+                    />
+                      {Boolean(errors.activities) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.activities}</p>
+                    )}
+            
+                </Grid>
+
 
                 <Grid item xs={12}>
                     <Divider sx={{ mx: '-24px' }} />

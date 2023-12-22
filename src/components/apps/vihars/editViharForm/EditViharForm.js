@@ -166,22 +166,29 @@ const AddProgramForm = () => {
             const res = await routes.APIS.GET_ALL_ACTIVITIES_VIHARS();
             console.log("resssss", res);
             let data = res.activities.map((item) => { return { label: item.activityName, value: item.activityName } });
+            console.log("dataaaaa",data)
             setOptions(data);
         } catch (error) {
             console.log("error", error);
         }
     };
 
-    const fetchActivityNames = async (activityIds) => {
-        try {
-            const response = await fetchActivityNamesApi(activityIds); // Replace with your actual API call
-            const activityNames = response.map(activity => ({ label: activity.activityName, value: activity._id }));
-            return activityNames;
-        } catch (error) {
-            console.error('Error fetching activity names:', error);
-            return [];
-        }
-    };
+    // const fetchActivityNames = async (activityIds) => {
+    //     console.log("activityIds",activityIds)
+    //     try {
+    //         let ids = activityIds.map(ac=>ac._id) 
+    //         const response = await routes.APIS.GET_ALL_ACTIVITIES_VIHARS(); 
+    //         console.log("response/////",response)
+    //         const selectedactivity = response.activities.filter(res=> ids.includes(res._id));
+    //         console.log("selecc???",selectedactivity,activityIds)
+    //         const activityNames = selectedactivity.map(activity => ({ label: activity.activityName, value: activity._id }));
+    //         console.log("activityNames>>>>>>",activityNames)
+    //         return activityNames;
+    //     } catch (error) {
+    //         console.error('Error fetching activity names:', error);
+    //         return [];
+    //     }
+    // };
 
 
     const handleSetActivity = (activity) => {
@@ -206,10 +213,10 @@ const AddProgramForm = () => {
         getAllActivities();
     }, []);
 
-    useEffect(() => {
-        console.log("activity", options, activities);
+    // useEffect(() => {
+    //     console.log("activity", options, activities);
 
-    }, [activities, options])
+    // }, [activities, options])
 
 
     useEffect(() => {
@@ -217,11 +224,13 @@ const AddProgramForm = () => {
 
         setTitle(selectedVihar?.viharName || '');
         setTagline(selectedVihar?.tagLine || '');
-        // setActivities(selectedVihar?.activities.map(activity => activity.activityName))
+        // setActivities(selectedVihar?.activities.map(activity => ({ label: activity.activityName, value: activity._id })))
         if (selectedVihar && selectedVihar?.activities) {
-            const activityNames = fetchActivityNames(selectedVihar?.activities);
-            console.log("activityNames",activityNames)
-            setActivities(activityNames);
+            let actName = selectedVihar?.activities.map(el=>({ label: el.activityName, value: el._id }));
+            console.log("actName",actName)
+            // const activityNames = fetchActivityNames(selectedVihar?.activities || []);
+            // console.log("activityNames????",activityNames)
+            setActivities(actName);
         }
         setImageUrl(selectedVihar?.masterImage || '');
         setFileList(selectedVihar?.facilityImages.map((item) => ({ url: item })))
@@ -231,7 +240,7 @@ const AddProgramForm = () => {
 
 
     }, [selectedVihar]);
-    console.log("urllllll", imageUrl)
+    
 
 
     const uploadButton = (
@@ -253,7 +262,7 @@ const AddProgramForm = () => {
         if (!imageUrl) {
             errors.imageUrl = "Master Image is required";
         }
-        if (!activities) {
+        if (!activities.length) {
             errors.activities = "Activities is required";
         }
         if (!editorContent || editorContent == "<p><br></P>" || editorContent == null || editorContent == undefined) {
@@ -441,6 +450,32 @@ const AddProgramForm = () => {
                         <p style={{ color: 'red', margin: '5px 0' }}>{errors.activities}</p>
                     )}
                 </Grid> */}
+                <Grid item xs={12} sm={6}>
+                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                        activities
+                    </CustomFormLabel>
+                    <Autocomplete
+                        freeSolo
+                        multiple
+                        fullWidth
+                        id="tags-outlined"
+                        options={options || []}
+                        onChange={(event, value) => {
+                            handleSetActivity(value);
+                            setErrors({ ...errors, activities: "" });
+                        }}
+                        getOptionLabel={(option) => option.label}
+                        defaultValue={ activities }
+                        value={activities}
+                        filterSelectedOptions
+                        renderInput={(params) => (
+                            <CustomTextField {...params} aria-label="Favorites" />
+                        )}
+                    />
+                    {Boolean(errors.activities) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.activities}</p>
+                    )}
+                </Grid>
 
                 <Grid item xs={12}>
                     <Divider sx={{ mx: '-24px' }} />

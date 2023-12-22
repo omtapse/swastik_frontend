@@ -100,6 +100,9 @@ const routes = {
         getCounts: async () => {
             return await apiGet("/admin/dashboard/counts", routes.BASE_PATH)
         },
+        getAllPillarActivity: async () =>{
+            return await apiGet("/pillar/activities",routes.BASE_PATH)
+        }
     }
 
 

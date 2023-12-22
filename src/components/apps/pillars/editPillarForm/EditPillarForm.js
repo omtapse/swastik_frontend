@@ -7,7 +7,8 @@ import {
     Divider,
     MenuItem,
     IconButton,
-    Stack
+    Stack,
+    Autocomplete
 } from '@mui/material';
 
 // import { IconEye, IconEyeOff } from '@tabler/icons';
@@ -107,6 +108,10 @@ const AddProgramForm = () => {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
     const [title, setTitle] = useState();
+    const [options, setOptions] = useState([]);
+    const [activities, setActivities] = useState([]);
+    const [tagline, setTagline] = useState();
+
     // const [tagline,seTagline] = useState();
 
 
@@ -115,7 +120,6 @@ const AddProgramForm = () => {
     const params = useParams();
 
     const selectedPillar = useSelector((state) => state.PillarReducer?.selectedPillar || []);
-    console.log("selectedPillar", selectedPillar);
 
     const handleChange = (event) => {
         setCountry(event.target.value);
@@ -187,29 +191,59 @@ const AddProgramForm = () => {
     };
     const handleChangeImage = async (info) => {
         if (info.file.status === "uploading") {
-            console.log("info", info.file);
             setLoading(true);
             let formData = new FormData();
             formData.append("image", info.file);
             let res = await routes.APIS.UPLOAD_IMAGE(formData);
             setImageUrl(res.url);
-            console.log("hhhhhhh", res.url)
             setLoading(false);
         }
     };
+    const getAllActivities = async () => {
+        try {
+            const res = await routes.APIS.getAllPillarActivity();
+            let data = res.activities.map((item) => { return { label: item.activityName, value: item._id } });
+            setOptions(data);
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+    const handleSetActivity = (activity) => {
+        let newArray = activity?.map((act) => {
+            if (act.label) {
+                return act
+            } else {
+                let newObj = {
+                    label: act,
+                    value: act
+                }
+                setOptions((prev) => [...prev, newObj])
+                return newObj
+            }
+        })
+        setActivities(newArray);
+    }
 
     useEffect(() => {
+        getAllActivities();
+    }, []);
+    
+    useEffect(() => {
         setTitle(selectedPillar?.pillarTitle || '')
+        setTagline(selectedPillar?.tagLine || '');
         setImageUrl(selectedPillar?.pillarImage || '');
+        if (selectedPillar && selectedPillar?.activities) {
+            let actName = selectedPillar?.activities.map(el => ({ label: el.activityName, value: el._id }));
+            // console.log("actName", actName)
+            // let val = actName.map((act)=>act.label)
+            // const activityNames = fetchActivityNames(selectedVihar?.activities || []);
+            // console.log("activityNames????",activityNames)
+            setActivities(actName);
+            // setActivities(actName)
+        }
         setEditorContent(selectedPillar?.pillarDescription || '');
 
     }, [selectedPillar]);
-    console.log("urllllll", imageUrl)
-
-
-
-
-
 
     // const handleChangeimg = (info) => {
     //     if (info.file.status === 'uploading') {
@@ -238,15 +272,23 @@ const AddProgramForm = () => {
         if (!title) {
             errors.title = "Pillar Title is required";
         }
+        if (!tagline) {
+            errors.tagline = "Tagline is required";
+        }
         if (!imageUrl) {
             errors.imageUrl = "Pillar image is required";
         }
-        if (!editorContent || editorContent == "<p><br></p>" || editorContent == null || editorContent == undefined ) {
+        if (!activities.length) {
+            errors.activities = "Activities is required";
+        }
+        if (!editorContent || editorContent == "<p class=\"ql-align-justify\"><br></p>" || editorContent == null || editorContent == undefined) {
             errors.editorContent = "Brief of Pillar is required";
         }
         setErrors(errors);
         return errors;
     };
+
+    console.log("editorContent",editorContent)
 
     const scrollToError = (errors, handleSubmitBtn) => {
         if (errors) {
@@ -267,7 +309,9 @@ const AddProgramForm = () => {
     const handleSubmitBtn = () => {
         const errors = validateForm(
             title,
+            tagline,
             imageUrl,
+            activities,
             editorContent
         );
         if (Object.keys(errors).length > 0) {
@@ -276,7 +320,9 @@ const AddProgramForm = () => {
 
         const data = {
             pillarTitle: title,
+            tagLine: tagline,
             pillarImage: imageUrl,
+            activities: activities,
             pillarDescription: editorContent
         }
 
@@ -289,9 +335,11 @@ const AddProgramForm = () => {
 
     }
 
-    useEffect(() => {params
-      dispatch(fetchPillarById(params.id))
-    },[])
+    console.log("activities",activities)
+    useEffect(() => {
+        params
+        dispatch(fetchPillarById(params.id))
+    }, [])
 
 
 
@@ -324,8 +372,56 @@ const AddProgramForm = () => {
                         </Typography>
                     )}
 
+                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                        Tagline
+                    </CustomFormLabel>
+                    <CustomTextField
+                        id="fs-uname"
+                        placeholder="Enter Tagline"
+                        sx={{ mb: 3 }}
+                        fullWidth
+                        value={tagline}
+                        // onChange={(e) => setTagline(e.target.value)}
+                        onChange={(e) => {
+                            setTagline(e.target.value);
+                            setErrors({ ...errors, tagline: "" });
+                        }}
+                    />
+                    {Boolean(errors.tagline) && (
+                        <Typography variant="caption" color="red">
+                            {errors.tagline}
+                        </Typography>
+                    )}
+
                 </Grid>
 
+
+                <Grid item xs={12} sm={6}>
+                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                        activities
+                    </CustomFormLabel>
+                    <Autocomplete
+                        freeSolo
+                        multiple
+                        fullWidth
+                        id="tags-outlined"
+                        options={options || []}
+                        onChange={(event, value) => {
+                            handleSetActivity(value);
+                            setErrors({ ...errors, activities: "" });
+                        }}
+                        getOptionLabel={(option) => option.label} 
+                        defaultValue={activities}
+                        value={activities}
+                        filterSelectedOptions
+                        renderInput={(params) => (
+                            <CustomTextField {...params} aria-label="Favorites" />
+                        )}
+                    />
+                    {Boolean(errors.activities) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.activities}</p>
+                    )}
+                </Grid>
                 <Grid item xs={12}>
                     <Divider sx={{ mx: '-24px' }} />
 
@@ -363,6 +459,7 @@ const AddProgramForm = () => {
                     )}
 
                 </Grid>
+               
 
                 <Grid item xs={12} >
                     <CustomFormLabel htmlFor="fs-editor">Brief of Pillar</CustomFormLabel>
@@ -371,18 +468,14 @@ const AddProgramForm = () => {
                         name="editorContent"
                         value={editorContent || ''}
                         style={{ height: '10rem', marginBottom: '3rem' }}
-                        // onChange={(value) => setEditorContent(value)}
                         onChange={(value) => {
                             setEditorContent(value);
-                            setErrors({ ...errors, editorContent: "" });
-                        }}
-                        onBlur={() => {
-                            validateForm();
+                            setErrors({ ...errors, editorContent: " " });
                         }}
                     />
-                    {Boolean(errors?.editorContent) && (
+                    {Boolean(errors.editorContent) && (
                         <Typography variant="caption" color="error">
-                            {errors?.editorContent}
+                            {errors.editorContent}
                         </Typography>
                     )}
                 </Grid>
@@ -393,7 +486,6 @@ const AddProgramForm = () => {
                         <Button
                             variant="contained"
                             color="primary"
-                            //   onClick={() => handleSubmitBtn()} 
                             onClick={() => scrollToError(errors, handleSubmitBtn)}
                         >
                             Submit

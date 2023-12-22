@@ -137,7 +137,7 @@ const slicedVihars = filteredVihars.slice(
         </Grid> */}
         <Grid item xs={12} lg={12}>
           <Card>
-          <Box p={2} display="flex" alignItems="center" justifyContent="flex-start">
+          <Box p={0} display="flex" alignItems="center" justifyContent="flex-start" style={{ paddingBottom: '10px' }}>
               <TextField
                 label="Search by Vihar Name"
                 variant="outlined"

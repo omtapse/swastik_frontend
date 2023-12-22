@@ -29,6 +29,7 @@ export const ViharSlice = createSlice({
     },
     // GetActivities: (state, action) => {
     //   state.activitiesData = action.payload;
+    //   console.log("state.activitiesData",state.activitiesData)
     // },
     setSelectedVihar: (state, action) => {
       state.selectedVihar = action.payload
@@ -74,12 +75,12 @@ export const fetchViharById = (id) => async (dispatch) => {
   }
 };
 
-// export const fetchActivitiesById = () => async (dispatch) => {
+// export const fetchActivitiesById = (id,data) => async (dispatch) => {
 //   try {
 //     // console.log(".........??????",id)
-//     const response = await routes.APIS.GET_ALL_ACTIVITIES_VIHARS();
-//     console.log("activitiessssss", response.activities);
-//     dispatch(GetActivities(response.activities));
+//     const response = await routes.APIS.GET_ALL_ACTIVITIES_VIHARS(id);
+//     console.log("activitiessssss", response);
+//     dispatch(GetActivities(response));
 //   } catch (error) {
 //     console.log(error);
 //   }

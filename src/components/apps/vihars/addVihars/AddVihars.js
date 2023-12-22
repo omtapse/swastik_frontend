@@ -378,24 +378,16 @@ const AddProgramForm = () => {
                         fullWidth
                         id="tags-outlined"
                         options={options || []}
-                        // onChange={handleOnChangeOption}
-                        // onChange={(event, value) => { handleSetActivity(value) }}
                         onChange={(event, value) => {
                             handleSetActivity(value);
                             setErrors({ ...errors, activities: "" });
                         }}
                         getOptionLabel={(option) => option.label}
-                        defaultValue={activities.map((activity) => ({ label: activity, value: activity }))}
+                        // defaultValue={activities.map((activity) => ({ label: activity, value: activity }))}
+                        defaultValue={activities}
+                        value={activities}
                         filterSelectedOptions
-                        // onInputChange={(event, newInputValue) => {
-                        //     setOptions((prevOptions) =>{
-                        //         console.log("prevOptions",prevOptions);
-                        //         return[
-                        //         ...prevOptions,
-                        //         { label: newInputValue, value: newInputValue },
-                        //     ]});
-                        // }}
-
+                    
                         renderInput={(params) => (
                             <CustomTextField {...params} value={activityValue} aria-label="Favorites" />
                         )}
