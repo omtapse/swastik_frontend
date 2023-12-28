@@ -100,12 +100,12 @@ useEffect(() => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                 <Typography variant="subtitle2" fontWeight={600}>Name</Typography>
               </TableCell>
           
-              <TableCell>
-                <Typography variant="subtitle2" fontWeight={600}>Action</Typography>
+              <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                <Typography variant="subtitle2" fontWeight={600}>Created At</Typography>
               </TableCell>
           
             </TableRow>
@@ -113,18 +113,17 @@ useEffect(() => {
           <TableBody>
             {topFivePillars.map((basic) => (
               <TableRow key={basic.id}>
-                <TableCell>
+                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                   <Stack direction="row" spacing={2}>
                     <Avatar src={basic.pillarImage} alt={basic.pillarImage} sx={{ width: 40, height: 40 }} />
                     <Box>
                       <Typography variant="subtitle2" fontWeight={600}>
                         {basic.pillarTitle}
                       </Typography>
-                     
                     </Box>
                   </Stack>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                 <Typography color="textSecondary" fontSize="12px" variant="subtitle2">
                         {isValid(new Date(basic.createdAt)) ? format(new Date(basic.createdAt),'dd-MM-yyyy'):'Invalid Date'}
                       </Typography>

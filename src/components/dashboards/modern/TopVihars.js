@@ -41,20 +41,12 @@ const TopPerformers = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const allProgram = useSelector((state) => state.ProgramReducer)
   const getAllVihar = useSelector((state) => state.ViharReducer?.vihars || []);
-
-
-  console.log("allllll", getAllVihar);
-
-
-
 
   const filterTopVihars = () => {
     const sortedVihars = [...getAllVihar].sort((a, b) => {
         return a.name - b.name;
     });
-
     return sortedVihars.slice(0, 5);
 };
 
@@ -102,10 +94,10 @@ useEffect(() => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                 <Typography variant="subtitle2" fontWeight={600}>Name</Typography>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                 <Typography variant="subtitle2" fontWeight={600}>Created At</Typography>
               </TableCell>
             </TableRow>
@@ -113,7 +105,7 @@ useEffect(() => {
           <TableBody>
             {topFiveVihars.map((basic) => (
               <TableRow key={basic.id}>
-                <TableCell>
+                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                   <Stack direction="row" spacing={2}>
                     <Avatar src={basic.masterImage} alt={basic.masterImage} sx={{ width: 40, height: 40 }} />
                     <Box>
@@ -124,7 +116,7 @@ useEffect(() => {
                     </Box>
                   </Stack>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                 <Typography color="textSecondary" fontSize="12px" variant="subtitle2">
                         {/* {basic.createdAt} */}
                         {isValid(new Date(basic.createdAt)) ? format(new Date(basic.createdAt),'dd-MM-yyyy'):'Invalid Date'}

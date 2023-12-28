@@ -1,12 +1,6 @@
 import React from 'react';
 import { Box, CardContent, Grid, Typography } from '@mui/material';
 
-import icon1 from '../../../assets/images/svgs/icon-connect.svg';
-import icon2 from '../../../assets/images/svgs/icon-user-male.svg';
-import icon3 from '../../../assets/images/svgs/icon-briefcase.svg';
-import icon4 from '../../../assets/images/svgs/icon-mailbox.svg';
-import icon5 from '../../../assets/images/svgs/icon-favorites.svg';
-import icon6 from '../../../assets/images/svgs/icon-speech-bubble.svg';
 import vihar from '../../../assets/images/icons/viharIcon.png'
 import pillar from '../../../assets/images/icons/pillarIcon.png'
 import guru from '../../../assets/images/icons/guruIcon.png'

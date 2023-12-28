@@ -216,7 +216,7 @@ const FormSeparator = () => {
                         <p style={{ color: 'red', margin: '5px 0' }}>{errors.name}</p>
                     )}
 
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">
+                    <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">
                         Master Image
                     </CustomFormLabel>
                     <Upload
@@ -264,7 +264,7 @@ const FormSeparator = () => {
                         <p style={{ color: 'red', margin: '5px 0' }}>{errors.expertise}</p>
                     )}
 
-                    <CustomFormLabel htmlFor="fs-date">Program Images</CustomFormLabel>
+                    <CustomFormLabel sx={{ mb:1 }} htmlFor="fs-date">Program Images</CustomFormLabel>
                     <Upload
                         listType="picture-card"
                         fileList={fileList}

@@ -57,21 +57,9 @@ const ProgramList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); 
-  // const [open, setOpen] = React.useState(false);
-
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => {
-  //   setOpen(false);
-  //   dispatch(resetSelectedStudent());
-  // };
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const allProgram = useSelector((state) => state.ProgramReducer)
   const getAllPillar = useSelector((state) => state.PillarReducer?.pillars || []);
-
-
-  console.log("allllll", getAllPillar);
 
   useEffect(() => {
     dispatch(fetchPillar())
@@ -79,9 +67,7 @@ const ProgramList = () => {
 
 
   const handleEdit = (pillarId) => {
-    console.log("editttt", pillarId)
     dispatch(fetchPillarById(pillarId));
-    // setOpen(true)
     if (pillarId) {
       navigate(`/pillars/editPillars/${pillarId}`)
     }
@@ -89,18 +75,9 @@ const ProgramList = () => {
 
 
   const handleDelete = (pillarId) => {
-    console.log("pillarriddddd", pillarId)
     dispatch(deletePillarByID(pillarId));
   };
 
-  // const handleEdit = (studentId) => () => {
-  //   dispatch(fetchStudentById(studentId));
-  //   setOpen(true);
-  // };
-
-  // const handleDelete = (studentId) => () => {
-  //   dispatch(deleteStudentById(studentId));
-  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -161,25 +138,16 @@ page * rowsPerPage + rowsPerPage
             >
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)',width: '350px' }}>
                     <Typography variant="h6">Pillar Name</Typography>
                   </TableCell>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)',width: '300px' }}>
                     <Typography variant="h6">Registered On</Typography>
                   </TableCell>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)',width: '300px' }}>
                     <Typography variant="h6">Updated On</Typography>
                   </TableCell>
-                  {/* <TableCell>
-                    <Typography variant="h6">Program Status</Typography>
-                  </TableCell> */}
-                  {/* <TableCell>
-                    <Typography variant="h6">Subactivity</Typography>
-                  </TableCell> */}
-                  {/* <TableCell>
-                    <Typography variant="h6">Description</Typography>
-                  </TableCell> */}
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)',width: '150px' }}>
                     <Typography variant="h6">Action</Typography>
                   </TableCell>
                 </TableRow>
@@ -219,11 +187,6 @@ page * rowsPerPage + rowsPerPage
                         }
                       </Typography>
                     </TableCell>
-                    {/* <TableCell>
-                      <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.programStatus}
-                      </Typography>
-                    </TableCell> */}
 
                     <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

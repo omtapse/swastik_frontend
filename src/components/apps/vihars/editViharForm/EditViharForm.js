@@ -69,10 +69,6 @@ const AddProgramForm = () => {
     const params = useParams();
 
     const selectedVihar = useSelector((state) => state.ViharReducer?.selectedVihar)
-    console.log("selectedVihar", selectedVihar)
-
-
-
 
     const handleChange = (event) => {
         setCountry(event.target.value);
@@ -135,18 +131,7 @@ const AddProgramForm = () => {
             console.log("error", error);
         }
     };
-    // const handleChangeImage = async (info) => {
-    //     try {
-    //         setLoading(true);
-    //         let formData = new FormData();
-    //         formData.append("image", info.target.files[0]);
-    //         let res = await routes.APIS.UPLOAD_IMAGE(formData);
-    //         setImageUrl(res.url);
-    //         setLoading(false);
-    //     } catch (error) {
-    //         console.log("error", error);
-    //     }
-    // };
+
     const handleChangeImage = async (info) => {
             if (info.file.status === "uploading") {
                 console.log("info", info.file);
@@ -213,12 +198,6 @@ const AddProgramForm = () => {
         getAllActivities();
     }, []);
 
-    // useEffect(() => {
-    //     console.log("activity", options, activities);
-
-    // }, [activities, options])
-
-
     useEffect(() => {
 
 
@@ -227,17 +206,11 @@ const AddProgramForm = () => {
         // setActivities(selectedVihar?.activities.map(activity => ({ label: activity.activityName, value: activity._id })))
         if (selectedVihar && selectedVihar?.activities) {
             let actName = selectedVihar?.activities.map(el=>({ label: el.activityName, value: el._id }));
-            console.log("actName",actName)
-            // const activityNames = fetchActivityNames(selectedVihar?.activities || []);
-            // console.log("activityNames????",activityNames)
             setActivities(actName);
         }
         setImageUrl(selectedVihar?.masterImage || '');
         setFileList(selectedVihar?.facilityImages.map((item) => ({ url: item })))
         setEditorContent(selectedVihar?.vihardescription || '');
-
-        // setActivities(selectedVihar?.)
-
 
     }, [selectedVihar]);
     
@@ -322,7 +295,14 @@ const AddProgramForm = () => {
             // Dispatch the action and wait for it to complete
             await dispatch(updateViharById(selectedVihar._id, data));
 
+
+            notification.success({
+                message: 'Vihar updated successfully',
+                // description: 'Program updated successfully',
+            });
             navigate('/vihars/viharList');
+
+
         } catch (error) {
             console.error("Error:", error);
             notification.error({
@@ -358,7 +338,6 @@ const AddProgramForm = () => {
                         fullWidth
                         value={title}
                         inputProps={{ maxLength: 50 }}
-                        // onChange={(e) => setTitle(e.target.value)}
 
                         onChange={(e) => {
                             setTitle(e.target.value);
@@ -366,9 +345,11 @@ const AddProgramForm = () => {
                         }}
                     />
                     {Boolean(errors.title) && (
-                        <Typography variant="caption" color="red">
-                            {errors.title}
-                        </Typography>
+                        // <Typography variant="caption" color="red">
+                        //     {errors.title}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.title}</p>
+
                     )}
 
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
@@ -380,19 +361,20 @@ const AddProgramForm = () => {
                         sx={{mb:3}}
                         fullWidth
                         value={tagline}
-                        // onChange={(e) => setTagline(e.target.value)}
                         onChange={(e) => {
                             setTagline(e.target.value);
                             setErrors({ ...errors, tagline: "" });
                         }}
                     />
                     {Boolean(errors.tagline) && (
-                        <Typography variant="caption" color="red">
-                            {errors.tagline}
-                        </Typography>
+                        // <Typography variant="caption" color="red">
+                        //     {errors.tagline}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.tagline}</p>
+
                     )}
 
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Master Image</CustomFormLabel>
+                    <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">Master Image</CustomFormLabel>
                     <Upload
                         name="image"
                         listType="picture-card"
@@ -416,40 +398,15 @@ const AddProgramForm = () => {
                         )}
                     </Upload>
                     {Boolean(errors.imageUrl) && (
-                        <Typography variant="caption" color="red">
-                            {errors.imageUrl}
-                        </Typography>
+                        // <Typography variant="caption" color="red">
+                        //     {errors.imageUrl}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.imageUrl}</p>
+
                     )}
 
                 </Grid>
-                {/* <Grid item xs={12} sm={6}>
-                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
-                        activities
-                    </CustomFormLabel>
-                    <Autocomplete
-                        // freeSolo
-                        multiple
-                        fullWidth
-                        id="tags-outlined"
-                        options={options || []}
-                        onChange={(event, value) => {
-                            handleSetActivity(value);
-                            setErrors({ ...errors, activities: "" });
-                        }}
-                        getOptionLabel={(option) => option.label}
-                       
-                        defaultValue={ activities?.map((activity) => ({ label: activity, value: activity }))}
-                        // defaultValue={(activities ?? [])?.map((activity) => ({ label: activity, value: activity }))}
-
-                        filterSelectedOptions
-                        renderInput={(params) => (
-                            <CustomTextField {...params} aria-label="Favorites" />
-                        )}
-                    />
-                    {Boolean(errors.activities) && (
-                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.activities}</p>
-                    )}
-                </Grid> */}
+              
                 <Grid item xs={12} sm={6}>
                     <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
                         activities
@@ -484,12 +441,10 @@ const AddProgramForm = () => {
 
                 <Grid item xs={12} sm={6}>
 
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Facility Image</CustomFormLabel>
+                    <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">Facility Image</CustomFormLabel>
                     <Upload
                         listType="picture-card"
                         fileList={fileList}
-                        // onPreview={handlePreview}
-                        // onChange={handleChangeImage}
                         accept="image/*"
                         beforeUpload={beforeUploadProgramImages}
                         onRemove={(file) => handleRemoveImage(file)}
@@ -497,9 +452,11 @@ const AddProgramForm = () => {
                         {fileList?.length >= 8 ? null : uploadButton}
                     </Upload>
                     {Boolean(errors.fileList) && (
-                        <Typography variant="caption" color="red">
-                            {errors.fileList}
-                        </Typography>
+                        // <Typography variant="caption" color="red">
+                        //     {errors.fileList}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.fileList}</p>
+
                     )}
 
                 </Grid>
@@ -510,16 +467,17 @@ const AddProgramForm = () => {
                         id="fs-editor"
                         value={editorContent || ''}
                         style={{ height: '10rem', marginBottom: '3rem' }}
-                        // onChange={(value) => setEditorContent(value)}
                         onChange={(value) => {
                             setEditorContent(value);
                             setErrors({ ...errors, editorContent: "" });
                         }}
                     />
                     {Boolean(errors.editorContent) && (
-                        <Typography variant="caption" color="red">
-                            {errors.editorContent}
-                        </Typography>
+                        // <Typography variant="caption" color="red">
+                        //     {errors.editorContent}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.editorContent}</p>
+
                     )}
                 </Grid>
 
@@ -528,7 +486,6 @@ const AddProgramForm = () => {
                         <Button
                             variant="contained"
                             color="primary"
-                            // onClick={() => handleSubmitBtn()}
                             onClick={(e) => scrollToError(errors, handleSubmitBtn)}
                         >
                             Submit

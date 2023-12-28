@@ -153,13 +153,6 @@ const AddProgramForm = () => {
     };
 
 
-
-    // const getBase64 = (img, callback) => {
-    //   const reader = new FileReader();
-    //   reader.addEventListener('load', () => callback(reader.result));
-    //   reader.readAsDataURL(img);
-    // };
-
     const beforeUpload = async (file) => {
         try {
             setLoading(true);
@@ -234,12 +227,7 @@ const AddProgramForm = () => {
         setImageUrl(selectedPillar?.pillarImage || '');
         if (selectedPillar && selectedPillar?.activities) {
             let actName = selectedPillar?.activities.map(el => ({ label: el.activityName, value: el._id }));
-            // console.log("actName", actName)
-            // let val = actName.map((act)=>act.label)
-            // const activityNames = fetchActivityNames(selectedVihar?.activities || []);
-            // console.log("activityNames????",activityNames)
             setActivities(actName);
-            // setActivities(actName)
         }
         setEditorContent(selectedPillar?.pillarDescription || '');
 
@@ -360,19 +348,20 @@ const AddProgramForm = () => {
                         fullWidth
                         value={title}
                         inputProps={{ maxLength: 50 }}
-                        // onChange={(e) => setTitle(e.target.value)}
                         onChange={(e) => {
                             setTitle(e.target.value);
                             setErrors({ ...errors, title: "" });
                         }}
                     />
                     {Boolean(errors?.title) && (
-                        <Typography variant="caption" color="error">
-                            {errors?.title}
-                        </Typography>
+                        // <Typography variant="caption" color="error">
+                        //     {errors?.title}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.title}</p>
+
                     )}
 
-                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0,pt:2 }}>
                         Tagline
                     </CustomFormLabel>
                     <CustomTextField
@@ -381,16 +370,17 @@ const AddProgramForm = () => {
                         sx={{ mb: 3 }}
                         fullWidth
                         value={tagline}
-                        // onChange={(e) => setTagline(e.target.value)}
                         onChange={(e) => {
                             setTagline(e.target.value);
                             setErrors({ ...errors, tagline: "" });
                         }}
                     />
                     {Boolean(errors.tagline) && (
-                        <Typography variant="caption" color="red">
-                            {errors.tagline}
-                        </Typography>
+                        // <Typography variant="caption" color="red">
+                        //     {errors.tagline}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.tagline}</p>
+
                     )}
 
                 </Grid>
@@ -429,7 +419,7 @@ const AddProgramForm = () => {
 
                 <Grid item xs={12} sm={6}>
 
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Pillar Image</CustomFormLabel>
+                    <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">Pillar Image</CustomFormLabel>
                     <Upload
                         name="image"
                         listType="picture-card"
@@ -453,9 +443,11 @@ const AddProgramForm = () => {
                         )}
                     </Upload>
                     {Boolean(errors?.imageUrl) && (
-                        <Typography variant="caption" color="error">
-                            {errors?.imageUrl}
-                        </Typography>
+                        // <Typography variant="caption" color="error">
+                        //     {errors?.imageUrl}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.imageUrl}</p>
+
                     )}
 
                 </Grid>
@@ -474,9 +466,11 @@ const AddProgramForm = () => {
                         }}
                     />
                     {Boolean(errors.editorContent) && (
-                        <Typography variant="caption" color="error">
-                            {errors.editorContent}
-                        </Typography>
+                        // <Typography variant="caption" color="error">
+                        //     {errors.editorContent}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.editorContent}</p>
+
                     )}
                 </Grid>
 

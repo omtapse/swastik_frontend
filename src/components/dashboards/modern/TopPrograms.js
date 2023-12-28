@@ -110,16 +110,16 @@ const TopPerformers = () => {
                        
                     <TableHead>
                         <TableRow>
-                            <TableCell>
+                            <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                                 <Typography variant="subtitle2" fontWeight={600}>Name</Typography>
                             </TableCell>
-                            <TableCell>
+                            <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                                 <Typography variant="subtitle2" fontWeight={600}>Price</Typography>
                             </TableCell>
-                            <TableCell>
+                            <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                                 <Typography variant="subtitle2" fontWeight={600}>Status</Typography>
                             </TableCell>
-                            <TableCell>
+                            <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                                 <Typography variant="subtitle2" fontWeight={600}>Duration</Typography>
                             </TableCell>
                         </TableRow>
@@ -127,7 +127,7 @@ const TopPerformers = () => {
                     <TableBody>
                         {topFivePrograms.map((basic) => (
                             <TableRow key={basic.id}>
-                                <TableCell>
+                                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                                     <Stack direction="row" spacing={2}>
                                         <Avatar src={basic.programImage} alt={basic.programImage} sx={{ width: 40, height: 40 }} />
                                         <Box>
@@ -138,7 +138,7 @@ const TopPerformers = () => {
 
                                     </Stack>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                                     <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
                                         {basic.programPrice}
                                     </Typography>
@@ -148,7 +148,7 @@ const TopPerformers = () => {
                     {basic.programStatus}
                   </Typography>
                 </TableCell> */}
-                                <TableCell>
+                                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                                     <Chip
                                         sx={{
                                             bgcolor: basic.programStatus === 'Active' ? (theme) => theme.palette.success.light : (theme) => theme.palette.error.light,
@@ -159,7 +159,7 @@ const TopPerformers = () => {
                                         label={basic.programStatus}
                                     />
                                 </TableCell>
-                                <TableCell>
+                                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                                     <Typography variant="subtitle2">{basic.programDuration}</Typography>
                                 </TableCell>
                             </TableRow>

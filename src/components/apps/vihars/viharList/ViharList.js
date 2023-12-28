@@ -67,33 +67,23 @@ const ViharList = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const allProgram = useSelector((state) => state.ProgramReducer)
   const getAllVihar = useSelector((state) => state.ViharReducer?.vihars || []);
 
 
-  console.log("allllll", getAllVihar);
 
   useEffect(() => {
-    // console.log("useEfffffff")
     dispatch(fetchVihar())
-  }, [dispatch])
+  }, [])
 
   const handleEdit = (viharId) => {
-    console.log("editttt", viharId)
     dispatch(fetchViharById(viharId));
-    // setOpen(true)
     if (viharId) {
       navigate(`/vihars/editVihars/${viharId}`)
     }
   }
 
-  // const handleEdit = (studentId) => () => {
-  //   dispatch(fetchStudentById(studentId));
-  //   setOpen(true);
-  // };
-
+ 
   const handleDelete = (viharId) => {
-    console.log("vihdeleeeeeee", viharId)
     dispatch(deleteViharByID(viharId));
   };
 
@@ -109,14 +99,13 @@ const ViharList = () => {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value); // Update search term when the user types
     setPage(0);
-
   };
 
   const filteredVihars = getAllVihar.filter((item) =>
-  item.viharName.toLowerCase().includes(searchTerm.toLowerCase())
+  item && item.viharName.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
-const slicedVihars = filteredVihars.slice(
+const slicedVihars = filteredVihars.slice(    
   page * rowsPerPage,
   page * rowsPerPage + rowsPerPage
 );
@@ -156,25 +145,16 @@ const slicedVihars = filteredVihars.slice(
             >
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)',width: '350px' }}>
                     <Typography variant="h6">Vihar Name</Typography>
                   </TableCell>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)',width: '300px' }}>
                     <Typography variant="h6">Registered On</Typography>
                   </TableCell>
                   <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                     <Typography variant="h6">Updated On</Typography>
                   </TableCell>
-                  {/* <TableCell>
-                    <Typography variant="h6">Program Status</Typography>
-                  </TableCell> */}
-                  {/* <TableCell>
-                    <Typography variant="h6">Subactivity</Typography>
-                  </TableCell> */}
-                  {/* <TableCell>
-                    <Typography variant="h6">Description</Typography>
-                  </TableCell> */}
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)',width: '150px' }}>
                     <Typography variant="h6">Action</Typography>
                   </TableCell>
                 </TableRow>
@@ -215,11 +195,6 @@ const slicedVihars = filteredVihars.slice(
 
                       </Typography>
                     </TableCell>
-                    {/* <TableCell>
-                      <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.programStatus}
-                      </Typography>
-                    </TableCell> */}
 
                     <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -256,14 +231,6 @@ const slicedVihars = filteredVihars.slice(
           </Card>
         </Grid>
       </Grid>
-     
-      {/* <AddStudentform
-        open={open}
-        setOpen={setOpen}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-        selectedStudent={selectedStudent}
-      /> */}
     </PageContainer>
   );
 };

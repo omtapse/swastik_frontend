@@ -116,11 +116,11 @@ const topFiveGurus = filterTopFiveGurus();
         >
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                 <Typography variant="subtitle2" fontWeight={600}>Name</Typography>
               </TableCell>
              
-              <TableCell>
+              <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                 <Typography variant="subtitle2" fontWeight={600}>Created At</Typography>
               </TableCell>
             </TableRow>
@@ -128,7 +128,7 @@ const topFiveGurus = filterTopFiveGurus();
           <TableBody>
             {topFiveGurus.map((basic) => (
               <TableRow key={basic.id}>
-                <TableCell>
+                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                   <Stack direction="row" spacing={2}>
                     <Avatar src={basic.image} alt={basic.image} sx={{ width: 40, height: 40 }} />
                     <Box>
@@ -142,7 +142,7 @@ const topFiveGurus = filterTopFiveGurus();
                     </Box>
                   </Stack>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
                 <Typography color="textSecondary" fontSize="12px" variant="subtitle2">
                         {/* {basic.createdAt} */}
                         {isValid(new Date(basic.createdAt)) ? format(new Date(basic.createdAt),'dd-MM-yyyy'):'Invalid Date'}

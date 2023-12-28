@@ -121,8 +121,6 @@ const AddProgramForm = () => {
             formData.append("image", file);
             const res = await routes.APIS.UPLOAD_IMAGE(formData);
             setImageUrl(res.url);
-            console.log("*****")
-
             setErrors({ ...errors, imageUrl: "" });
             setLoading(false);
             return false; // Prevent default upload
@@ -162,7 +160,6 @@ const AddProgramForm = () => {
     const getAllActivities = async () => {
         try {
             const res = await routes.APIS.getAllPillarActivity();
-            console.log("resssss", res);
             let data = res.activities.map((item) => { return { label: item.activityName, value: item.activityName } });
             setOptions(data);
         } catch (error) {
@@ -213,7 +210,7 @@ const AddProgramForm = () => {
             errors.tagline = "Tagline is required";
         }
         if (!activities.length) {
-            errors.activities = "Activities is required";
+            errors.activities = "Select atleast one activitiy";
         }
         if (!editorContent) {
             errors.editorContent = "Brief of Pillar is required";
@@ -280,14 +277,14 @@ const AddProgramForm = () => {
 
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
-                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0,mb:1 }}>
                         Pillar title
                     </CustomFormLabel>
                     <CustomTextField
                         id="fs-uname"
                         placeholder="Enter Program"
                         fullWidth
-                        sx={{mb:3}}
+                        sx={{mb:0}}
                         value={title}
                         inputProps={{ maxLength: 50 }}
                         onChange={(e) => {
@@ -295,14 +292,17 @@ const AddProgramForm = () => {
                             setErrors({ ...errors, title: "" });
                         }}
                     />
-                    {Boolean(errors.title) && (
+                    {/* {Boolean(errors.title) && (
                         <Typography variant="caption" color="red">
                             {errors.title}
                         </Typography>
+                    )} */}
+                     {Boolean(errors.tagline) && (
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.title}</p>
                     )}
 
 
-<CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+<CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0,pt:2 }}>
                         Tagline
                     </CustomFormLabel>
                     <CustomTextField
@@ -311,7 +311,6 @@ const AddProgramForm = () => {
                         sx={{mb:0}}
                         fullWidth
                         value={tagline}
-                        // onChange={(e) => setTagline(e.target.value)}
                         onChange={(e) => {
                             setTagline(e.target.value);
                             setErrors({ ...errors, tagline: "" });
@@ -326,7 +325,7 @@ const AddProgramForm = () => {
 
                 
                 <Grid item xs={12} sm={6}>
-                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
+                    <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0,mb:1 }}>
                         activities
                     </CustomFormLabel>
                     <Autocomplete
@@ -339,9 +338,7 @@ const AddProgramForm = () => {
                                 handleSetActivity(value);
                                 setErrors({ ...errors, activities: "" });
                             }}
-                            getOptionLabel={(option) => option.label}
-                            // defaultValue={activities?.map((activity) => ({ label: activity, value: activity }))}
-                            
+                            getOptionLabel={(option) => option.label}                            
                             defaultValue={activities}
                             value={activities}
                             filterSelectedOptions
@@ -363,7 +360,7 @@ const AddProgramForm = () => {
 
                 <Grid item xs={12} sm={6}>
 
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Pillar Image</CustomFormLabel>
+                    <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">Pillar Image</CustomFormLabel>
                     <Upload
                         name="image"
                         listType="picture-card"
@@ -387,16 +384,18 @@ const AddProgramForm = () => {
                         )}
                     </Upload>
                     {Boolean(errors.imageUrl) && (
-                        <Typography variant="caption" color="red">
-                            {errors.imageUrl}
-                        </Typography>
+                        // <Typography variant="caption" color="red">
+                        //     {errors.imageUrl}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.imageUrl}</p>
+
                     )}
 
 
                 </Grid>
 
                 <Grid item xs={12} >
-                    <CustomFormLabel htmlFor="fs-editor">Brief of Pillar</CustomFormLabel>
+                    <CustomFormLabel htmlFor="fs-editor" style={{marginTop:"0"}} >Brief of Pillar</CustomFormLabel>
                     <ReactQuill
                         id="fs-editor"
                         value={editorContent}
@@ -408,9 +407,11 @@ const AddProgramForm = () => {
                         }}
                     />
                     {Boolean(errors.editorContent) && (
-                        <Typography variant="caption" color="red">
-                            {errors.editorContent}
-                        </Typography>
+                        // <Typography variant="caption" color="red">
+                        //     {errors.editorContent}
+                        // </Typography>
+                        <p style={{ color: 'red', margin: '5px 0' }}>{errors.editorContent}</p>
+
                     )}
                 </Grid>
 

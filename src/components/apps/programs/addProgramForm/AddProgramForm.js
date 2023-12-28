@@ -501,7 +501,7 @@ const AddProgramForm = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl>
-            <FormLabel id="demo-row-radio-buttons-group-label">Program Status</FormLabel>
+            <FormLabel id="demo-row-radio-buttons-group-label" style={{fontWeight:"600"}}>Program Status</FormLabel>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -522,18 +522,7 @@ const AddProgramForm = () => {
           )}
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Program Image</CustomFormLabel>
-          {/* <Button
-            component="label"
-            variant="contained"
-            startIcon={<CloudUploadIcon />}
-            beforeUpload={beforeUpload}
-            onChange={handleChangeImg}
-          >
-            Upload file
-            <VisuallyHiddenInput type="file" />
-          </Button> */}
-
+          <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">Program Image</CustomFormLabel>
           <Upload
             name="imageUrl"
             listType="picture-card"

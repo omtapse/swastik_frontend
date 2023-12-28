@@ -54,7 +54,7 @@ const ProgramList = () => {
   const [sortOrder, setSortOrder] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5); 
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
 
 
@@ -82,9 +82,9 @@ const ProgramList = () => {
     dispatch(fetchProgram())
   }, [dispatch])
 
-//   const filteredPrograms = getAllProgram.filter((program) =>
-//   program.programName.toLowerCase().includes(searchQuery.toLowerCase())
-// );
+  //   const filteredPrograms = getAllProgram.filter((program) =>
+  //   program.programName.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
   const handleEdit = (programId) => {
     console.log("editttt", programId)
@@ -124,7 +124,7 @@ const ProgramList = () => {
   //   },
   //   // ... (add more columns as needed)
   // ];
-  
+
   // const options = {
   //   filter: true,
   //   sort: true,
@@ -132,7 +132,7 @@ const ProgramList = () => {
   //   print: false,
   //   selectableRows: 'none',
   // };
-  
+
   // const data = filteredPrograms?.map((item) => [
   //   // Map your data to the columns
   //   item.programName,
@@ -144,25 +144,25 @@ const ProgramList = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-  
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     setPage(0);
   };
 
   const filteredPrograms = getAllProgram.filter((item) =>
-  item.programName.toLowerCase().includes(searchTerm.toLowerCase())
-);
+    item.programName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 5));
-    setPage(0); 
+    setPage(0);
   };
   const slicedVihars = filteredPrograms.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-  
+
 
 
   return (
@@ -181,7 +181,7 @@ const ProgramList = () => {
         </Grid> */}
         <Grid item xs={12} lg={12}>
           <Card>
-          <Box p={0} display="flex" alignItems="center" justifyContent="flex-start" style={{ paddingBottom: '10px' }}>
+            <Box p={0} display="flex" alignItems="center" justifyContent="flex-start" style={{ paddingBottom: '10px' }}>
               <TextField
                 label="Search by Name"
                 variant="outlined"
@@ -192,93 +192,110 @@ const ProgramList = () => {
               />
             </Box>
 
-          <TableContainer>
-            <Table
-              aria-label="simple table"
-              sx={{
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }} onClick={() => handleSort('programName')}>
-                  <Typography variant="h6">Program Name</Typography>
-                  </TableCell >
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                    <Typography variant="h6">Program Price</Typography>
-                  </TableCell>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                    <Typography variant="h6">Program Duration</Typography>
-                  </TableCell>
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                    <Typography variant="h6">Program Status</Typography>
-                  </TableCell>
-                  {/* <TableCell>
+            <TableContainer>
+              <Table
+                aria-label="simple table"
+                sx={{
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }} onClick={() => handleSort('programName')}>
+                      <Typography variant="h6">Program Name</Typography>
+                    </TableCell >
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                      <Typography variant="h6">Program Price</Typography>
+                    </TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                      <Typography variant="h6">Program Duration</Typography>
+                    </TableCell>
+                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                      <Typography variant="h6">Program Status</Typography>
+                    </TableCell>
+                    {/* <TableCell>
                     <Typography variant="h6">Subactivity</Typography>
                   </TableCell> */}
-                  {/* <TableCell>
+                    {/* <TableCell>
                     <Typography variant="h6">Description</Typography>
                   </TableCell> */}
-                  <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                    <Typography variant="h6">Action</Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {slicedVihars.map((item) => (
-
-                  <TableRow key={item.id}>
                     <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                      <Stack direction="row" spacing={2}>
-                        <Avatar src={item.programImage} alt={item.programImage} width="35" />
-                        <Box alignItems={'center'} display={'flex'}>
-                          <Typography variant="h6" fontWeight="600">
-                            {item.programName}
-                          </Typography>
-                        </Box>
-                      </Stack>
-                    </TableCell>
-                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                      <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.programPrice}
-                      </Typography>
-                    </TableCell>
-                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                      <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.programDuration}
-                      </Typography>
-                    </TableCell>
-                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                      <Typography color="textSecondary" variant="h6" fontWeight="400">
-                        {item.programStatus}
-                      </Typography>
-                    </TableCell>
-
-                    <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Tooltip title="View">
-                          <IconButton>
-                            <VisibilityIcon />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Edit">
-                          <IconButton>
-                            <EditIcon onClick={e => handleEdit(item._id)} />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="DeleteBtn"  >
-                          <IconButton  >
-                            <DeleteIcon onClick={e => { console.log("deleeeeeee", item._id); handleDelete(item._id) }} />
-                          </IconButton>
-                        </Tooltip>
-                      </Box>
+                      <Typography variant="h6">Action</Typography>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
+                </TableHead>
+                <TableBody>
+                  {slicedVihars.map((item) => (
+
+                    <TableRow key={item.id}>
+                      <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                        <Stack direction="row" spacing={2}>
+                          <Avatar src={item.programImage} alt={item.programImage} width="35" />
+                          <Box alignItems={'center'} display={'flex'}>
+                            <Typography variant="h6" fontWeight="600">
+                              {item.programName}
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </TableCell>
+                      <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                        <Typography color="textSecondary" variant="h6" fontWeight="400">
+                          {item.programPrice}
+                        </Typography>
+                      </TableCell>
+                      <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                        <Typography color="textSecondary" variant="h6" fontWeight="400">
+                          {item.programDuration}
+                        </Typography>
+                      </TableCell>
+                      <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                        {/* <Chip
+                          sx={{
+                            bgcolor: item.programStatus === 'Active' ? (theme) => theme.palette.success.light : (theme) => theme.palette.error.light,
+                            color: item.programStatus === 'Active' ? (theme) => theme.palette.success.main : (theme) => theme.palette.error.main,
+                            borderRadius: '8px',
+                          }}
+                          size="small"
+                          label={item.programStatus}
+                        /> */}
+                        <Typography color="textSecondary" variant="h6" fontWeight="400"
+                          sx={{
+                            // bgcolor: item.programStatus === 'Active' ? (theme) => theme.palette.success.light : (theme) => theme.palette.error.light,
+                            color: item.programStatus === 'Active' ? (theme) => theme.palette.success.main : (theme) => theme.palette.error.main,
+                            borderRadius: '6px'
+
+                          }}
+                        
+                        >
+                        {item.programStatus}
+                      </Typography>
+                      </TableCell>
+
+                      <TableCell style={{ border: '1px solid rgba(204, 204, 204, 0.7)' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <Tooltip title="View">
+                            <IconButton>
+                              <VisibilityIcon />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Edit">
+                            <IconButton>
+                              <EditIcon onClick={e => handleEdit(item._id)} />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="DeleteBtn"  >
+                            <IconButton  >
+                              <DeleteIcon onClick={e => { console.log("deleeeeeee", item._id); handleDelete(item._id) }} />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
               component="div"
               count={filteredPrograms.length}
               page={page}
@@ -286,7 +303,7 @@ const ProgramList = () => {
               rowsPerPage={rowsPerPage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-          {/* <MUIDataTable
+            {/* <MUIDataTable
               title=""
               data={data}
               columns={columns}

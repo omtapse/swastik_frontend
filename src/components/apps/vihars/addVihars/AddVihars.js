@@ -279,16 +279,19 @@ const AddProgramForm = () => {
 
             // Dispatch the action and wait for it to complete
             await dispatch(addVihar(data));
-
-            navigate('/vihars/viharList');
+console.log("Vdataaaaaa",data)
+         
             notification.success({
                 message: 'Vihar added successfully',
                 // description: 'Program updated successfully',
             });
+            navigate('/vihars/viharList');
         } catch (error) {
             console.error("Error:", error);
         }
     }
+
+
 
 
 
@@ -341,7 +344,7 @@ const AddProgramForm = () => {
                     )}
 
 
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Master Image</CustomFormLabel>
+                    <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">Master Image</CustomFormLabel>
                     <Upload
                         name="image"
                         listType="picture-card"
@@ -402,7 +405,7 @@ const AddProgramForm = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Facility Image</CustomFormLabel>
+                    <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">Facility Image</CustomFormLabel>
                     <Upload
                         listType="picture-card"
                         fileList={fileList}

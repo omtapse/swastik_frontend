@@ -57,6 +57,8 @@ import {
 } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
+import guru from '../../../../assets/images/icons/guruIcon.png'
+
 
 const Menuitems = [
   {

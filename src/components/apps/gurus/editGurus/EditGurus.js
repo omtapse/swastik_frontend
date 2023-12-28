@@ -280,7 +280,7 @@ const FormSeparator = () => {
                     )}
 
 
-                    <CustomFormLabel sx={{ m: 0 }} htmlFor="fs-date">Master Image</CustomFormLabel>
+                    <CustomFormLabel sx={{ m: 0,mb:1 }} htmlFor="fs-date">Master Image</CustomFormLabel>
                     <Upload
                         name="image"
                         listType="picture-card"
@@ -328,7 +328,7 @@ const FormSeparator = () => {
                         <p style={{ color: 'red', margin: '5px 0' }}>{errors.expertise}</p>
                     )}
 
-                    <CustomFormLabel htmlFor="fs-date">Program Images</CustomFormLabel>
+                    <CustomFormLabel sx={{ mb:1 }} htmlFor="fs-date">Program Images</CustomFormLabel>
                     <Upload
                         // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture-card"

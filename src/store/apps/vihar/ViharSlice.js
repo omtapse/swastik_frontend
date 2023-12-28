@@ -89,7 +89,7 @@ export const fetchViharById = (id) => async (dispatch) => {
 export const addVihar = (data) => async (dispatch) => {
   try {
     const response = await routes.APIS.ADD_VIHAR(data);
-    console.log("vihSliceeeeee", response.data)
+    // console.log("vihSliceeeeee", response.data)
     if (response.message === "Vihar created successfully") {
       dispatch(CreateVihar(response.data));
     } else {
